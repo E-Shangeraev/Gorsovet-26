@@ -1,0 +1,55 @@
+<nav class="header__nav">
+  <ul>
+    {{#if isMain }}
+      <li class="active"><a href="/">Главная</a></li>
+    {{else}}
+      <li><a href="/">Главная</a></li>
+    {{/if}}
+
+    {{#if isCouncil }}
+      <li class="active"><a href="/council">Совет депутатов</a></li>
+    {{else}}
+      <li><a href="/council">Совет депутатов</a></li>
+    {{/if}}
+
+    {{#if isActivity }}
+      <li class="active"><a href="/activity">Деятельность совета</a></li>
+    {{else}}
+      <li><a href="/activity">Деятельность совета</a></li>
+    {{/if}}
+
+    {{#if isCorpus }}
+      <li class="active"><a href="/corpus">Депутатский корпус</a></li>
+    {{else}}
+      <li><a href="/corpus">Депутатский корпус</a></li>
+    {{/if}}
+
+    {{#if isDocuments }}
+      <li class="active"><a href="/documents">Документы</a></li>
+    {{else}}
+      <li><a href="/documents">Документы</a></li>
+    {{/if}}
+
+    {{#if isNews }}
+      <li class="active"><a href="/news">Новости</a></li>
+    {{else}}
+      <li><a href="/news">Новости</a></li>
+    {{/if}}
+
+    {{#if isContacts }}
+      <li class="active"><a href="/contacts">Контакты</a></li>
+    {{else}}
+      <li><a href="/contacts">Контакты</a></li>
+    {{/if}}
+
+    {{#if isCorrpution }}
+      <li class="active"><a href="/corruption">Противодействие коррупции</a></li>
+    {{else}}
+      <li><a href="/corruption">Противодействие коррупции</a></li>
+    {{/if}}
+    
+    <li>
+      <a href="#"><img src="/svg/eye.svg" alt="Версия для слабовидящих" /></a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,194 @@
+/* Theme CSS */
+html {
+  background-color: #eee;
+}
+body {
+  font-family: Arial, 'Lucida Grande', sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+  color: #555;
+  background-color: #fff;
+}
+.eventCalendar-wrap .eventCalendar-arrow {
+  text-decoration: none;
+  color: #fff;
+  padding: 0 5px;
+  line-height: 28px;
+}
+.eventCalendar-wrap .eventCalendar-arrow:hover {
+  opacity: 0.7;
+}
+.eventCalendar-slider {
+  width: 50%;
+  height: 80px;
+}
+
+.eventCalendar-monthWrap {
+  border-radius: 5px;
+  left: 0px;
+}
+.eventCalendar-currentTitle .eventCalendar-monthTitle {
+  font-size: 110%;
+  text-decoration: none;
+  font-weight: bold;
+  color: #fff;
+}
+.eventCalendar-daysList {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  zoom: 1;
+  padding: 0;
+  width: 100%;
+}
+.eventCalendar-daysList.showDayNames.eventCalendar-showAsWeek {
+  border-radius: 5px 5px 0 0;
+}
+.eventCalendar-daysList:after {
+  clear: both;
+}
+.eventCalendar-day-header {
+  text-transform: lowercase;
+  text-align: center;
+}
+.eventCalendar-daysList.eventCalendar-showAsWeek li {
+  height: auto;
+  margin: 0;
+}
+.eventCalendar-day a {
+  text-decoration: none;
+  font-size: 10px;
+  color: #424242;
+}
+.eventCalendar-day a {
+  border: solid 1px #bcbcbc;
+  border-width: 0 1px 1px 0;
+}
+.eventCalendar-showAsWeek .eventCalendar-day a {
+  line-height: 27px;
+  font-size: 11px;
+}
+.eventCalendar-daysList li.today a {
+  color: #fff;
+}
+li.eventCalendar-day.today a:hover {
+  background-color: #ccc;
+}
+.eventCalendar-daysList li.current a {
+  color: #fff;
+  background: #449fb2;
+  box-shadow: inset 5px 5px 10px #216b7a;
+  text-shadow: 2px 2px 2px #216b7a;
+}
+li.eventCalendar-day.current a:hover {
+  background-color: #79bdcc;
+  box-shadow: inset 5px 5px 10px #449fb2;
+  text-shadow: 2px 2px 2px #449fb2;
+}
+.eventCalendar-loading {
+  margin: 25px auto;
+  font-weight: bold;
+  z-index: 4;
+}
+.eventCalendar-loading.error {
+  background-color: red;
+}
+.eventCalendar-subtitle {
+  padding-top: 10px;
+}
+.eventCalendar-list-wrap {
+  min-height: 100px;
+  position: relative;
+}
+.eventCalendar-list-content.scrollable {
+  height: 100px;
+  overflow-y: auto;
+  margin: 0 5px 5px 0;
+}
+.eventCalendar-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+.eventCalendar-list li {
+  padding: 0 5px 15px;
+  margin: 0;
+  clear: both;
+}
+.eventCalendar-list li time {
+  font-size: 10px;
+  line-height: 13px;
+}
+.eventCalendar-list li time em {
+  float: left;
+  font-style: normal;
+}
+.eventCalendar-list li .eventCalendar-eventTitle {
+  display: block;
+  clear: both;
+}
+.eventCalendar-list li a.eventCalendar-eventTitle:hover {
+  text-decoration: underline;
+}
+.eventCalendar-list li .eventDesc {
+  clear: both;
+  margin: 0 0 5px 0;
+  font-size: 80%;
+  line-height: 1.2em;
+}
+.eventCalendar-list .eventCalendar-noEvents {
+  font-size: 120%;
+  border-radius: 4px;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.bt {
+  font-size: 12px;
+  display: block;
+  clear: both;
+  text-align: center;
+  margin-top: 10px;
+  padding: 9px 34px 11px;
+  text-decoration: none;
+  font-weight: bold;
+  line-height: 1;
+
+  color: #ffffff;
+  background-color: #698b10;
+  background-repeat: repeat-x;
+
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#89b814), to(#698b10));
+  background-image: -moz-linear-gradient(top, #89b814, #698b10);
+  background-image: -ms-linear-gradient(top, #89b814, #698b10);
+  background-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #89b814),
+    color-stop(100%, #698b10)
+  );
+  background-image: -webkit-linear-gradient(top, #89b814, #698b10);
+  background-image: -o-linear-gradient(top, #89b814, #698b10);
+  background-image: linear-gradient(top, #89b814, #698b10);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#89B814', endColorstr='#698B10', GradientType=0);
+
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+
+  border: 1px solid #698b10;
+  border-color: #698b10 #698b10 #465f05;
+
+  border-radius: 4px;
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+
+  -webkit-transition: 0.1s linear all;
+  -moz-transition: 0.1s linear all;
+  -ms-transition: 0.1s linear all;
+  -o-transition: 0.1s linear all;
+  transition: 0.1s linear all;
+}
+.bt:hover {
+  background-position: 0 -15px;
+  text-decoration: none;
+}
+/* end of theme css */

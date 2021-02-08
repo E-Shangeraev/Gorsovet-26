@@ -1,0 +1,73 @@
+<section class="news">
+  <div class="d-flex">
+    <h2 class="title">Новости</h2>
+    <input type="search" class="search" placeholder="Поиск по новостям" />
+  </div>
+  <div class="news__container">
+    {{#if news.length}}
+      {{#each news}}
+        <a href="/news/{{_id}}">
+          <figure class="preview">
+            <img class="preview__image" src="{{img}}" alt="{{title}}"/>
+            <figcaption class="preview__caption">
+              <h4 class="preview__title">{{title}}</h4>
+              <p class="preview__text">{{trimString text}}</p>
+              <div class="preview__footer">
+                <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
+                <p class="preview__views">
+                  <img src="svg/views.svg" />
+                  <span class="preview__count">327</span>
+                </p>
+              </div>
+            </figcaption>
+          </figure>
+        </a>
+      {{/each}}
+    {{else}}
+      <p>Новостей нет</p>
+    {{/if}}
+  </div>
+  <footer class="news__footer">
+    <button class="more">Показать еще на этой странице</button>
+
+    <div class="pagination">
+      <ul class="pagination__list">
+        <li class="pagination__num pagination__num--current"><a href="#">1</a></li>
+        <li class="pagination__num"><a href="#">2</a></li>
+        <li class="pagination__num"><a href="#">3</a></li>
+        <li class="pagination__num"><a href="#">4</a></li>
+      </ul>
+      <a href="#" class="pagination__next">
+        <span>Следующая страница</span>
+        <img src="svg/arrow-next.svg" alt="" />
+      </a>
+    </div>
+  </footer>
+</section>
+
+<section class="report">
+  <div class="d-flex">
+    <h2 class="title">Фотоотчет</h2>
+    <div class="slider__nav">
+      <p class="slider__buttons">
+        <button class="report__prev slider__prev"></button>
+        <button class="report__next slider__next"></button>
+      </p>
+      <p class="slider__counter">
+        <span class="slider__current">4</span>
+        <span> из </span>
+        <span class="slider__total">12</span>
+      </p>
+    </div>
+  </div>
+  <ul class="report__slider slider">
+    <li><img src="img/report-1.jpg" /></li>
+    <li><img src="img/report-2.jpg" /></li>
+    <li><img src="img/report-3.jpg" /></li>
+    <li><img src="img/report-4.jpg" /></li>
+    <li><img src="img/report-1.jpg" /></li>
+    <li><img src="img/report-2.jpg" /></li>
+    <li><img src="img/report-3.jpg" /></li>
+    <li><img src="img/report-4.jpg" /></li>
+  </ul>
+</section>
