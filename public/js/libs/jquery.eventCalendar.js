@@ -33,6 +33,9 @@
     }
   };
 
+  let promoEventTitle = [];
+  let promoEventDate = [];
+
   // define the parameters with the default values of the function
   $.fn.eventCalendar.defaults = {
     eventsjson: 'js/events.json',
@@ -519,6 +522,11 @@
                   eventStringDate = moment(eventDate).format(eventsOpts.dateFormat).split('');
                   eventStringDate[eventStringDate.length - 1] = 'я';
                   eventStringDate = eventStringDate.join('').toLowerCase();
+                  promoEventDate.push(eventStringDate);
+                  promoEventTitle.push(event.title);
+                  document.querySelector('.event__closest time').textContent = promoEventDate[0];
+                  document.querySelector('.event__name').textContent = promoEventTitle[0];
+
                   var eventTitle;
 
                   if (event.url) {

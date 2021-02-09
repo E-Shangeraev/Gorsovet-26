@@ -19,6 +19,7 @@ const {
   corruptionRoutes,
   receptionRoutes,
   newsRoutes,
+  userRoutes,
 } = require('./routes/index');
 
 const app = express();
@@ -43,6 +44,7 @@ app.use('/news', newsRoutes);
 app.use('/contacts', contactsRoutes);
 app.use('/corruption', corruptionRoutes);
 app.use('/reception', receptionRoutes);
+app.use('/news', userRoutes);
 
 const PORT = process.env.PORT || 3000;
 
