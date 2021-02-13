@@ -48,8 +48,15 @@
       <li><a href="/corruption">Противодействие коррупции</a></li>
     {{/if}}
     
-    <li>
-      <a href="#"><img src="/svg/eye.svg" alt="Версия для слабовидящих" /></a>
+    <li class="header__eye bvi-open">
+      <a href="#">
+        <img src="./svg/eye.svg" alt="Версия для слабовидящих" />
+        <span>Версия для слабовидящих</span>
+      </a>
     </li>
+    <li><input class="header__search header__search--mobile" type="search" placeholder="Поиск по сайту" /></li>
+    <li><a class="button button--mobile" href="reception.html">Онлайн-приемная</a></li>
   </ul>
+
+  <button class="close close--animate"></button>
 </nav>

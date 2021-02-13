@@ -53,12 +53,12 @@
           </div>
           <div class="event promo__event">
             <header>
-              <time class="event__time">14:57:23</time>
-              <time class="event__date">20 декабря 2020</time>
+              <time class="event__time">{{year}}</time>
+              <time class="event__date">{{date format="DD MMMM YYYY"}}</time>
             </header>
             <div class="event__wrapper">
-              <p class="event__closest">Ближайшее мероприятие - <time>16 января 2021</time></p>
-              <h3 class="event__name">Заседание Совета депутатов</h3>
+              <p class="event__closest">Ближайшее мероприятие - <time><span class="loader"></span></time></p>
+              <h3 class="event__name"><span class="loader"></span></h3>
             </div>
           </div>
         </div>
@@ -107,7 +107,7 @@
             </h2>
             <a href="#" class="button promo__button">Задать вопрос</a>
           </div>
-          <div class="event promo__event">
+          {{!-- <div class="event promo__event">
             <header>
               <time class="event__time">14:57:23</time>
               <time class="event__date">20 декабря 2020</time>
@@ -116,7 +116,7 @@
               <p class="event__closest">Ближайшее мероприятие - <time>16 января 2021</time></p>
               <h3 class="event__name">Заседание Совета депутатов</h3>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
       <div class="promo__slide" id="promo-slide-3">
@@ -163,7 +163,7 @@
             </h2>
             <a href="#" class="button promo__button">Задать вопрос</a>
           </div>
-          <div class="event promo__event">
+          {{!-- <div class="event promo__event">
             <header>
               <time class="event__time">14:57:23</time>
               <time class="event__date">20 декабря 2020</time>
@@ -172,7 +172,7 @@
               <p class="event__closest">Ближайшее мероприятие - <time>16 января 2021</time></p>
               <h3 class="event__name">Заседание Совета депутатов</h3>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
     </div>
@@ -518,16 +518,16 @@
         <h4>Наши социальные сети:</h4>
         <ul>
           <li>
-            <a href="#"><img src="svg/vk-useful.svg" alt="ВКонтакте" /></a>
+            <a href="#"><img src="/svg/vk-useful.svg" alt="ВКонтакте" /></a>
           </li>
           <li>
-            <a href="#"><img src="svg/inst-useful.svg" alt="Инстаграм" /></a>
+            <a href="#"><img src="/svg/inst-useful.svg" alt="Инстаграм" /></a>
           </li>
           <li>
-            <a href="#"><img src="svg/fb-useful.svg" alt="Фейсбук" /></a>
+            <a href="#"><img src="/svg/fb-useful.svg" alt="Фейсбук" /></a>
           </li>
           <li>
-            <a href="#"><img src="svg/ok-useful.svg" alt="Одноклассники" /></a>
+            <a href="#"><img src="/svg/ok-useful.svg" alt="Одноклассники" /></a>
           </li>
         </ul>
       </div>
@@ -567,7 +567,7 @@
   <section class="questions">
     <div class="questions__container">
       <div class="questions__left">
-        <h2 class="title questions__title">Страница закончилась, а вопросы остались?</h2>
+        <h2 class="title questions__title">Страница закончилась, <span>а вопросы</span> остались?</h2>
         <p class="questions__desc">
           Опишите свой вопрос и мы обязательно ответим на него в ближайшее время!
         </p>

@@ -1,5 +1,3 @@
-const fileName = document.location.pathname.split('/')[1];
-
 function setupSlider({
   section,
   slidesToShow,
@@ -76,8 +74,6 @@ function setupSlider({
   }
 }
 
-// console.log(fileName);
-
 if (fileName === '') {
   setupSlider({
     section: '.promo',
@@ -85,7 +81,7 @@ if (fileName === '') {
     slidesToScroll: 1,
     rows: 1,
     fade: false,
-    infinite: false,
+    infinite: true,
   });
   setupSlider({
     section: '.about',
@@ -107,7 +103,7 @@ if (fileName === '') {
   });
 }
 
-if (fileName === 'corpus') {
+if (fileName === 'corpus.html') {
   setupSlider({
     section: '.activities',
     slidesToShow: 4,
@@ -120,7 +116,7 @@ if (fileName === 'corpus') {
   });
 }
 
-if (fileName === 'news') {
+if (fileName === 'news.html') {
   setupSlider({
     section: '.report',
     slidesToShow: 4,
@@ -130,5 +126,25 @@ if (fileName === 'news') {
     fade: false,
     infinite: false,
     slidesToShow900: 2,
+  });
+}
+
+if (fileName === 'council.html') {
+  $('.history__big').slick({
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    arrows: false,
+    fade: true,
+    swipe: false,
+    asNavFor: '.history__small',
+  });
+  $('.history__small').slick({
+    slidesToShow: 4,
+    slidesToScroll: 1,
+    asNavFor: '.history__big',
+    arrows: false,
+    dots: false,
+    centerMode: true,
+    focusOnSelect: true,
   });
 }

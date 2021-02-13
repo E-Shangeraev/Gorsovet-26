@@ -7,6 +7,7 @@ const contactsRoutes = require('./contacts');
 const corruptionRoutes = require('./corruption');
 const receptionRoutes = require('./reception');
 const newsRoutes = require('./news');
+const userRoutes = require('./user');
 
 module.exports = {
   homeRoutes,
@@ -18,4 +19,5 @@ module.exports = {
   corruptionRoutes,
   receptionRoutes,
   newsRoutes,
+  userRoutes,
 };

@@ -15,6 +15,9 @@ const News = new Schema({
     type: Date,
     default: Date.now,
   },
+  views: {
+    type: Number,
+  },
 });
 
 module.exports = model('News', News);
