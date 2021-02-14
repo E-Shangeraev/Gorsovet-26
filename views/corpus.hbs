@@ -1,105 +1,164 @@
-<main>
-  <section class="corpus">
-    <h2 class="title">Депутатский корпус</h2>
-    <div class="corpus__container">
-      <figure class="corpus__data">
-        <img
-          class="corpus__photo"
-          src="./img/corpus.jpg"
-          alt="Депутат Антонов Эдуард Юрьевич"
-        />
-        <figcaption class="corpus__caption">
-          <h4 class="corpus__name">Антонов Эдуард Юрьевич</h4>
-          <p class="corpus__post">
-            Член комиссии по вопросам местного самоуправлении и законности
-          </p>
-          <a href="#corpus-popup" class="details open-corpus-popup">Подробнее</a>
-        </figcaption>
-      </figure>
-    </div>
-
-    <div id="corpus-popup" class="popup your-deputie mfp-hide">
+<section class="corpus">
+  <h2 class="title">
+    Депутатский корпус
+  </h2>
+  <div class="corpus__container">
+    {{#if deputies.length}}
+      {{#each deputies}}
+        <figure class="corpus__data" id="{{_id}}">
+          <img class="corpus__photo" src="{{img}}" alt="{{name}}" />
+          <figcaption class="corpus__caption">
+            <h4 class="corpus__name">
+              {{name}}
+            </h4>
+            <p class="corpus__post">
+              {{post}}
+            </p>
+            <a href="#popup-{{_id}}" class="details open-corpus-popup">
+              Подробнее
+            </a>
+          </figcaption>
+        </figure>
+        <div id="popup-{{_id}}" class="popup your-deputie mfp-hide">
+          <div class="your-deputie__wrapper bg-gray bg-gray--border">
+            <img class="your-deputie__photo" src="{{img}}" alt="{{name}}" />
+            <header class="your-deputie__header d-flex">
+              <div>
+                <h3 class="your-deputie__name">
+                  {{name}}
+                </h3>
+                <p class="your-deputie__post">
+                  {{post}}
+                </p>
+              </div>
+              <img src="img/edro.png" />
+            </header>
+            <p class="your-deputie__desc">
+              {{about}}
+            </p>
+            <footer class="your-deputie__footer">
+              <p>
+                <span class="red">
+                  График приема:
+                </span>
+                {{schedule}}
+              </p>
+              <p>
+                <span class="red">
+                  Запись:
+                </span>
+                {{appointment}}
+              </p>
+            </footer>
+          </div>
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+  {{!-- {{#if deputiesPopup.length}}
+    <div id="{{_id}}" class="popup your-deputie mfp-hide">
       <div class="your-deputie__wrapper bg-gray bg-gray--border">
-        <img class="your-deputie__photo" src="img/corpus.jpg" />
+        <img class="your-deputie__photo" src="{{img}}" alt="{{name}}" />
         <header class="your-deputie__header d-flex">
           <div>
-            <h3 class="your-deputie__name">Антонов Эдуард Юрьевич</h3>
-            <p class="your-deputie__post">МАУ СШ «Юность», директор</p>
+            <h3 class="your-deputie__name">
+              {{name}}
+            </h3>
+            <p class="your-deputie__post">
+              {{post}}
+            </p>
           </div>
           <img src="img/edro.png" />
         </header>
-
         <p class="your-deputie__desc">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает в
-          Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-          Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-          пропагандирует физическую культуру.
+          {{about}}
         </p>
-
         <footer class="your-deputie__footer">
           <p>
-            <span class="red">График приема: </span>каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
+            <span class="red">
+              График приема:
+            </span>
+            {{schedule}}
           </p>
           <p>
-            <span class="red">Запись: </span>предварительная запись по телефону 8-913-199-65-67
+            <span class="red">
+              Запись:
+            </span>
+            {{appointment}}
           </p>
         </footer>
       </div>
     </div>
-  </section>
-
-  <section class="find">
-    <div class="find__wrapper d-flex">
-      <div>
-        <h2 class="title">Найди своего депутата</h2>
-        <p class="find__text">
-          Введите адрес своего проживания и узнайте, какой депутат отвечает за ваш округ!
-        </p>
-      </div>
-      <form class="form" action="#">
-        <input
-          class="form__field"
-          type="search"
-          placeholder="Введите адерс своего проживания*"
-        />
-        <button class="button form__button">Найти</button>
-      </form>
+  {{/if}} --}}
+</section>
+<section class="find">
+  <div class="find__wrapper d-flex">
+    <div>
+      <h2 class="title">
+        Найди своего депутата
+      </h2>
+      <p class="find__text">
+        Введите адрес своего проживания и узнайте, какой депутат отвечает за ваш округ!
+      </p>
     </div>
-  </section>
-
-  <section class="activities">
-    <h2 class="title">Деятельность депутатов Совета депутатов</h2>
-    <div class="activities__slider">
-      <a href="#">
-        <figure class="preview">
-          <img class="preview__image" src="img/activities-1.jpg" />
-          <figcaption class="preview__caption">
-            <h4 class="preview__title">Девять тысяч детей получили сладкие подарки</h4>
-            <p class="preview__text">
-              Бесплатные сладкие подарки получили воспитанники детских садов, учащиеся начальной
+    <form class="form" action="#">
+      <input
+        class="form__field"
+        type="search"
+        placeholder="Введите адерс своего проживания*"
+      />
+      <button class="button form__button">
+        Найти
+      </button>
+    </form>
+  </div>
+</section>
+<section class="activities">
+  <h2 class="title">
+    Деятельность депутатов Совета депутатов
+  </h2>
+  <div class="activities__slider">
+    <a href="#">
+      <figure class="preview">
+        <img class="preview__image" src="img/activities-1.jpg" />
+        <figcaption class="preview__caption">
+          <h4 class="preview__title">
+            Девять тысяч детей получили сладкие подарки
+          </h4>
+          <p class="preview__text">
+            Бесплатные сладкие подарки получили воспитанники детских садов, учащиеся начальной
               школы с 1 по 4 классы. Всего было приобретено 9 109 подарков.
+          </p>
+          <div class="preview__footer">
+            <time pubdate>
+              25.11.2020
+            </time>
+            <p class="preview__views">
+              <img class="preview__eye" src="svg/views.svg" />
+              <span class="preview__count">
+                327
+              </span>
             </p>
-            <div class="preview__footer">
-              <time pubdate>25.11.2020</time>
-              <p class="preview__views">
-                <img class="preview__eye" src="svg/views.svg" />
-                <span class="preview__count">327</span>
-              </p>
-            </div>
-          </figcaption>
-        </figure>
-      </a>
-    </div>
-    <div class="slider__nav">
-      <p class="slider__buttons">
-        <button class="activities__prev slider__prev"></button>
-        <button class="activities__next slider__next"></button>
-      </p>
-      <p class="slider__counter">
-        <span class="slider__current">4</span>
-        <span> из </span>
-        <span class="slider__total"> 12</span>
-      </p>
-    </div>
-  </section>
-</main>
+          </div>
+        </figcaption>
+      </figure>
+    </a>
+  </div>
+  <div class="slider__nav">
+    <p class="slider__buttons">
+      <button class="activities__prev slider__prev"></button>
+      <button class="activities__next slider__next"></button>
+    </p>
+    <p class="slider__counter">
+      <span class="slider__current">
+        4
+      </span>
+      <span>
+        из
+      </span>
+      <span class="slider__total">
+        12
+      </span>
+    </p>
+  </div>
+</section>

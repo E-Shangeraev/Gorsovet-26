@@ -103,7 +103,7 @@ if (fileName === '') {
   });
 }
 
-if (fileName === 'corpus.html') {
+if (fileName === 'corpus') {
   setupSlider({
     section: '.activities',
     slidesToShow: 4,
@@ -116,7 +116,7 @@ if (fileName === 'corpus.html') {
   });
 }
 
-if (fileName === 'news.html') {
+if (fileName === 'news') {
   setupSlider({
     section: '.report',
     slidesToShow: 4,
@@ -129,7 +129,7 @@ if (fileName === 'news.html') {
   });
 }
 
-if (fileName === 'council.html') {
+if (fileName === 'council') {
   $('.history__big').slick({
     slidesToShow: 1,
     slidesToScroll: 1,

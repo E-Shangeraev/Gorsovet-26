@@ -3,12 +3,19 @@ const path = require('path');
 const mongoose = require('mongoose');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
+const bodyParser = require('body-parser');
 const helpers = require('handlebars-helpers')(['date']);
 handlebars.registerHelper('trimString', function (passedString) {
   const theString = passedString.substring(0, 200) + '...';
   return new handlebars.SafeString(theString);
 });
-
+handlebars.registerHelper('if_eq', function (a, b, opts) {
+  if (a == b) {
+    return opts.fn(this);
+  } else {
+    return opts.inverse(this);
+  }
+});
 const {
   homeRoutes,
   councilRoutes,
@@ -32,7 +39,8 @@ const hbs = exphbs.create({
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('veiws', 'views');
-
+app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use('/', homeRoutes);
@@ -46,7 +54,7 @@ app.use('/corruption', corruptionRoutes);
 app.use('/reception', receptionRoutes);
 app.use('/news', userRoutes);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8089;
 
 const start = async () => {
   try {

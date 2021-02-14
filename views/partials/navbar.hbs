@@ -1,62 +1,129 @@
 <nav class="header__nav">
   <ul>
-    {{#if isMain }}
-      <li class="active"><a href="/">Главная</a></li>
+    {{#if isMain}}
+      <li class="active">
+        <a href="/">
+          Главная
+        </a>
+      </li>
     {{else}}
-      <li><a href="/">Главная</a></li>
+      <li>
+        <a href="/">
+          Главная
+        </a>
+      </li>
     {{/if}}
-
-    {{#if isCouncil }}
-      <li class="active"><a href="/council">Совет депутатов</a></li>
+    {{#if isCouncil}}
+      <li class="active">
+        <a href="/council">
+          Совет депутатов
+        </a>
+      </li>
     {{else}}
-      <li><a href="/council">Совет депутатов</a></li>
+      <li>
+        <a href="/council">
+          Совет депутатов
+        </a>
+      </li>
     {{/if}}
-
-    {{#if isActivity }}
-      <li class="active"><a href="/activity">Деятельность совета</a></li>
+    {{#if isActivity}}
+      <li class="active">
+        <a href="/activity">
+          Деятельность совета
+        </a>
+      </li>
     {{else}}
-      <li><a href="/activity">Деятельность совета</a></li>
+      <li>
+        <a href="/activity">
+          Деятельность совета
+        </a>
+      </li>
     {{/if}}
-
-    {{#if isCorpus }}
-      <li class="active"><a href="/corpus">Депутатский корпус</a></li>
+    {{#if isCorpus}}
+      <li class="active">
+        <a href="/corpus">
+          Депутатский корпус
+        </a>
+      </li>
     {{else}}
-      <li><a href="/corpus">Депутатский корпус</a></li>
+      <li>
+        <a href="/corpus">
+          Депутатский корпус
+        </a>
+      </li>
     {{/if}}
-
-    {{#if isDocuments }}
-      <li class="active"><a href="/documents">Документы</a></li>
+    {{#if isDocuments}}
+      <li class="active">
+        <a href="/documents">
+          Документы
+        </a>
+      </li>
     {{else}}
-      <li><a href="/documents">Документы</a></li>
+      <li>
+        <a href="/documents">
+          Документы
+        </a>
+      </li>
     {{/if}}
-
-    {{#if isNews }}
-      <li class="active"><a href="/news">Новости</a></li>
+    {{#if isNews}}
+      <li class="active">
+        <a href="/news?p=1">
+          Новости
+        </a>
+      </li>
     {{else}}
-      <li><a href="/news">Новости</a></li>
+      <li>
+        <a href="/news?p=1">
+          Новости
+        </a>
+      </li>
     {{/if}}
-
-    {{#if isContacts }}
-      <li class="active"><a href="/contacts">Контакты</a></li>
+    {{#if isContacts}}
+      <li class="active">
+        <a href="/contacts">
+          Контакты
+        </a>
+      </li>
     {{else}}
-      <li><a href="/contacts">Контакты</a></li>
+      <li>
+        <a href="/contacts">
+          Контакты
+        </a>
+      </li>
     {{/if}}
-
-    {{#if isCorrpution }}
-      <li class="active"><a href="/corruption">Противодействие коррупции</a></li>
+    {{#if isCorruption}}
+      <li class="active">
+        <a href="/corruption">
+          Противодействие коррупции
+        </a>
+      </li>
     {{else}}
-      <li><a href="/corruption">Противодействие коррупции</a></li>
+      <li>
+        <a href="/corruption">
+          Противодействие коррупции
+        </a>
+      </li>
     {{/if}}
-    
     <li class="header__eye bvi-open">
       <a href="#">
         <img src="./svg/eye.svg" alt="Версия для слабовидящих" />
-        <span>Версия для слабовидящих</span>
+        <span>
+          Версия для слабовидящих
+        </span>
       </a>
     </li>
-    <li><input class="header__search header__search--mobile" type="search" placeholder="Поиск по сайту" /></li>
-    <li><a class="button button--mobile" href="reception.html">Онлайн-приемная</a></li>
+    <li>
+      <input
+        class="header__search header__search--mobile"
+        type="search"
+        placeholder="Поиск по сайту"
+      />
+    </li>
+    <li>
+      <a class="button button--mobile" href="reception.html">
+        Онлайн-приемная
+      </a>
+    </li>
   </ul>
-
   <button class="close close--animate"></button>
 </nav>
