@@ -3,3 +3,9 @@ $('.open-corpus-popup').magnificPopup({
   midClick: true,
   closeBtnInside: true,
 });
+
+$('.open-policy-popup').magnificPopup({
+  type: 'inline',
+  midClick: true,
+  closeBtnInside: true,
+});
