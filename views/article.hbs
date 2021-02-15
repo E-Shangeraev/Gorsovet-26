@@ -44,26 +44,45 @@
     <h2 class="subtitle">Читайте также</h2>
     <div class="news__container">
       {{#if news.length}}
-      {{#each news}}
-        <a href="/news/{{_id}}">
-          <figure class="preview">
-            <img class="preview__image" src="{{img}}" alt="{{title}}"/>
-            <figcaption class="preview__caption">
-              <h4 class="preview__title">{{title}}</h4>
-              <p class="preview__text">{{trimString text}}</p>
-              <div class="preview__footer">
-                <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
-                <p class="preview__views">
-                  <img src="/svg/views.svg" />
-                  <span class="preview__count">{{views}}</span>
-                </p>
-              </div>
-            </figcaption>
-          </figure>
-        </a>
-      {{/each}}
-    {{else}}
-      <p>Новостей нет</p>
-    {{/if}}
+        {{#each news}}
+          <a href="/news/{{_id}}">
+            <figure class="preview">
+              <img class="preview__image" src="{{img}}" alt="{{title}}"/>
+              <figcaption class="preview__caption">
+                <h4 class="preview__title">{{title}}</h4>
+                <p class="preview__text">{{trimString text}}</p>
+                <div class="preview__footer">
+                  <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
+                  <p class="preview__views">
+                    <img src="/svg/views.svg" />
+                    <span class="preview__count">{{views}}</span>
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
+          </a>
+        {{/each}}
+      {{/if}}
+
+      {{#if activities.length}}
+        {{#each activities}}
+          <a href="/corpus/{{_id}}">
+            <figure class="preview">
+              <img class="preview__image" src="{{img}}" alt="{{title}}"/>
+              <figcaption class="preview__caption">
+                <h4 class="preview__title">{{title}}</h4>
+                <p class="preview__text">{{trimString text}}</p>
+                <div class="preview__footer">
+                  <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
+                  <p class="preview__views">
+                    <img src="/svg/views.svg" />
+                    <span class="preview__count">{{views}}</span>
+                  </p>
+                </div>
+              </figcaption>
+            </figure>
+          </a>
+        {{/each}}
+      {{/if}}   
     </div>
   </section>

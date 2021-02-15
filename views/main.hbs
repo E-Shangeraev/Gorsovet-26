@@ -1,62 +1,28 @@
 <section class="promo">
-  <div class="promo__slider">
-    <div class="promo__slide" id="promo-slide-1">
-      <ul class="promo__news">
-        <li>
-          <a href="#">
-            <h4>
-              Новое в законодательстве для хозяйствующих субъектов, привлекающих иностранных
-                работников
-            </h4>
-            <div>
-              <time pubdate>
-                25.11.2020
-              </time>
-              <p class="promo__views">
-                <img src="svg/views.svg" />
-                <span class="preview__count">
-                  327
-                </span>
-              </p>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <h4>
-              За минувшие сутки в Железногорске коронавирус выявили у 87 человек
-            </h4>
-            <div>
-              <time pubdate>
-                25.11.2020
-              </time>
-              <p class="promo__views">
-                <img src="svg/views.svg" />
-                <span class="preview__count">
-                  327
-                </span>
-              </p>
-            </div>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <h4>
-              Онлайн-знакомство с Сибирской академией МЧС России
-            </h4>
-            <div>
-              <time pubdate>
-                25.11.2020
-              </time>
-              <p class="promo__views">
-                <img src="svg/views.svg" />
-                <span class="preview__count">
-                  327
-                </span>
-              </p>
-            </div>
-          </a>
-        </li>
+  <div class="promo__wrapper">
+      <ul class="promo__news promo__slider">
+        {{#if news.length}}
+          {{#each news}}
+            <li>
+              <a href="#">
+                <h4>
+                  {{title}}
+                </h4>
+                <div>
+                  <time pubdate>
+                    {{moment date format="DD.MM.YYYY"}}
+                  </time>
+                  <p class="promo__views">
+                    <img src="/svg/views.svg" />
+                    <span class="preview__count">
+                      {{views}}
+                    </span>
+                  </p>
+                </div>
+              </a>
+            </li>
+          {{/each}}
+        {{/if}}
       </ul>
       <div class="promo__content d-flex">
         <div>
@@ -89,160 +55,13 @@
           </div>
         </div>
       </div>
+      <p class="promo__buttons slider__buttons">
+          <button class="promo__prev slider__prev"></button>
+          <button class="promo__next slider__next"></button>
+        </p>
     </div>
-    <div class="promo__slide" id="promo-slide-2">
-      <ul class="promo__news">
-        <li>
-          <h4>
-            Новое в законодательстве для хозяйствующих субъектов, привлекающих иностранных
-              работников
-          </h4>
-          <div>
-            <time pubdate>
-              25.11.2020
-            </time>
-            <p class="promo__views">
-              <img src="svg/views.svg" />
-              <span class="preview__count">
-                327
-              </span>
-            </p>
-          </div>
-        </li>
-        <li>
-          <h4>
-            За минувшие сутки в Железногорске коронавирус выявили у 87 человек
-          </h4>
-          <div>
-            <time pubdate>
-              25.11.2020
-            </time>
-            <p class="promo__views">
-              <img src="svg/views.svg" />
-              <span class="preview__count">
-                327
-              </span>
-            </p>
-          </div>
-        </li>
-        <li>
-          <h4>
-            Онлайн-знакомство с Сибирской академией МЧС России
-          </h4>
-          <div>
-            <time pubdate>
-              25.11.2020
-            </time>
-            <p class="promo__views">
-              <img src="svg/views.svg" />
-              <span class="preview__count">
-                327
-              </span>
-            </p>
-          </div>
-        </li>
-      </ul>
-      <div class="promo__content d-flex">
-        <div>
-          <h2 class="promo__title">
-            Ваша возможность задать интересующий вопрос своему депутату
-          </h2>
-          <a href="#" class="button promo__button">
-            Задать вопрос
-          </a>
-        </div>
-        {{! <div class="event promo__event">
-            <header>
-              <time class="event__time">14:57:23</time>
-              <time class="event__date">20 декабря 2020</time>
-            </header>
-            <div class="event__wrapper">
-              <p class="event__closest">Ближайшее мероприятие - <time>16 января 2021</time></p>
-              <h3 class="event__name">Заседание Совета депутатов</h3>
-            </div>
-          </div> }}
-      </div>
-    </div>
-    <div class="promo__slide" id="promo-slide-3">
-      <ul class="promo__news">
-        <li>
-          <h4>
-            Новое в законодательстве для хозяйствующих субъектов, привлекающих иностранных
-              работников
-          </h4>
-          <div>
-            <time pubdate>
-              25.11.2020
-            </time>
-            <p class="promo__views">
-              <img src="svg/views.svg" />
-              <span class="preview__count">
-                327
-              </span>
-            </p>
-          </div>
-        </li>
-        <li>
-          <h4>
-            За минувшие сутки в Железногорске коронавирус выявили у 87 человек
-          </h4>
-          <div>
-            <time pubdate>
-              25.11.2020
-            </time>
-            <p class="promo__views">
-              <img src="svg/views.svg" />
-              <span class="preview__count">
-                327
-              </span>
-            </p>
-          </div>
-        </li>
-        <li>
-          <h4>
-            Онлайн-знакомство с Сибирской академией МЧС России
-          </h4>
-          <div>
-            <time pubdate>
-              25.11.2020
-            </time>
-            <p class="promo__views">
-              <img src="svg/views.svg" />
-              <span class="preview__count">
-                327
-              </span>
-            </p>
-          </div>
-        </li>
-      </ul>
-      <div class="promo__content d-flex">
-        <div>
-          <h2 class="promo__title">
-            Ваша возможность задать интересующий вопрос своему депутату
-          </h2>
-          <a href="#" class="button promo__button">
-            Задать вопрос
-          </a>
-        </div>
-        {{! <div class="event promo__event">
-            <header>
-              <time class="event__time">14:57:23</time>
-              <time class="event__date">20 декабря 2020</time>
-            </header>
-            <div class="event__wrapper">
-              <p class="event__closest">Ближайшее мероприятие - <time>16 января 2021</time></p>
-              <h3 class="event__name">Заседание Совета депутатов</h3>
-            </div>
-          </div> }}
-      </div>
-    </div>
-  </div>
-  <p class="promo__buttons slider__buttons">
-    <button class="promo__prev slider__prev"></button>
-    <button class="promo__next slider__next"></button>
-  </p>
-  <p class="promo__dots"></p>
 </section>
+
 <section class="about">
   <div class="about__slider">
     <div class="about__slide">
@@ -258,9 +77,6 @@
             выборах на основе всеобщего равного и прямого избирательного права при тайном
             голосовании. Совет депутатов избирается сроком на пять лет.
         </p>
-        <a class="more about__more" href="#">
-          Подробнее
-        </a>
       </div>
       <img src="img/about.jpg" alt="Совет депутатов" />
     </div>
@@ -278,9 +94,6 @@
             Информация о деятельности совета депутатов. Информация о деятельности совета
             депутатов. Информация о деятельности совета депутатов.
         </p>
-        <a class="more about__more" href="#">
-          Подробнее
-        </a>
       </div>
     </div>
     <div class="about__slide">
@@ -297,9 +110,6 @@
             officia odio exercitationem atque cumque at fuga quod facere commodi laudantium
             aspernatur, qui natus impedit dolorem ducimus repellendus.
         </p>
-        <a class="more about__more" href="#">
-          Подробнее
-        </a>
       </div>
       <img src="img/about.jpg" alt="Совет депутатов" />
     </div>
@@ -317,9 +127,6 @@
             explicabo quos alias error fugit, magni minima, vel maiores soluta enim ratione
             commodi?
         </p>
-        <a class="more about__more" href="#">
-          Подробнее
-        </a>
       </div>
     </div>
   </div>
@@ -349,318 +156,46 @@
     Депутаты Совета депутатов
   </h2>
   <div class="deput__slider">
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
-    <figure class="deput__card">
-      <div class="deput__head">
-        <img class="deput__photo" src="img/corpus.jpg" />
-        <img
-          src="img/edro.png"
-          alt="Единая Россия"
-          class="deput__consignment"
-        />
-      </div>
-      <figcaption class="deput__caption">
-        <h4 class="deput__name">
-          Антонов Эдуард Юрьевич
-        </h4>
-        <p class="deput__post">
-          МАУ СШ «Юность», директор
-        </p>
-        <p class="deput__text">
-          Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает
-            в Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-            Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-            пропагандирует физическую культуру.
-        </p>
-        <p class="deput__schedule">
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p class="deput__registration">
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </figcaption>
-      <button class="button deput__button">
-        Задать вопрос
-      </button>
-    </figure>
+    {{#if deputies.length}}
+      {{#each deputies}}
+        <figure class="deput__card">
+          <div class="deput__head">
+            <img class="deput__photo" src="{{img}}" />
+            <img
+              src="{{fraction}}"
+              alt="Единая Россия"
+              class="deput__consignment"
+            />
+          </div>
+          <figcaption class="deput__caption">
+            <h4 class="deput__name">
+              {{name}}
+            </h4>
+            <p class="deput__post">
+              {{post}}
+            </p>
+            <p class="deput__text">
+              {{about}}
+            </p>
+            <p class="deput__schedule">
+              <span class="red">
+                График приема:
+              </span>
+              {{schedule}}
+            </p>
+            <p class="deput__registration">
+              <span class="red">
+                Запись:
+              </span>
+              {{appointment}}
+            </p>
+          </figcaption>
+          <button class="button deput__button">
+            Задать вопрос
+          </button>
+        </figure>
+      {{/each}}
+    {{/if}}
   </div>
   <div class="slider__nav deput__slider-nav">
     <a href="/corpus" class="more">

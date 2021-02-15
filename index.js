@@ -4,18 +4,8 @@ const mongoose = require('mongoose');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const nodemailer = require('nodemailer');
 const helpers = require('handlebars-helpers')(['date']);
-handlebars.registerHelper('trimString', function (passedString) {
-  const theString = passedString.substring(0, 200) + '...';
-  return new handlebars.SafeString(theString);
-});
-handlebars.registerHelper('if_eq', function (a, b, opts) {
-  if (a == b) {
-    return opts.fn(this);
-  } else {
-    return opts.inverse(this);
-  }
-});
 const {
   homeRoutes,
   councilRoutes,
@@ -34,6 +24,18 @@ const app = express();
 const hbs = exphbs.create({
   defaultLayout: 'main',
   extname: 'hbs',
+});
+
+handlebars.registerHelper('trimString', function (passedString) {
+  const theString = passedString.substring(0, 200) + '...';
+  return new handlebars.SafeString(theString);
+});
+handlebars.registerHelper('if_eq', function (a, b, opts) {
+  if (a == b) {
+    return opts.fn(this);
+  } else {
+    return opts.inverse(this);
+  }
 });
 
 app.engine('hbs', hbs.engine);
@@ -73,3 +75,5 @@ const start = async () => {
   }
 };
 start();
+
+const sendMail = async (data, result) => {};

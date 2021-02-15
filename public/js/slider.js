@@ -77,7 +77,7 @@ function setupSlider({
 if (fileName === '') {
   setupSlider({
     section: '.promo',
-    slidesToShow: 1,
+    slidesToShow: 3,
     slidesToScroll: 1,
     rows: 1,
     fade: false,

@@ -55,41 +55,6 @@
       {{/each}}
     {{/if}}
   </div>
-  {{!-- {{#if deputiesPopup.length}}
-    <div id="{{_id}}" class="popup your-deputie mfp-hide">
-      <div class="your-deputie__wrapper bg-gray bg-gray--border">
-        <img class="your-deputie__photo" src="{{img}}" alt="{{name}}" />
-        <header class="your-deputie__header d-flex">
-          <div>
-            <h3 class="your-deputie__name">
-              {{name}}
-            </h3>
-            <p class="your-deputie__post">
-              {{post}}
-            </p>
-          </div>
-          <img src="img/edro.png" />
-        </header>
-        <p class="your-deputie__desc">
-          {{about}}
-        </p>
-        <footer class="your-deputie__footer">
-          <p>
-            <span class="red">
-              График приема:
-            </span>
-            {{schedule}}
-          </p>
-          <p>
-            <span class="red">
-              Запись:
-            </span>
-            {{appointment}}
-          </p>
-        </footer>
-      </div>
-    </div>
-  {{/if}} --}}
 </section>
 <section class="find">
   <div class="find__wrapper d-flex">
@@ -118,31 +83,34 @@
     Деятельность депутатов Совета депутатов
   </h2>
   <div class="activities__slider">
-    <a href="#">
-      <figure class="preview">
-        <img class="preview__image" src="img/activities-1.jpg" />
-        <figcaption class="preview__caption">
-          <h4 class="preview__title">
-            Девять тысяч детей получили сладкие подарки
-          </h4>
-          <p class="preview__text">
-            Бесплатные сладкие подарки получили воспитанники детских садов, учащиеся начальной
-              школы с 1 по 4 классы. Всего было приобретено 9 109 подарков.
-          </p>
-          <div class="preview__footer">
-            <time pubdate>
-              25.11.2020
-            </time>
-            <p class="preview__views">
-              <img class="preview__eye" src="svg/views.svg" />
-              <span class="preview__count">
-                327
-              </span>
-            </p>
-          </div>
-        </figcaption>
-      </figure>
-    </a>
+      {{#if activities.length}}
+        {{#each activities}}
+        <a href="/corpus/{{_id}}">
+          <figure class="preview">
+            <img class="preview__image" src="{{img}}" alt="{{title}}"/>
+            <figcaption class="preview__caption">
+              <h4 class="preview__title">
+                {{title}}
+              </h4>
+              <p class="preview__text">
+                {{text}}
+              </p>
+              <div class="preview__footer">
+                <time pubdate>
+                  {{moment date format="DD.MM.YYYY"}}
+                </time>
+                <p class="preview__views">
+                  <img class="preview__eye" src="/svg/views.svg" />
+                  <span class="preview__count">
+                    {{views}}
+                  </span>
+                </p>
+              </div>
+            </figcaption>
+          </figure>
+        </a>
+        {{/each}}
+      {{/if}}
   </div>
   <div class="slider__nav">
     <p class="slider__buttons">
