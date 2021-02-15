@@ -78,10 +78,10 @@
             голосовании. Совет депутатов избирается сроком на пять лет.
         </p>
       </div>
-      <img src="img/about.jpg" alt="Совет депутатов" />
+      <img src="/img/about.jpg" alt="Совет депутатов" />
     </div>
     <div class="about__slide">
-      <img src="img/about.jpg" alt="Деятельность совета" />
+      <img src="/img/about.jpg" alt="Деятельность совета" />
       <div>
         <h3 class="subtitle">
           Деятельность совета
@@ -111,10 +111,10 @@
             aspernatur, qui natus impedit dolorem ducimus repellendus.
         </p>
       </div>
-      <img src="img/about.jpg" alt="Совет депутатов" />
+      <img src="/img/about.jpg" alt="Совет депутатов" />
     </div>
     <div class="about__slide">
-      <img src="img/about.jpg" alt="Деятельность совета" />
+      <img src="/img/about.jpg" alt="Деятельность совета" />
       <div>
         <h3 class="subtitle">
           Dolor sit amet
@@ -281,7 +281,7 @@
         </h4>
         <img
           class="useful__image"
-          src="img/useful-1.png"
+          src="/img/useful-1.png"
           alt="Город и горожане"
         />
       </div>
@@ -305,7 +305,7 @@
         </h4>
         <img
           class="useful__image"
-          src="img/emblem.png"
+          src="/img/emblem.png"
           alt="Администрация ЗАТО г. Железногорск"
         />
       </div>
@@ -335,23 +335,26 @@
         Опишите свой вопрос и мы обязательно ответим на него в ближайшее время!
       </p>
     </div>
-    <form action="#" method="POST" class="form questions__form">
+    <form action="http://127.0.0.1:8089/question" method="POST" class="form questions__form">
       <input
         class="form__field form__field--white"
         type="text"
         placeholder="Ваш вопрос*"
+        name="question"
       />
       <input
         class="form__field form__field--white"
         type="name"
         placeholder="Ваше имя*"
+        name="name"
       />
       <input
         class="form__field form__field--white"
         type="tel"
-        placeholder="Ваш телефон*"
+        placeholder="Ваш телефон*" 
+        name="phone"
       />
-      <button class="button button--white">
+      <button class="button button--white" type="submit">
         Отправить
       </button>
       <p>

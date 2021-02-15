@@ -26,6 +26,11 @@ const hbs = exphbs.create({
   extname: 'hbs',
 });
 
+app.engine('hbs', hbs.engine);
+
+app.set('view engine', 'hbs');
+app.set('veiws', 'views');
+
 handlebars.registerHelper('trimString', function (passedString) {
   const theString = passedString.substring(0, 200) + '...';
   return new handlebars.SafeString(theString);
@@ -38,11 +43,8 @@ handlebars.registerHelper('if_eq', function (a, b, opts) {
   }
 });
 
-app.engine('hbs', hbs.engine);
-app.set('view engine', 'hbs');
-app.set('veiws', 'views');
 app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use('/', homeRoutes);
@@ -76,4 +78,49 @@ const start = async () => {
 };
 start();
 
-const sendMail = async (data, result) => {};
+sendQuestion = async (data) => {
+  let res = `
+    <h2>Письмо с сайта gorsovet-26.ru</h2>
+    <hr>
+    <p>
+      <b>Имя: </b>
+      ${data.name}
+    </p>
+    <hr>
+    <p>
+      <b>Телефон: </b>
+      ${data.phone}
+    </p>
+    <hr>
+    <p>
+      <b>Вопрос: </b>
+      ${data.question}
+    </p>
+  `;
+
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 587,
+    secure: false,
+    auth: {
+      user: 'zickrail@gmail.com',
+      pass: 'neon1miami1980e',
+    },
+  });
+
+  let mailOption = {
+    from: '<zickrail@gmail.com>',
+    to: 'zickrail@gmail.com',
+    subject: 'Сайт gorsovet-26.ru',
+    text: `Имя: ${data.name}, \nТелефон: ${data.phone}, \nВопрос: ${data.question}`,
+    html: res,
+  };
+
+  let info = await transporter.sendMail(mailOption);
+
+  console.log('Message sent: %s', info.messageId);
+  console.log('Preview sent: %s', nodemailer.getTestMessageUrl(info));
+  return true;
+};
+
+module.exports = sendQuestion;

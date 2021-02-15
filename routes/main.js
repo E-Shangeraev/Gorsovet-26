@@ -1,8 +1,9 @@
 const { Router } = require('express');
+const router = Router();
 const Deputie = require('../models/Deputie');
 const Calendar = require('../models/Calendar');
 const News = require('../models/News');
-const router = Router();
+const bodyParser = require('body-parser');
 
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().lean();
@@ -18,8 +19,21 @@ router.get('/', async (req, res) => {
 
 router.get('/calendar', async (req, res) => {
   const calendar = await Calendar.find({});
-  console.log(calendar);
   res.json(calendar);
+});
+
+router.post('/question', bodyParser(), async (req, res) => {
+  console.log(req.body);
+  if (req.body.name.length != 0 || req.body.phone.length != 0 || req.body.question.length != 0) {
+    try {
+      await sendQuestion(req.body);
+      res.send('1');
+    } catch (err) {
+      console.log(err);
+    }
+  } else {
+    res.send('0');
+  }
 });
 
 module.exports = router;

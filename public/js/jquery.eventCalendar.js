@@ -525,10 +525,10 @@
                   promoEventDate.push(eventStringDate);
                   promoEventTitle.push(event.title);
 
-                  console.log(document.querySelector('.event__closest time'));
-                  console.log(promoEventDate[0]);
-                  console.log(document.querySelector('.event__name'));
-                  console.log(promoEventTitle[0]);
+                  // console.log(document.querySelector('.event__closest time'));
+                  // console.log(promoEventDate[0]);
+                  // console.log(document.querySelector('.event__name'));
+                  // console.log(promoEventTitle[0]);
 
                   document.querySelector('.event__closest time').textContent = promoEventDate[0];
                   document.querySelector('.event__name').textContent = promoEventTitle[0];
