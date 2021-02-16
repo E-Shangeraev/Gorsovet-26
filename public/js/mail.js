@@ -8,14 +8,7 @@ function sendForm(form, url) {
     const email = document.querySelector('.form__field[name="email"]');
     const file = document.querySelector('.form__field[name="file"]');
     const address = document.querySelector('.form__field[name="address"]');
-    const deput = document.querySelector('input[name="deput"]');
-
-    if (name.value == '' || phone.value == '' || question.value == '') {
-      //не заполнены поля
-      console.log('Поля не заполнены');
-    }
-
-    // console.log(name);
+    const deput = document.querySelector('.select span');
 
     fetch(url, {
       method: 'POST',
@@ -23,10 +16,10 @@ function sendForm(form, url) {
         name: name.value.trim(),
         phone: phone.value.trim(),
         question: question.value.trim(),
-        email: email.value.trim(),
-        file: file.value.trim(),
-        address: address.value.trim(),
-        deput: deput.value.trim(),
+        email: email ? email.value.trim() : '',
+        file: file ? file.value.trim() : '',
+        address: address ? address.value.trim() : '',
+        deput: deput ? deput.textContent.trim() : '',
       }),
       headers: {
         Accept: 'application/json',
@@ -37,12 +30,11 @@ function sendForm(form, url) {
         name.value = '';
         phone.value = '';
         question.value = '';
-        email.value = '';
-        file.value = '';
-        address.value = '';
-        deput.value = '';
+        email ? (email.value = '') : null;
+        file ? (file.value = '') : null;
+        address ? (address.value = '') : null;
+        deput ? (deput.textContent = 'Выберите депутата, к которому хотите обратиться*') : null;
       })
-      .then((res) => res.text())
       .then((data) => console.log(data));
   });
 }

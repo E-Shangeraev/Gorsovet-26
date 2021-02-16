@@ -43,6 +43,7 @@ router.post('/question', bodyParser(), async (req, res) => {
           <b>Вопрос: </b>
           ${req.body.question}
         </p>
+        <hr>
       `;
       await sendQuestion(message);
       res.send('1');
