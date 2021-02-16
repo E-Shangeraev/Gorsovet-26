@@ -79,25 +79,6 @@ const start = async () => {
 start();
 
 sendQuestion = async (data) => {
-  let res = `
-    <h2>Письмо с сайта gorsovet-26.ru</h2>
-    <hr>
-    <p>
-      <b>Имя: </b>
-      ${data.name}
-    </p>
-    <hr>
-    <p>
-      <b>Телефон: </b>
-      ${data.phone}
-    </p>
-    <hr>
-    <p>
-      <b>Вопрос: </b>
-      ${data.question}
-    </p>
-  `;
-
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -112,15 +93,12 @@ sendQuestion = async (data) => {
     from: '<zickrail@gmail.com>',
     to: 'zickrail@gmail.com',
     subject: 'Сайт gorsovet-26.ru',
-    text: `Имя: ${data.name}, \nТелефон: ${data.phone}, \nВопрос: ${data.question}`,
-    html: res,
+    // text: `Имя: ${data.name}, \nТелефон: ${data.phone}, \nВопрос: ${data.question}`,
+    html: data,
   };
 
   let info = await transporter.sendMail(mailOption);
 
   console.log('Message sent: %s', info.messageId);
-  console.log('Preview sent: %s', nodemailer.getTestMessageUrl(info));
   return true;
 };
-
-module.exports = sendQuestion;

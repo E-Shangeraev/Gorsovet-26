@@ -5,23 +5,25 @@
   <form class="reception__form" id="reception__form">
     <textarea
       class="form__field"
-      name=""
+      name="question"
       id=""
       placeholder="Текст обращения*"
       required
     ></textarea>
-    <input class="form__field" type="name" placeholder="Ваше ФИО*" required />
-    <input class="form__field" type="tel" placeholder="Ваш телефон*" required />
-    <input class="form__field" type="email" placeholder="E-mail*" required />
+    <input class="form__field" type="name" name="name" placeholder="Ваше ФИО*" required />
+    <input class="form__field" type="tel" name="phone" placeholder="Ваш телефон*" required />
+    <input class="form__field" type="email" name="email" placeholder="E-mail*" required />
     <input
       class="form__field"
       type="text"
       placeholder="Почтовый адрес*"
+      name="address"
       required
     />
     <input
       class="form__field"
       type="file"
+      name="file"
       placeholder="Прикрепите файл"
       id="file"
     />
@@ -41,7 +43,7 @@
           </span>
           <img src="svg/mark.svg" />
         </p>
-        <input type="hidden" name="gender" />
+        <input type="hidden" name="deput" required/>
         <ul class="dropdown-menu">
           <li id="deputie-1">
             Депутат 1

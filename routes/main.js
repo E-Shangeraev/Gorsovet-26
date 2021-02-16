@@ -26,7 +26,25 @@ router.post('/question', bodyParser(), async (req, res) => {
   console.log(req.body);
   if (req.body.name.length != 0 || req.body.phone.length != 0 || req.body.question.length != 0) {
     try {
-      await sendQuestion(req.body);
+      const message = `
+        <h2>Письмо с сайта gorsovet-26.ru</h2>
+        <hr>
+        <p>
+          <b>Имя: </b>
+          ${req.body.name}
+        </p>
+        <hr>
+        <p>
+          <b>Телефон: </b>
+          ${req.body.phone}
+        </p>
+        <hr>
+        <p>
+          <b>Вопрос: </b>
+          ${req.body.question}
+        </p>
+      `;
+      await sendQuestion(message);
       res.send('1');
     } catch (err) {
       console.log(err);
