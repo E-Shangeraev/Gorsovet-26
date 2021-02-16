@@ -1,15 +1,26 @@
 const { Router } = require('express');
 const router = Router();
+const Deputie = require('../models/Deputie');
 const bodyParser = require('body-parser');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const deputies = await Deputie.find().lean();
   res.render('reception', {
     title: 'Онлайн-приемная',
+    deputies,
+  });
+});
+
+router.get('/:id', async (req, res) => {
+  const deputie = await Deputie.find({ _id: req.params.id }).lean();
+  res.render('reception', {
+    title: 'Онлайн-приемная',
+    deputie: deputie[0],
   });
 });
 
 router.post('/appeal', bodyParser(), async (req, res) => {
-  console.log(req.body);
+  console.log(req.file);
   if (
     req.body.name.length != 0 ||
     req.body.phone.length != 0 ||
@@ -19,6 +30,8 @@ router.post('/appeal', bodyParser(), async (req, res) => {
     req.body.deput.length != 0
   ) {
     try {
+      // console.log(req.file);
+
       const message = `
         <h2>Обращение с сайта gorsovet-26.ru</h2>
         <hr>
@@ -50,6 +63,11 @@ router.post('/appeal', bodyParser(), async (req, res) => {
         <p>
           <b>Текст обращения: </b>
           ${req.body.question}
+        </p>
+        <hr>
+        <p>
+          <b>Прикрепленный файл: </b>
+          ${req.file}
         </p>
         <hr>
       `;

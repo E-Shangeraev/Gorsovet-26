@@ -10,6 +10,14 @@ function sendForm(form, url) {
     const address = document.querySelector('.form__field[name="address"]');
     const deput = document.querySelector('.select span');
 
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file.files[0]);
+
+      console.log(file.files);
+      console.log(formData);
+    }
+
     fetch(url, {
       method: 'POST',
       body: JSON.stringify({
@@ -17,7 +25,7 @@ function sendForm(form, url) {
         phone: phone.value.trim(),
         question: question.value.trim(),
         email: email ? email.value.trim() : '',
-        file: file ? file.value.trim() : '',
+        file: file ? formData : null,
         address: address ? address.value.trim() : '',
         deput: deput ? deput.textContent.trim() : '',
       }),
@@ -31,15 +39,13 @@ function sendForm(form, url) {
         phone.value = '';
         question.value = '';
         email ? (email.value = '') : null;
-        file ? (file.value = '') : null;
+        file ? (file.files[0] = '') : null;
         address ? (address.value = '') : null;
         deput ? (deput.textContent = 'Выберите депутата, к которому хотите обратиться*') : null;
       })
       .then((data) => console.log(data));
   });
 }
-
-console.log(fileName);
 
 if (fileName === '') {
   const questionForm = document.querySelector('.questions__form');

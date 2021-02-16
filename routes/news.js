@@ -2,6 +2,19 @@ const { Router } = require('express');
 const News = require('../models/News');
 const router = Router();
 
+const changeStream = News.watch().on('change', async (data) => {
+  console.log(data.fullDocument);
+  const added = data.fullDocument;
+  if (added) {
+    const news = `
+      <h2>Сайт gorsovet-26.ru</h2>
+      <hr>
+      <h3>${added.title}</h3>
+    `;
+    await sendQuestion(news);
+  }
+});
+
 router.get('/', paginatedResults(News), async (req, res) => {
   const news = res.paginatedResults.results;
   const page = res.paginatedResults.page;
@@ -17,6 +30,23 @@ router.get('/', paginatedResults(News), async (req, res) => {
     pageNums,
     next: page + 1,
     isNext: pagesCount > page,
+  });
+});
+
+router.get('/:id', async (req, res) => {
+  const article = await News.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } }).lean();
+  const news = await News.find({
+    _id: { $ne: article['_id'] },
+  })
+    .sort({ _id: 1 })
+    .limit(4)
+    .lean();
+
+  res.render('article', {
+    title: 'Новости',
+    article,
+    news,
+    isNews: true,
   });
 });
 
@@ -67,21 +97,5 @@ function paginatedResults(model) {
     next();
   };
 }
-
-router.get('/:id', async (req, res) => {
-  const article = await News.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } }).lean();
-  const news = await News.find({
-    _id: { $ne: article['_id'] },
-  })
-    .sort({ _id: 1 })
-    .limit(4)
-    .lean();
-
-  res.render('article', {
-    title: 'Новости',
-    article,
-    news,
-  });
-});
 
 module.exports = router;

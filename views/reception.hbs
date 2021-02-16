@@ -2,7 +2,7 @@
   <h2 class="title">
     Онлайн-приемная
   </h2>
-  <form class="reception__form" id="reception__form">
+  <form class="reception__form" id="reception__form" enctype="multipart/form-data">
     <textarea
       class="form__field"
       name="question"
@@ -11,7 +11,7 @@
       required
     ></textarea>
     <input class="form__field" type="name" name="name" placeholder="Ваше ФИО*" required />
-    <input class="form__field" type="tel" name="phone" placeholder="Ваш телефон*" required />
+    <input class="form__field" type="tel" name="phone" placeholder="Ваш телефон*" data-inputmask="'mask': '+7-(999)-99-99'" required />
     <input class="form__field" type="email" name="email" placeholder="E-mail*" required />
     <input
       class="form__field"
@@ -38,25 +38,26 @@
     <div class="dropmenu">
       <div class="dropdown reception__dropdown">
         <p class="select form__field">
-          <span>
-            Выберите депутата, к которому хотите обратиться*
-          </span>
-          <img src="svg/mark.svg" />
+          {{#if deputie}}
+            <span>
+              {{deputie.name}}
+            </span>
+          {{else}}
+            <span>
+              Выберите депутата, к которому хотите обратиться*
+            </span>
+          {{/if}}
+          <img src="/svg/mark.svg" />
         </p>
         <input type="hidden" name="deput" required/>
         <ul class="dropdown-menu">
-          <li id="deputie-1">
-            Депутат 1
-          </li>
-          <li id="deputie-2">
-            Депутат 2
-          </li>
-          <li id="deputie-3">
-            Депутат 3
-          </li>
-          <li id="deputie-4">
-            Депутат 4
-          </li>
+          {{#if deputies.length}}
+            {{#each deputies}}
+              <li>
+                {{name}}
+              </li>
+            {{/each}}
+          {{/if}}
         </ul>
       </div>
     </div>
@@ -97,7 +98,7 @@
       Ваш депутат
     </h2>
     <div class="your-deputie__wrapper bg-gray bg-gray--border">
-      <img class="your-deputie__photo" src="img/corpus.jpg" />
+      <img class="your-deputie__photo" src="/img/corpus.jpg" />
       <header class="your-deputie__header d-flex">
         <div>
           <h3 class="your-deputie__name">
@@ -107,7 +108,7 @@
             МАУ СШ «Юность», директор
           </p>
         </div>
-        <img src="img/edro.png" />
+        <img src="/img/edro.png" />
       </header>
       <p class="your-deputie__desc">
         Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает в
