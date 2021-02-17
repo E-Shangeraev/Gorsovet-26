@@ -8,6 +8,7 @@ const corruptionRoutes = require('./corruption');
 const receptionRoutes = require('./reception');
 const newsRoutes = require('./news');
 const userRoutes = require('./user');
+const uploadRoutes = require('./upload');
 
 module.exports = {
   homeRoutes,
@@ -20,4 +21,5 @@ module.exports = {
   receptionRoutes,
   newsRoutes,
   userRoutes,
+  uploadRoutes,
 };

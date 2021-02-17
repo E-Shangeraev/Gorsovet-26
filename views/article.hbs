@@ -20,14 +20,7 @@
 
         <footer class="article__footer">
           <span>Поделиться:</span>
-          <ul class="article__socials">
-            <li><a><img src="/svg/inst-gray.svg" alt="Инстаграм" /></li></a>
-            <li><a onclick="Share.vkontakte('URL','TITLE','IMG_PATH','DESC')"><img src="/svg/vk-gray.svg" alt="ВКонтакте" /></a></li>
-            <li><a onclick="Share.facebook('URL','TITLE','IMG_PATH','DESC')"><img src="/svg/fb-gray.svg" alt="Фейсбук" /></a></li>
-            <li><a onclick="Share.odnoklassniki('URL','DESC')"><img src="/svg/ok-gray.svg" alt="Одноклассники" /></a></li>
-            <li><a href="#"><img src="/svg/whatsapp-gray.svg" alt="Вотсап" /></a></li>
-            <li><a href="#"><img src="/svg/tg-gray.svg" alt="Телеграм" /></a></li>
-          </ul>
+          {{> share}}
         </footer>
       </article>
       <form class="subscribe" action="#">

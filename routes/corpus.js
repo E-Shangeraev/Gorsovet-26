@@ -2,7 +2,6 @@ const { Router } = require('express');
 const Deputie = require('../models/Deputie');
 const Activity = require('../models/Activity');
 const router = Router();
-
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().lean();
   const activities = await Activity.find().lean();

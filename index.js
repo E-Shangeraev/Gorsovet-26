@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const helpers = require('handlebars-helpers')(['date']);
-// const inputmask = require('inputmask');
 const {
   homeRoutes,
   councilRoutes,
@@ -19,6 +18,7 @@ const {
   receptionRoutes,
   newsRoutes,
   userRoutes,
+  uploadRoutes,
 } = require('./routes/index');
 
 const app = express();
@@ -45,8 +45,20 @@ handlebars.registerHelper('if_eq', function (a, b, opts) {
   }
 });
 
-app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads');
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + '-' + Date.now());
+  },
+});
+const upload = multer({ storage: storage });
+
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(multer({ dest: 'uploads' }).single('file'));
@@ -60,6 +72,7 @@ app.use('/contacts', contactsRoutes);
 app.use('/corruption', corruptionRoutes);
 app.use('/reception', receptionRoutes);
 app.use('/news', userRoutes);
+app.use('/upload', uploadRoutes);
 
 const PORT = process.env.PORT || 8089;
 
@@ -72,15 +85,6 @@ const start = async () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
-    // .then((client) => {
-    //   console.log(client.db);
-    //   const db = client.db('deputies');
-    //   const collection = db.collection('news');
-    //   const changeStream = collection.watch();
-    //   changeStream.on('change', (event) => {
-    //     console.log(JSON.stringify(event));
-    //   });
-    // });
     app.listen(PORT, () => {
       console.log(`Server has been started on port ${PORT}...`);
     });

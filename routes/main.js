@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().lean();
-  const news = await News.find().sort({ x: 1 }).limit(3).lean();
+  const news = await News.find().sort({ x: 1 }).limit(20).lean();
 
   res.render('main', {
     title: 'Главная',
