@@ -3,13 +3,14 @@ const path = require('path');
 const mongoose = require('mongoose');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const helpers = require('handlebars-helpers')(['date']);
 const { default: AdminBro } = require('admin-bro');
 const AdminBroExpress = require('admin-bro-expressjs');
 const options = require('./admin/admin.options');
+const formidable = require('express-formidable');
 const {
   homeRoutes,
   councilRoutes,
@@ -20,7 +21,6 @@ const {
   corruptionRoutes,
   receptionRoutes,
   newsRoutes,
-  uploadRoutes,
   buildAdminRouter,
 } = require('./routes/index');
 
@@ -30,9 +30,7 @@ const hbs = exphbs.create({
   defaultLayout: 'main',
   extname: 'hbs',
 });
-
 app.engine('hbs', hbs.engine);
-
 app.set('view engine', 'hbs');
 app.set('veiws', 'views');
 
@@ -48,20 +46,12 @@ handlebars.registerHelper('if_eq', function (a, b, opts) {
   }
 });
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, 'uploads');
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.fieldname + '-' + Date.now());
-//   },
-// });
-// const upload = multer({ storage: storage });
-
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+app.use(formidable());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 app.use(multer({ dest: 'uploads' }).single('file'));
 app.use('/', homeRoutes);
 app.use('/council', councilRoutes);
@@ -72,8 +62,6 @@ app.use('/news', newsRoutes);
 app.use('/contacts', contactsRoutes);
 app.use('/corruption', corruptionRoutes);
 app.use('/reception', receptionRoutes);
-// app.use('/upload', uploadRoutes);
-// app.use('/admin', buildAdminRouter);
 
 const PORT = process.env.PORT || 8089;
 

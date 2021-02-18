@@ -3,7 +3,7 @@ const router = Router();
 const Deputie = require('../models/Deputie');
 const Calendar = require('../models/Calendar');
 const News = require('../models/News');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().lean();
@@ -22,7 +22,8 @@ router.get('/calendar', async (req, res) => {
   res.json(calendar);
 });
 
-router.post('/question', bodyParser(), async (req, res) => {
+// router.post('/question', bodyParser(), async (req, res) => {
+router.post('/question', async (req, res) => {
   console.log(req.body);
   if (req.body.name.length != 0 || req.body.phone.length != 0 || req.body.question.length != 0) {
     try {

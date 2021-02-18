@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const Deputie = require('../models/Deputie');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().lean();
@@ -19,7 +19,8 @@ router.get('/:id', async (req, res) => {
   });
 });
 
-router.post('/appeal', bodyParser(), async (req, res) => {
+// router.post('/appeal', bodyParser(), async (req, res) => {
+router.post('/appeal', async (req, res) => {
   console.log(req.file);
   if (
     req.body.name.length != 0 ||
@@ -30,8 +31,6 @@ router.post('/appeal', bodyParser(), async (req, res) => {
     req.body.deput.length != 0
   ) {
     try {
-      // console.log(req.file);
-
       const message = `
         <h2>Обращение с сайта gorsovet-26.ru</h2>
         <hr>
