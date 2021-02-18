@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const helpers = require('handlebars-helpers')(['date']);
+const { default: AdminBro } = require('admin-bro');
+const AdminBroExpress = require('admin-bro-expressjs');
+const options = require('./admin/admin.options');
 const {
   homeRoutes,
   councilRoutes,
@@ -17,8 +20,8 @@ const {
   corruptionRoutes,
   receptionRoutes,
   newsRoutes,
-  userRoutes,
   uploadRoutes,
+  buildAdminRouter,
 } = require('./routes/index');
 
 const app = express();
@@ -45,19 +48,17 @@ handlebars.registerHelper('if_eq', function (a, b, opts) {
   }
 });
 
-// app.use('/jquery', express.static(__dirname + '/node_modules/jquery/dist/'));
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads');
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now());
-  },
-});
-const upload = multer({ storage: storage });
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, 'uploads');
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname + '-' + Date.now());
+//   },
+// });
+// const upload = multer({ storage: storage });
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
@@ -71,8 +72,8 @@ app.use('/news', newsRoutes);
 app.use('/contacts', contactsRoutes);
 app.use('/corruption', corruptionRoutes);
 app.use('/reception', receptionRoutes);
-app.use('/news', userRoutes);
-app.use('/upload', uploadRoutes);
+// app.use('/upload', uploadRoutes);
+// app.use('/admin', buildAdminRouter);
 
 const PORT = process.env.PORT || 8089;
 
@@ -85,6 +86,11 @@ const start = async () => {
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
+
+    const admin = new AdminBro(options);
+    const router = buildAdminRouter(admin);
+    app.use(admin.options.rootPath, router);
+
     app.listen(PORT, () => {
       console.log(`Server has been started on port ${PORT}...`);
     });
@@ -94,12 +100,12 @@ const start = async () => {
 };
 start();
 
-app.post('/reception/appeal', function (req, res, next) {
-  let filedata = req.file;
-  console.log(filedata);
-  if (!filedata) res.send('Ошибка при загрузке файла');
-  else res.send('Файл загружен');
-});
+// app.post('/reception/appeal', function (req, res, next) {
+//   let filedata = req.file;
+//   console.log(filedata);
+//   if (!filedata) res.send('Ошибка при загрузке файла');
+//   else res.send('Файл загружен');
+// });
 
 sendQuestion = async (data) => {
   let transporter = nodemailer.createTransport({
@@ -116,7 +122,6 @@ sendQuestion = async (data) => {
     from: '<zickrail@gmail.com>',
     to: 'zickrail@gmail.com',
     subject: 'Сайт gorsovet-26.ru',
-    // text: `Имя: ${data.name}, \nТелефон: ${data.phone}, \nВопрос: ${data.question}`,
     html: data,
     // attachments: [{ filename: 'test.txt', path: '/uploads' }],
   };
