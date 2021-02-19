@@ -1,12 +1,15 @@
 const AdminBro = require('admin-bro');
-const Admin = require('../models/Admin');
+const { Admin } = require('../models/Admin');
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
 
 /** @type {AdminBro.ResourceOtions} */
 const options = {
+  parent: {
+    name: 'Администрирование',
+  },
   properties: {
     encryptedPassword: {
-      isVisible: true,
+      isVisible: false,
     },
     password: {
       type: 'password',

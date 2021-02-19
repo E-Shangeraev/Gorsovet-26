@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const Activity = new Schema(
   {
@@ -18,6 +18,10 @@ const Activity = new Schema(
     },
     views: {
       type: Number,
+    },
+    ownerId: {
+      type: Types.ObjectId,
+      ref: 'Admin',
     },
   },
   { collection: 'activities' },

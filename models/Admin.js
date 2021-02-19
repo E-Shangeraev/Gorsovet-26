@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const Admin = new Schema(
+const AdminSchema = new Schema(
   {
     login: {
       type: String,
@@ -10,8 +10,15 @@ const Admin = new Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      enum: ['admin', 'restricted'],
+      required: true,
+    },
   },
   { collection: 'admin' },
 );
 
-module.exports = model('Admin', Admin);
+const Admin = model('Admin', AdminSchema);
+
+module.exports = { AdminSchema, Admin };

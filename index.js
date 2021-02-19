@@ -10,7 +10,7 @@ const helpers = require('handlebars-helpers')(['date']);
 const { default: AdminBro } = require('admin-bro');
 const AdminBroExpress = require('admin-bro-expressjs');
 const options = require('./admin/admin.options');
-const formidable = require('express-formidable');
+// const formidable = require('express-formidable');
 const {
   homeRoutes,
   councilRoutes,
@@ -46,12 +46,16 @@ handlebars.registerHelper('if_eq', function (a, b, opts) {
   }
 });
 
+const admin = new AdminBro(options);
+const router = buildAdminRouter(admin);
+app.use(admin.options.rootPath, router);
+
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
-app.use(formidable());
+// app.use(formidable());
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.urlencoded({ extended: true }));
-// app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(multer({ dest: 'uploads' }).single('file'));
 app.use('/', homeRoutes);
 app.use('/council', councilRoutes);
@@ -68,16 +72,13 @@ const PORT = process.env.PORT || 8089;
 const start = async () => {
   try {
     const url =
-      'mongodb+srv://admin:1234509876@cluster0.ts9am.mongodb.net/deputies?retryWrites=true&w=majority';
+      'mongodb+srv://gorsovet26:gfhjkmujhcjdtnf26@cluster0.a8cvf.mongodb.net/gorsovet26?retryWrites=true&w=majority';
+    // 'mongodb+srv://admin:1234509876@cluster0.ts9am.mongodb.net/deputies?retryWrites=true&w=majority';
     await mongoose.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
     });
-
-    const admin = new AdminBro(options);
-    const router = buildAdminRouter(admin);
-    app.use(admin.options.rootPath, router);
 
     app.listen(PORT, () => {
       console.log(`Server has been started on port ${PORT}...`);
@@ -87,13 +88,6 @@ const start = async () => {
   }
 };
 start();
-
-// app.post('/reception/appeal', function (req, res, next) {
-//   let filedata = req.file;
-//   console.log(filedata);
-//   if (!filedata) res.send('Ошибка при загрузке файла');
-//   else res.send('Файл загружен');
-// });
 
 sendQuestion = async (data) => {
   let transporter = nodemailer.createTransport({

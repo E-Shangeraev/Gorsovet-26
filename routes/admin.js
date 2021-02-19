@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 
-const Admin = require('../models/Admin');
+const { Admin } = require('../models/Admin');
 
 /**
  * @param {AdminBro} admin
@@ -18,28 +18,41 @@ const buildAdminRouter = (admin) => {
     {
       cookieName: 'admin-bro',
       cookiePassword: 'superlongandcomplicatedname',
-      authenticate: async (login, password) => {
-        const user = await Admin.findOne({ login });
+      authenticate: async (email, password) => {
+        const user = await Admin.findOne({ email });
 
-        if (user) {
-          // const matched = await argon2.verify(user.encryptedPassword, password);
-          const matched = true;
+        if (user && (await argon2.verify(user.encryptedPassword, password))) {
+          console.log(user);
 
-          if (matched) {
-            return user.toJSON();
-          }
+          return user;
         }
-        return null;
+        return false;
       },
     },
-    null,
-    {
-      resave: false,
-      saveUninitialized: true,
-      store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    },
+    // null,
+    // {
+    //   resave: false,
+    //   saveUninitialized: true,
+    //   store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    // },
   );
   return router;
 };
+
+// const buildAdminRouter = (admin) => {
+//   const router = buildAuthenticatedRouter(admin, {
+//     cookieName: 'admin-bro',
+//     cookiePassword: 'superlongandcomplicatedname',
+//     authenticate: async (login, password) => {
+//       const user = await Admin.findOne({ login });
+
+//       if (user && (await argon2.verify(user.encryptedPassword, password))) {
+//         return user.toJSON();
+//       }
+//       return null;
+//     },
+//   });
+//   return router;
+// };
 
 module.exports = buildAdminRouter;
