@@ -38,7 +38,8 @@ const options = {
           properties: {
             title: 'Заголовок',
             text: 'Текст',
-            img: 'Изображение',
+            img: 'Путь к изображению',
+            uploadImage: 'Изображение',
             date: 'Дата публикации',
             views: 'Кол-во просмотров',
           },
@@ -46,6 +47,9 @@ const options = {
         Calendar: {
           properties: {
             title: 'Заголовок',
+            text: 'Текст',
+            img: 'Путь к изображению',
+            uploadImage: 'Изображение',
             url: 'Ссылка',
             date: 'Дата проведения',
           },
@@ -77,7 +81,7 @@ const options = {
     {
       resource: Activity,
       options: {
-        listProperties: ['title', 'text', 'date', 'views', 'img', 'uploadImage'],
+        listProperties: ['title', 'text', 'date', 'views', 'uploadImage'],
         parent: {
           name: 'Контент сайта',
         },
@@ -99,8 +103,6 @@ const options = {
               const modifiedResponse = await passwordAfterHook(res, req, context);
               return uploadAfterHook(modifiedResponse, req, context);
             },
-            // before: async (req, context) => uploadBeforeHook(req, context),
-            // after: async (res, req, context) => uploadAfterHook(res, req, context),
           },
           edit: {
             before: async (req, context) => {
@@ -111,8 +113,6 @@ const options = {
               const modifiedResponse = await passwordAfterHook(res, req, context);
               return uploadAfterHook(modifiedResponse, req, context);
             },
-            // before: async (req, context) => uploadBeforeHook(req, context),
-            // after: async (res, req, context) => uploadAfterHook(res, req, context),
           },
           show: {
             isVisible: false,
@@ -123,18 +123,78 @@ const options = {
     {
       resource: Calendar,
       options: {
-        listProperties: ['title', 'url', 'date'],
+        listProperties: ['title', 'text', 'date', 'url', 'uploadImage'],
         parent: {
           name: 'Контент сайта',
+        },
+        properties: {
+          uploadImage: {
+            components: {
+              edit: AdminBro.bundle('./components/upload-image.edit.tsx'),
+              list: AdminBro.bundle('./components/upload-image.list.tsx'),
+            },
+          },
+        },
+        actions: {
+          new: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+          },
+          edit: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+          },
         },
       },
     },
     {
       resource: Deputie,
       options: {
-        listProperties: ['name', 'img', 'post', 'schedule', 'appointment', 'about'],
+        listProperties: ['name', 'uploadImage', 'post', 'schedule', 'appointment', 'about'],
         parent: {
           name: 'Контент сайта',
+        },
+        properties: {
+          uploadImage: {
+            components: {
+              edit: AdminBro.bundle('./components/upload-image.edit.tsx'),
+              list: AdminBro.bundle('./components/upload-image.list.tsx'),
+            },
+          },
+        },
+        actions: {
+          new: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+          },
+          edit: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+          },
         },
       },
     },

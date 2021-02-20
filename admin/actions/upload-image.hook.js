@@ -26,6 +26,7 @@ const after = async (res, req, context) => {
 
   if (record.isValid() && uploadImage) {
     console.log('record', record);
+
     const filePath = path.join(__dirname, '../../public/uploads', uploadImage.name);
 
     await fs.promises.mkdir(path.dirname(filePath), { recursive: true });

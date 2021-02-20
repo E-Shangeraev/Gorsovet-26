@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const Calendar = new Schema(
   {
@@ -6,10 +6,20 @@ const Calendar = new Schema(
       type: String,
       required: true,
     },
+    text: {
+      type: String,
+      required: true,
+      max: 12,
+    },
+    img: String,
     url: String,
     date: {
       type: Date,
       default: Date.now,
+    },
+    ownerId: {
+      type: Types.ObjectId,
+      ref: 'Admin',
     },
   },
   { collection: 'calendar' },

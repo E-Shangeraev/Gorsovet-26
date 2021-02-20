@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const Deputie = new Schema(
   {
@@ -23,9 +23,9 @@ const Deputie = new Schema(
       type: String,
       required: false,
     },
-    about: {
-      type: String,
-      required: false,
+    ownerId: {
+      type: Types.ObjectId,
+      ref: 'Admin',
     },
   },
   { collection: 'deputies' },
