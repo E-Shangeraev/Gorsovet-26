@@ -1,6 +1,7 @@
 const AdminBro = require('admin-bro');
 const { Admin } = require('../models/Admin');
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
+// const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
 
 /** @type {AdminBro.ResourceOtions} */
 const options = {

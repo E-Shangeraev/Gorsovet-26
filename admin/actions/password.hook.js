@@ -23,7 +23,7 @@ const before = async (req) => {
 
 /** @type {AdminBro.After<AdminBro.ActionResponse>}*/
 const after = async (res) => {
-  if (res.record && res.record.errors) {
+  if (res.record && res.record.errors && res.record.errors.encryptedPassword) {
     res.record.errors.password = res.record.errors.encryptedPassword;
   }
   return res;

@@ -29,30 +29,14 @@ const buildAdminRouter = (admin) => {
         return false;
       },
     },
-    // null,
-    // {
-    //   resave: false,
-    //   saveUninitialized: true,
-    //   store: new MongoStore({ mongooseConnection: mongoose.connection }),
-    // },
+    null,
+    {
+      resave: false,
+      saveUninitialized: true,
+      store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    },
   );
   return router;
 };
-
-// const buildAdminRouter = (admin) => {
-//   const router = buildAuthenticatedRouter(admin, {
-//     cookieName: 'admin-bro',
-//     cookiePassword: 'superlongandcomplicatedname',
-//     authenticate: async (login, password) => {
-//       const user = await Admin.findOne({ login });
-
-//       if (user && (await argon2.verify(user.encryptedPassword, password))) {
-//         return user.toJSON();
-//       }
-//       return null;
-//     },
-//   });
-//   return router;
-// };
 
 module.exports = buildAdminRouter;

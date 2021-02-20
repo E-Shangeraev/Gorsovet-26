@@ -6,6 +6,9 @@ const Calendar = require('../models/Calendar');
 const Deputie = require('../models/Deputie');
 const News = require('../models/News');
 
+const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
+const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
+
 AdminBro.registerAdapter(AdminBroMongoose);
 
 /** @type {import('admin-bro').AdminBroOptions} */
@@ -28,6 +31,7 @@ const options = {
       },
       buttons: {
         filter: 'Фильтр',
+        save: 'Сохранить',
       },
       resources: {
         Activity: {
@@ -73,15 +77,45 @@ const options = {
     {
       resource: Activity,
       options: {
-        listProperties: ['title', 'text', 'img', 'date', 'views'],
+        listProperties: ['title', 'text', 'date', 'views', 'img', 'uploadImage'],
         parent: {
           name: 'Контент сайта',
         },
         properties: {
-          img: {
+          uploadImage: {
             components: {
-              edit: AdminBro.bundle('./components/image.edit.tsx'),
+              edit: AdminBro.bundle('./components/upload-image.edit.tsx'),
+              list: AdminBro.bundle('./components/upload-image.list.tsx'),
             },
+          },
+        },
+        actions: {
+          new: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+            // before: async (req, context) => uploadBeforeHook(req, context),
+            // after: async (res, req, context) => uploadAfterHook(res, req, context),
+          },
+          edit: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+            // before: async (req, context) => uploadBeforeHook(req, context),
+            // after: async (res, req, context) => uploadAfterHook(res, req, context),
+          },
+          show: {
+            isVisible: false,
           },
         },
       },
