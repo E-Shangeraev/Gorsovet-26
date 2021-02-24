@@ -1,0 +1,59 @@
+@import 'variables.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+  height: fit-content;
+
+  font-size: 16px;
+  line-height: 30px;
+  font-family: $reg;
+  color: #000000;
+  font-style: normal;
+  overflow-x: hidden;
+}
+section {
+  margin-bottom: 140px;
+  padding: 0 200px;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+p,
+figure,
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+
+@media (max-width: 1600px) {
+  section {
+    margin-bottom: 120px;
+  }
+}
+@media (max-width: 1440px) {
+  section {
+    margin-bottom: 100px;
+    padding: 0 100px;
+  }
+}
+@media (max-width: 1024px) {
+  section {
+    margin-bottom: 50px;
+    padding: 0 50px;
+  }
+}
+@media (max-width: 440px) {
+  section {
+    margin-bottom: 70px;
+    padding: 0 20px;
+  }
+}

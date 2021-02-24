@@ -1,0 +1,53 @@
+.ya-share2__container_color-scheme_whiteblack .ya-share2__icon {
+  background-repeat: no-repeat;
+  background-size: 35px !important;
+}
+
+.ya-share2__container_color-scheme_whiteblack .ya-share2__item_service_vkontakte .ya-share2__icon {
+  background-image: url('../svg/vk-gray.svg') !important;
+}
+.ya-share2__container_color-scheme_whiteblack .ya-share2__item_service_facebook .ya-share2__icon {
+  background-image: url('../svg/fb-gray.svg') !important;
+}
+.ya-share2__container_color-scheme_whiteblack
+  .ya-share2__item_service_odnoklassniki
+  .ya-share2__icon {
+  background-image: url('../svg/ok-gray.svg') !important;
+}
+.ya-share2__container_color-scheme_whiteblack .ya-share2__item_service_telegram .ya-share2__icon {
+  background-image: url('../svg/tg-gray.svg') !important;
+}
+.ya-share2__container_color-scheme_whiteblack .ya-share2__item_service_whatsapp .ya-share2__icon {
+  background-image: url('../svg/whatsapp-gray.svg') !important;
+}
+
+@media (max-width: 1200px) {
+  .ya-share2__container_color-scheme_whiteblack .ya-share2__icon {
+    background-size: 30px !important;
+  }
+  .ya-share2__container_size_l .ya-share2__badge .ya-share2__icon {
+    width: 40px !important;
+    height: 40px !important;
+  }
+}
+@media (max-width: 900px) {
+  .ya-share2__container_color-scheme_whiteblack .ya-share2__icon {
+    background-size: 30px !important;
+  }
+  .ya-share2__container_size_l .ya-share2__badge .ya-share2__icon {
+    width: 35px !important;
+    height: 35px !important;
+  }
+}
+@media (max-width: 600px) {
+  .ya-share2__container_color-scheme_whiteblack .ya-share2__icon {
+    background-size: 30px !important;
+  }
+  .ya-share2__container_size_l .ya-share2__badge .ya-share2__icon {
+    width: 30px !important;
+    height: 30px !important;
+  }
+  .ya-share2__list.ya-share2__list_direction_horizontal > .ya-share2__item:not(:last-child) {
+    margin-right: 10px !important;
+  }
+}

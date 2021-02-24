@@ -1,25 +1,27 @@
 const { Router } = require('express');
 const News = require('../models/News');
+const Report = require('../models/Report');
 const router = Router();
 
-const changeStream = News.watch().on('change', async (data) => {
-  console.log(data.fullDocument);
-  const added = data.fullDocument;
-  if (added) {
-    const news = `
-      <h2>Сайт gorsovet-26.ru</h2>
-      <hr>
-      <h3>${added.title}</h3>
-    `;
-    await sendQuestion(news);
-  }
-});
+// const changeStream = News.watch().on('change', async (data) => {
+//   console.log(data.fullDocument);
+//   const added = data.fullDocument;
+//   if (added) {
+//     const news = `
+//       <h2>Сайт gorsovet-26.ru</h2>
+//       <hr>
+//       <h3>${added.title}</h3>
+//     `;
+//     await sendQuestion(news);
+//   }
+// });
 
 router.get('/', paginatedResults(News), async (req, res) => {
   const news = res.paginatedResults.results;
   const page = res.paginatedResults.page;
   const pagesCount = res.paginatedResults.pagesCount;
   const pageNums = res.paginatedResults.pageNums;
+  const photos = await Report.find().lean();
 
   res.render('news', {
     title: 'Новости',
@@ -30,6 +32,7 @@ router.get('/', paginatedResults(News), async (req, res) => {
     pageNums,
     next: page + 1,
     isNext: pagesCount > page,
+    photos,
   });
 });
 
@@ -92,8 +95,6 @@ function paginatedResults(model) {
     }
 
     res.paginatedResults = results;
-
-    console.log(res.paginatedResults);
     next();
   };
 }

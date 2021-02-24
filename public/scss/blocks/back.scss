@@ -1,0 +1,43 @@
+.back {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+  text-decoration: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+
+  img {
+    margin-right: 20px;
+  }
+  span {
+    font-family: $semi;
+    font-size: 20px;
+    color: #9b9b9b;
+  }
+}
+
+@media (max-width: 1600px) {
+  .back {
+    span {
+      font-size: 18px;
+    }
+    img {
+      margin-right: 15px;
+      transform: scale(0.8);
+    }
+  }
+}
+@media (max-width: 440px) {
+  .back {
+    margin-bottom: 20px;
+
+    img {
+      margin-right: 5px;
+      transform: scale(0.5);
+    }
+    span {
+      font-size: 12px;
+    }
+  }
+}

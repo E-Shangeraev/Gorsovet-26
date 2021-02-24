@@ -1,0 +1,170 @@
+.useful {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background-color: $gray;
+}
+.useful__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.useful__block {
+  padding: 50px;
+  background-color: #fff;
+  border-radius: 8px;
+
+  h4 span {
+    white-space: nowrap;
+  }
+  h4,
+  h4 span {
+    font-family: $semi;
+    font-size: 24px;
+    line-height: 130%;
+  }
+  .d-flex {
+    align-items: center;
+    margin-bottom: 30px;
+    max-height: 70px;
+  }
+}
+.useful__socials {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-column-start: 1;
+  grid-column-end: -1;
+  padding: 20px 50px;
+
+  ul {
+    display: flex;
+  }
+  li {
+    margin-right: 45px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .useful__block {
+    h4,
+    h4 span {
+      font-size: 22px;
+    }
+    img {
+      max-width: 52px;
+    }
+  }
+}
+@media (max-width: 1440px) {
+  .useful__block {
+    h4,
+    h4 span {
+      font-size: 20px;
+    }
+    img {
+      max-width: 45px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 1200px) {
+  .useful__block {
+    p {
+      font-size: 14px;
+      line-height: 150%;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .useful {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
+  .useful__block {
+    padding: 30px;
+
+    h4,
+    h4 span {
+      font-size: 18px;
+    }
+    img {
+      max-width: 35px;
+    }
+  }
+  .useful__socials {
+    ul {
+      display: flex;
+      justify-content: space-between;
+      width: 40%;
+    }
+    li {
+      margin-right: 0;
+    }
+  }
+  .useful__image {
+    max-width: 20%;
+  }
+}
+@media (max-width: 768px) {
+  .useful__container {
+    grid-template-columns: 1fr;
+  }
+  .useful__socials {
+    flex-direction: column;
+    align-items: start;
+
+    ul {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    li {
+      margin-right: 0;
+    }
+  }
+  .useful__block {
+    ul {
+      margin-top: 15px;
+      width: 60%;
+    }
+  }
+}
+@media (max-width: 440px) {
+  .useful {
+    padding-top: 45px;
+    padding-bottom: 45px;
+  }
+  .useful__socials {
+    flex-direction: column;
+    align-items: start;
+
+    ul {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
+    li {
+      margin-right: 0;
+    }
+  }
+  .useful__block {
+    padding: 20px;
+
+    h4,
+    h4 span {
+      font-size: 14px;
+      line-height: 130%;
+    }
+    p {
+      margin-bottom: 20px;
+      font-size: 12px;
+      line-height: 150%;
+    }
+  }
+  .useful__image {
+    margin-left: 20px;
+    max-width: 20%;
+  }
+}

@@ -1,0 +1,293 @@
+// =============== Events calendar =================
+.calendar-title {
+  margin-bottom: 40px;
+  font-family: $semi;
+  font-size: 30px;
+  line-height: 34px;
+}
+.eventCalendar-list li time {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 34px;
+}
+.eventCalendar-list li time em {
+  color: $red;
+}
+.eventCalendar-list li time small {
+  font-size: 20px;
+  line-height: 34px;
+}
+.eventCalendar-wrap {
+  display: grid;
+  grid-template-columns: 40% 1fr;
+  column-gap: 35px;
+  border-radius: 6px;
+}
+.eventCalendar-monthWrap {
+  width: auto !important;
+  position: relative;
+  order: 2;
+}
+.eventCalendar-list-wrap {
+  width: 100% !important;
+  box-sizing: border-box;
+}
+.eventCalendar-slider {
+  width: 100%;
+  height: 100% !important;
+  position: relative;
+  order: 1;
+  box-sizing: border-box;
+}
+.eventCalendar-slider,
+.eventCalendar-list-wrap {
+  padding: 95px 50px;
+  background-color: $gray;
+}
+.eventCalendar-wrap .eventCalendar-arrow {
+  top: 98px;
+  text-align: center;
+}
+.eventCalendar-prev {
+  left: 95px;
+}
+.eventCalendar-next {
+  right: 95px;
+}
+.eventCalendar-wrap .eventCalendar-arrow span {
+  width: auto;
+  height: auto;
+}
+.eventCalendar-daysList {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 20px;
+}
+.eventCalendar-day {
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+
+  a {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+  }
+}
+.eventCalendar-showAsWeek .eventCalendar-day a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 27px;
+  transition: ease 0.3s;
+}
+.eventCalendar-daysList li.eventCalendar-dayWithEvents a {
+  border: solid 1px $d-gray;
+}
+.eventCalendar-daysList li.today a {
+  background: $red;
+}
+.eventCalendar-day a:hover {
+  background: $d-gray;
+  color: #fff;
+}
+.eventCalendar-currentTitle .eventCalendar-monthTitle span,
+.eventCalendar-wrap .eventCalendar-arrow span {
+  font-family: $reg;
+  font-size: 16px;
+  line-height: 24px;
+  color: #000;
+}
+.eventCalendar-day-header {
+  font-size: 16px;
+}
+.eventCalendar-currentTitle {
+  position: relative;
+  margin-bottom: 30px;
+}
+.eventCalendar-subtitle {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 120%;
+}
+.eventCalendar-monthWrap.eventCalendar-oldMonth {
+  // position: absolute;
+  display: none;
+}
+.eventCalendar-eventTitle,
+.eventCalendar-list .eventCalendar-noEvents,
+.eventCalendar-loading {
+  font-family: $reg;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 150%;
+  text-decoration: none;
+  color: #000;
+}
+
+@media (max-width: 1600px) {
+  .eventCalendar-slider,
+  .eventCalendar-list-wrap {
+    padding: 85px 50px;
+  }
+  .eventCalendar-wrap .eventCalendar-arrow {
+    top: 88px;
+  }
+  .calendar-title {
+    margin-bottom: 30px;
+    font-size: 26px;
+  }
+  .eventCalendar-subtitle {
+    margin-bottom: 15px;
+    font-size: 22px;
+  }
+  .eventCalendar-eventTitle,
+  .eventCalendar-list .eventCalendar-noEvents,
+  .eventCalendar-loading {
+    font-size: 16px;
+  }
+  .eventCalendar-currentTitle .eventCalendar-monthTitle span,
+  .eventCalendar-wrap .eventCalendar-arrow span,
+  .eventCalendar-day-header {
+    font-size: 16px;
+  }
+  .eventCalendar-day a {
+    width: 40px;
+    height: 40px;
+  }
+  .eventCalendar-list li time {
+    margin: 0px;
+  }
+  .eventCalendar-list li time small,
+  .eventCalendar-list li time em {
+    font-size: 16px;
+  }
+}
+@media (max-width: 1440px) {
+  .eventCalendar-slider,
+  .eventCalendar-list-wrap {
+    padding: 70px 45px;
+  }
+  .eventCalendar-wrap .eventCalendar-arrow {
+    top: 74px;
+  }
+  .calendar-title {
+    margin-bottom: 25px;
+    font-size: 22px;
+  }
+  .eventCalendar-subtitle {
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+  .eventCalendar-eventTitle,
+  .eventCalendar-list .eventCalendar-noEvents,
+  .eventCalendar-loading {
+    font-size: 14px;
+  }
+  .eventCalendar-currentTitle .eventCalendar-monthTitle span,
+  .eventCalendar-wrap .eventCalendar-arrow span,
+  .eventCalendar-day-header {
+    font-size: 14px;
+  }
+  .eventCalendar-list li time small,
+  .eventCalendar-list li time em {
+    font-size: 14px;
+  }
+  .eventCalendar-day a {
+    width: 35px;
+    height: 35px;
+  }
+}
+@media (max-width: 900px) {
+  .eventCalendar-wrap {
+    column-gap: 20px;
+  }
+  .eventCalendar-slider,
+  .eventCalendar-list-wrap {
+    padding: 40px 20px;
+  }
+  .eventCalendar-wrap .eventCalendar-arrow {
+    top: 43px;
+  }
+  .eventCalendar-prev {
+    left: 30px;
+  }
+  .eventCalendar-next {
+    right: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .eventCalendar-wrap {
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+  .eventCalendar-list-wrap,
+  .eventCalendar-slider {
+    padding: 50px;
+  }
+  .eventCalendar-prev {
+    left: 70px;
+  }
+  .eventCalendar-next {
+    right: 70px;
+  }
+  .eventCalendar-wrap .eventCalendar-arrow {
+    top: 52px;
+  }
+}
+@media (max-width: 440px) {
+  .calendar {
+    margin-bottom: 55px;
+  }
+  .eventCalendar-list-wrap,
+  .eventCalendar-slider {
+    padding: 30px;
+  }
+  .eventCalendar-wrap .eventCalendar-arrow {
+    top: 33px;
+  }
+  .eventCalendar-prev {
+    left: 30px;
+  }
+  .eventCalendar-next {
+    right: 30px;
+  }
+  .calendar-title {
+    margin-bottom: 15px;
+    font-size: 18px;
+    line-height: 34px;
+  }
+  .eventCalendar-subtitle {
+    margin-bottom: 3px;
+    font-size: 15px;
+    line-height: 34px;
+  }
+  .eventCalendar-list li time,
+  .eventCalendar-list li time small {
+    margin-bottom: 0;
+    font-size: 12px;
+    line-height: 34px;
+  }
+  .eventCalendar-currentTitle .eventCalendar-monthTitle span,
+  .eventCalendar-wrap .eventCalendar-arrow span {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .eventCalendar-day-header,
+  .eventCalendar-showAsWeek .eventCalendar-day a {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .eventCalendar-day a {
+    width: 30px;
+    height: 30px;
+  }
+}

@@ -1,0 +1,61 @@
+@import '_fonts.scss';
+@import '_visually-hidden.scss';
+@import '_variables.scss';
+@import '_mixins.scss';
+@import '_scaffolding.scss';
+@import '_colors.scss';
+
+@import 'blocks/site-search.scss';
+@import 'blocks/site-search-result.scss';
+@import 'blocks/share.scss';
+@import 'blocks/wrapper.scss';
+@import 'blocks/button.scss';
+@import 'blocks/header.scss';
+@import 'blocks/footer.scss';
+@import 'blocks/title.scss';
+@import 'blocks/subtitle.scss';
+@import 'blocks/more.scss';
+@import 'blocks/details.scss';
+@import 'blocks/form.scss';
+@import 'blocks/search.scss';
+@import 'blocks/pagination.scss';
+@import 'blocks/slider.scss';
+@import 'blocks/find.scss';
+@import 'blocks/preview.scss';
+@import 'blocks/d-flex.scss';
+@import 'blocks/back.scss';
+@import 'blocks/subscribe.scss';
+@import 'blocks/dropdown.scss';
+@import 'blocks/bg-gray.scss';
+@import 'blocks/burger.scss';
+@import 'blocks/loader.scss';
+@import 'blocks/popup.scss';
+@import 'blocks/close.scss';
+
+@import 'blocks/activity.scss';
+@import 'blocks/news.scss';
+@import 'blocks/report.scss';
+@import 'blocks/corpus/corpus.scss';
+@import 'blocks/corpus/activities.scss';
+@import 'blocks/article.scss';
+@import 'blocks/corruption.scss';
+@import 'blocks/documents.scss';
+@import 'blocks/reception.scss';
+@import 'blocks/your-deputie.scss';
+@import 'blocks/council/council.scss';
+@import 'blocks/council/structure.scss';
+@import 'blocks/council/commission.scss';
+@import 'blocks/council/fractions.scss';
+@import 'blocks/council/staff.scss';
+@import 'blocks/council/history.scss';
+@import 'blocks/event.scss';
+@import 'blocks/main/promo.scss';
+@import 'blocks/main/about.scss';
+@import 'blocks/main/deput.scss';
+@import 'blocks/main/useful.scss';
+@import 'blocks/main/questions.scss';
+@import 'blocks/calendar.scss';
+
+* {
+  scroll-behavior: smooth;
+}

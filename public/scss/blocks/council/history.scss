@@ -1,0 +1,141 @@
+.history {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  // display: flex;
+  column-gap: 70px;
+  padding: 0;
+}
+.history__photo {
+  //   display: grid;
+  //   grid-template-columns: repeat(4, 1fr);
+  //   grid-template-rows: 500px 120px;
+  //   gap: 10px;
+  max-width: 700px;
+  width: 100%;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 3;
+  // margin-right: 35px;
+
+  //   img {
+  //     width: 100%;
+  //     height: 100%;
+  //     border-radius: 6px;
+  //     object-fit: cover;
+  //   }
+  //   img:nth-child(1) {
+  //     grid-column-start: 1;
+  //     grid-column-end: -1;
+  //   }
+}
+.history__photo {
+  img {
+    display: inline-block;
+    object-fit: cover;
+  }
+  .history__big {
+    margin-bottom: 25px;
+    width: 100%;
+    height: auto;
+
+    img {
+      display: inline-block;
+      width: 100%;
+      height: 490px;
+    }
+  }
+  .history__small {
+    width: 100%;
+
+    .slick-track {
+      column-gap: 25px;
+    }
+    img {
+      margin-right: 25px;
+      width: 125px;
+      height: 102px;
+    }
+  }
+}
+.history__text {
+  margin-bottom: 35px;
+}
+
+@media (max-width: 1600px) {
+  .history__photo {
+    max-width: 530px;
+  }
+}
+@media (max-width: 1440px) {
+  .history__photo {
+    max-width: 570px;
+  }
+  .history__text {
+    font-size: 14px;
+  }
+  .history__small {
+    img {
+      margin-right: 25px;
+      width: 125px;
+      height: 50px;
+    }
+  }
+}
+@media (max-width: 1366px) {
+  .history__photo {
+    max-width: 537px;
+  }
+}
+@media (max-width: 1200px) {
+  .history {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: 1fr;
+  }
+  .history__title {
+    order: -1;
+    grid-row-start: 1;
+    grid-row-end: 2;
+  }
+  .history__photo {
+    margin-bottom: 25px;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    // max-width: 100%;
+    max-width: 980px;
+    // max-width: 87vw;
+
+    //   gap: 10px;
+    .history__big {
+      margin-bottom: 15px;
+    }
+    .history__small {
+      img {
+        margin-right: 15px;
+      }
+    }
+  }
+}
+@media (max-width: 640px) {
+  .history__big {
+    img {
+      height: 320px !important;
+    }
+  }
+  .history__small {
+    img {
+      height: 70px !important;
+    }
+  }
+}
+@media (max-width: 440px) {
+  // .history__photo {
+  //   grid-template-rows: 190px 65px;
+  // }
+  .history__text {
+    margin-bottom: 25px;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}

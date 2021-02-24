@@ -1,0 +1,36 @@
+.council__photo {
+  margin-bottom: 60px;
+}
+.council__text {
+  column-count: 2;
+  column-gap: 35px;
+  // white-space: pre-line;
+}
+
+@media (max-width: 1440px) {
+  .council__text {
+    font-size: 14px;
+  }
+}
+@media (max-width: 1200px) {
+  .council__photo {
+    margin-bottom: 25px;
+  }
+  .council__text {
+    column-count: 1;
+    line-height: 150%;
+  }
+}
+@media (max-width: 440px) {
+  .council__photo {
+    margin-bottom: 35px;
+    height: 370px;
+    object-fit: cover;
+    border-radius: 6px;
+  }
+  .council__text {
+    column-count: 1;
+    font-size: 12px;
+    line-height: 18px;
+  }
+}

@@ -23,6 +23,10 @@ const Deputie = new Schema(
       type: String,
       required: false,
     },
+    fraction: {
+      type: String,
+      required: false,
+    },
     ownerId: {
       type: Types.ObjectId,
       ref: 'Admin',

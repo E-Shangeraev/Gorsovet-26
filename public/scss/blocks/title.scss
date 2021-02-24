@@ -1,0 +1,32 @@
+.title {
+  margin-bottom: 60px;
+  font-family: $semi;
+  font-size: 40px;
+  line-height: 120%;
+  color: #242020;
+}
+
+@media (max-width: 1600px) {
+  .title {
+    margin-bottom: 40px;
+    font-size: 36px;
+  }
+}
+@media (max-width: 1440px) {
+  .title {
+    margin-bottom: 35px;
+    font-size: 32px;
+  }
+}
+@media (max-width: 900px) {
+  .title {
+    font-size: 28px;
+  }
+}
+@media (max-width: 440px) {
+  .title {
+    margin-bottom: 30px;
+    font-size: 20px;
+    line-height: 130%;
+  }
+}

@@ -1,0 +1,49 @@
+.report {
+  .title {
+    margin: 0;
+  }
+  .d-flex {
+    margin-bottom: 60px;
+  }
+  img {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1600px) {
+  .report .d-flex {
+    margin-bottom: 40px;
+  }
+}
+@media (max-width: 1440px) {
+  .report .d-flex {
+    margin-bottom: 35px;
+  }
+}
+@media (max-width: 600px) {
+  .report {
+    margin-right: 15px;
+
+    .title {
+      margin-bottom: 25px;
+    }
+    .d-flex {
+      display: block;
+    }
+  }
+}
+@media (max-width: 440px) {
+  .report {
+    margin-right: 15px;
+
+    .title {
+      margin-bottom: 0;
+    }
+    .d-flex {
+      display: flex;
+    }
+  }
+  .report__prev {
+    margin-right: 25px;
+  }
+}

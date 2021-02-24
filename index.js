@@ -56,7 +56,7 @@ app.use(admin.options.rootPath, router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(multer({ dest: 'uploads' }).single('file'));
+// app.use(multer({ dest: 'uploads' }).single('file'));
 app.use('/', homeRoutes);
 app.use('/council', councilRoutes);
 app.use('/activity', activityRoutes);

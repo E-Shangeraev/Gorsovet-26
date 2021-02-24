@@ -1,0 +1,32 @@
+.popup {
+  position: relative;
+  margin: 20px auto;
+  width: auto;
+  max-width: 1000px;
+  background: #fff;
+  border-radius: 6px;
+}
+
+.popup__policy {
+  padding: 30px;
+  max-width: 80vw;
+  max-height: 80vh;
+  line-height: 200%;
+  overflow: auto;
+}
+
+@media (max-width: 1440px) {
+  .popup__policy {
+    font-size: 14px;
+  }
+}
+@media (max-width: 440px) {
+  .popup__policy {
+    padding: 10px;
+    font-size: 12px;
+
+    ol {
+      padding-left: 15px;
+    }
+  }
+}

@@ -1,0 +1,140 @@
+.article__wrapper {
+  display: flex;
+
+  article {
+    margin-right: 35px;
+  }
+}
+.article__title {
+  margin-bottom: 20px;
+  font-family: $semi;
+  font-size: 24px;
+  line-height: 140%;
+}
+.article__pubdate {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+
+  img {
+    margin-right: 15px;
+  }
+}
+.article__image {
+  margin-bottom: 30px;
+  border-radius: 6px;
+  width: 100%;
+  object-fit: cover;
+}
+.article__text {
+  padding-bottom: 40px;
+  font-size: 18px;
+  line-height: 160%;
+  // white-space: pre-line;
+  border-bottom: 2px solid #cfcfcf;
+}
+.article__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+
+  span {
+    font-size: 22px;
+    line-height: 28px;
+    color: #9b9b9b;
+  }
+}
+.article__socials {
+  display: flex;
+
+  li {
+    cursor: pointer;
+  }
+  li:not(:last-child) {
+    margin-right: 20px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .article__title {
+    font-size: 22px;
+  }
+  .article__text {
+    font-size: 16px;
+  }
+  .article__pubdate time {
+    font-size: 14px;
+  }
+  .article__footer span {
+    font-size: 20px;
+  }
+}
+@media (max-width: 1200px) {
+  .article__title {
+    font-size: 20px;
+  }
+  .article__text {
+    font-size: 14px;
+  }
+  .article__pubdate time {
+    font-size: 14px;
+  }
+  .article__footer span {
+    font-size: 18px;
+  }
+}
+@media (max-width: 900px) {
+  .article {
+    .d-flex {
+      display: block;
+    }
+  }
+  .article__wrapper {
+    display: block;
+  }
+}
+@media (max-width: 500px) {
+  .article {
+    margin-bottom: 50px;
+
+    .d-flex {
+      display: block;
+    }
+  }
+  .article__wrapper {
+    article {
+      margin-bottom: 50px;
+    }
+  }
+  .article__title {
+    font-size: 14px;
+  }
+  .article__image {
+    margin-bottom: 20px;
+    height: 170px;
+  }
+  .article__pubdate {
+    img {
+      margin-right: 5px;
+      transform: scale(0.5);
+    }
+    time {
+      font-size: 10px;
+      line-height: 160%;
+    }
+  }
+  .article__text {
+    font-size: 12px;
+  }
+  .article__footer {
+    display: block;
+    padding: 15px 0;
+
+    span {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 12px;
+    }
+  }
+}

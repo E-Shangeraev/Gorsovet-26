@@ -96,29 +96,12 @@
     </div>
   </div>
   <ul class="report__slider slider">
-    <li>
-      <img src="img/report-1.jpg" />
-    </li>
-    <li>
-      <img src="img/report-2.jpg" />
-    </li>
-    <li>
-      <img src="img/report-3.jpg" />
-    </li>
-    <li>
-      <img src="img/report-4.jpg" />
-    </li>
-    <li>
-      <img src="img/report-1.jpg" />
-    </li>
-    <li>
-      <img src="img/report-2.jpg" />
-    </li>
-    <li>
-      <img src="img/report-3.jpg" />
-    </li>
-    <li>
-      <img src="img/report-4.jpg" />
-    </li>
+    {{#if photos.length}}
+      {{#each photos}}
+        <li>
+          <img src="{{img}}" />
+        </li>
+      {{/each}}
+    {{/if}}
   </ul>
 </section>

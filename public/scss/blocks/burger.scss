@@ -1,0 +1,81 @@
+.burger {
+  display: none;
+  position: relative;
+  padding: 10px;
+  width: 30px;
+  height: 21px;
+  border: none;
+  background-color: transparent;
+
+  span {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    height: 2px;
+    width: 15px;
+    background-color: $red;
+  }
+  &::before,
+  &::after {
+    position: absolute;
+    content: '';
+    right: 0;
+    height: 2px;
+    width: 30px;
+    background-color: $red;
+  }
+  &::before {
+    top: 0;
+  }
+  &::after {
+    bottom: 0;
+  }
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}
+.burger--animate span,
+.burger--animate::after,
+.burger--animate::before {
+  animation-delay: 0.1s;
+  animation-timing-function: ease-out;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+.burger--animate span {
+  animation-name: 'burger-span-animate';
+}
+.burger--animate::after,
+.burger--animate::before {
+  animation-name: 'burger-before-after-animate';
+}
+
+@media (max-width: 1200px) {
+  .burger {
+    display: block;
+  }
+}
+
+@keyframes burger-span-animate {
+  30% {
+    width: 30px;
+  }
+  85% {
+    width: 10px;
+  }
+  100% {
+    width: 15px;
+  }
+}
+@keyframes burger-before-after-animate {
+  30% {
+    width: 10px;
+  }
+  50% {
+    width: 20px;
+  }
+  100% {
+    width: 30px;
+  }
+}

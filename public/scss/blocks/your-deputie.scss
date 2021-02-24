@@ -1,0 +1,168 @@
+.your-deputie {
+  margin-top: 60px;
+}
+.your-deputie__wrapper {
+  // display: flex;
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 60px;
+
+  padding: 70px;
+}
+.your-deputie__photo {
+  // margin-right: 60px;
+  grid-row-start: 1;
+  grid-row-end: 4;
+  max-width: 260px;
+  border-radius: 6px;
+}
+.your-deputie__header {
+  margin-bottom: 27px;
+}
+.your-deputie__name {
+  margin-bottom: 10px;
+  font-family: $semi;
+  font-size: 24px;
+  line-height: 130%;
+}
+.your-deputie__post {
+  font-size: 16px;
+  line-height: 130%;
+  letter-spacing: 0.01em;
+  color: rgba(0, 0, 0, 0.6);
+}
+.your-deputie__desc {
+  margin-bottom: 27px;
+  font-size: 16px;
+  line-height: 150%;
+}
+.your-deputie__footer {
+  display: flex;
+  column-gap: 120px;
+
+  p {
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 1440px) {
+  .your-deputie__wrapper {
+    padding: 50px;
+  }
+  .your-deputie__header img {
+    max-width: 60px;
+  }
+  .your-deputie__name {
+    font-size: 20px;
+  }
+  .your-deputie__desc {
+    font-size: 14px;
+  }
+  .your-deputie__footer p {
+    font-size: 14px;
+    line-height: 150%;
+  }
+}
+@media (max-width: 1200px) {
+  .your-deputie__wrapper {
+    column-gap: 35px;
+  }
+  .your-deputie__footer {
+    column-gap: 40px;
+  }
+  .your-deputie__photo {
+    max-width: 200px;
+  }
+}
+@media (max-width: 900px) {
+  .your-deputie__wrapper {
+    padding: 35px 30px;
+    column-gap: 10px;
+  }
+  .your-deputie__photo {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    margin-right: 12px;
+    height: auto;
+  }
+  .your-deputie__header {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    flex-direction: column;
+
+    img {
+      margin-bottom: 10px;
+      order: 1;
+    }
+    div {
+      order: 2;
+    }
+  }
+  .your-deputie__desc {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+  }
+  .your-deputie__footer {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    flex-direction: column;
+
+    p {
+      margin-bottom: 20px;
+      max-width: 100%;
+    }
+  }
+}
+@media (max-width: 700px) {
+  .your-deputie__name {
+    font-size: 16px;
+  }
+  .your-deputie__post {
+    font-size: 14px;
+  }
+  .your-deputie__photo {
+    max-width: 150px;
+  }
+  .your-deputie__header {
+    img {
+      max-width: 40px;
+    }
+  }
+}
+@media (max-width: 480px) {
+  .your-deputie__wrapper {
+    padding: 25px 20px;
+    column-gap: 5px;
+  }
+  .your-deputie__photo {
+    max-width: 97px;
+  }
+  .your-deputie__header {
+    img {
+      max-width: 30px;
+    }
+  }
+  .your-deputie__name {
+    font-size: 12px;
+  }
+  .your-deputie__post {
+    font-size: 10px;
+  }
+  .your-deputie__desc {
+    margin-top: 0;
+    font-size: 12px;
+  }
+  .your-deputie__footer {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    flex-direction: column;
+
+    p {
+      font-size: 12px;
+      line-height: 18px;
+    }
+  }
+}

@@ -1,0 +1,138 @@
+.questions__container {
+  display: flex;
+  gap: 30px;
+  padding: 95px 50px;
+  background-color: $red;
+  border-radius: 6px;
+}
+.questions__left {
+  display: flex;
+  flex-direction: column;
+}
+.questions__title {
+  color: #fff;
+
+  span {
+    white-space: nowrap;
+  }
+}
+.questions__desc {
+  // margin-top: auto;
+  font-size: 22px;
+  line-height: 160%;
+  color: #fff;
+}
+.questions__form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  width: 100%;
+
+  input[type='text'] {
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
+  p {
+    line-height: 150%;
+    color: #fff;
+  }
+}
+
+@media (max-width: 1600px) {
+  .questions__container {
+    padding: 80px 50px;
+  }
+  .questions__desc {
+    font-size: 20px;
+  }
+  .questions__form {
+    gap: 20px;
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 1440px) {
+  .questions__container {
+    padding: 70px 40px;
+  }
+  .questions__desc {
+    font-size: 18px;
+  }
+  .questions__form {
+    gap: 20px;
+
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 1200px) {
+  .questions__container {
+    display: block;
+    padding: 70px 100px;
+  }
+  .questions__desc {
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+  .questions__form {
+    column-gap: 20px;
+    row-gap: 0;
+
+    button {
+      margin-bottom: 15px;
+    }
+    p {
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .questions__container {
+    padding: 60px 50px;
+  }
+  .questions__desc {
+    font-size: 16px;
+  }
+  .questions__title {
+    margin-bottom: 30px;
+  }
+}
+@media (max-width: 768px) {
+  .questions__form {
+    display: block;
+
+    .form__field {
+      margin-bottom: 20px;
+    }
+    .button {
+      margin-bottom: 20px;
+      width: 100%;
+    }
+  }
+}
+@media (max-width: 440px) {
+  .questions__container {
+    padding: 30px 20px;
+    flex-direction: column;
+    justify-content: start;
+  }
+  .questions__form {
+    p {
+      font-size: 12px;
+      line-height: 160%;
+    }
+  }
+  .questions__title {
+    margin-bottom: 15px;
+    font-size: 20px;
+    line-height: 150%;
+  }
+  .questions__desc {
+    margin-bottom: 20px;
+    font-size: 12px;
+    line-height: 160%;
+  }
+}

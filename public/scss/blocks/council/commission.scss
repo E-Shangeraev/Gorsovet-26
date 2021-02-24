@@ -1,0 +1,114 @@
+.commission {
+  padding: 0;
+  margin-bottom: 80px;
+}
+.commission__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+}
+.commission__block {
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+}
+.commission__name {
+  margin-bottom: 25px;
+  font-family: $reg;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 140%;
+}
+.commission__details {
+  overflow: hidden;
+}
+.commission__list {
+  padding-top: 15px;
+  padding-left: 15px;
+  position: relative;
+  top: -100%;
+  height: 0;
+  opacity: 0;
+  z-index: -1;
+  transition: 0.5s ease-in-out 0s;
+
+  a {
+    position: relative;
+    text-decoration: none;
+    color: #000;
+    left: 0;
+    transition: 0.4s ease;
+  }
+  li {
+    position: relative;
+  }
+  li::before {
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 2px;
+    left: 0;
+    top: 47%;
+    background-color: $red;
+    transition: none;
+  }
+  li:hover {
+    a {
+      color: $red;
+      left: 15px;
+    }
+
+    &::before {
+      width: 10px;
+      transition: 0.3s ease 0.3s;
+    }
+  }
+}
+.open .commission__list {
+  top: 0;
+  height: auto;
+  opacity: 1;
+  z-index: 1;
+}
+
+@media (max-width: 1600px) {
+  .commission__name {
+    font-size: 18px;
+  }
+}
+@media (max-width: 1400px) {
+  .commission__block {
+    padding: 30px;
+  }
+}
+@media (max-width: 1200px) {
+  .commission__container {
+    gap: 25px;
+  }
+  .commission__name {
+    font-size: 16px;
+  }
+}
+@media (max-width: 900px) {
+  .commission__name {
+    font-size: 14px;
+  }
+}
+@media (max-width: 768px) {
+  .commission__container {
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+}
+@media (max-width: 440px) {
+  .commission {
+    margin-bottom: 50px;
+  }
+  .commission__block {
+    padding: 20px;
+  }
+  .commission__name {
+    margin-bottom: 15px;
+    font-size: 12px;
+  }
+}

@@ -9,7 +9,6 @@ const Calendar = new Schema(
     text: {
       type: String,
       required: true,
-      max: 12,
     },
     img: String,
     url: String,

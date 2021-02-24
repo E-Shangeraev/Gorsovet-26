@@ -1,0 +1,42 @@
+.activities {
+  position: relative;
+
+  &::before {
+    position: absolute;
+    content: '';
+    top: -50px;
+    left: -100%;
+    background: #f8f8f8;
+    height: 300px;
+    z-index: -1;
+  }
+}
+.activities__slider {
+  margin-bottom: 60px;
+
+  a {
+    margin-right: 15px;
+    width: fit-content;
+    height: fit-content;
+    text-decoration: none;
+    color: #000;
+    transition: ease 0.3s;
+    border-radius: 8px;
+  }
+  a:hover,
+  a:focus,
+  a:active {
+    box-shadow: 0 0 4px rgb(197, 197, 197);
+    background-color: $gray;
+  }
+
+  .preview {
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 1400px) {
+  .activities__slider {
+    margin-bottom: 40px;
+  }
+}

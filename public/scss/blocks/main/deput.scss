@@ -1,0 +1,136 @@
+.deput__slider {
+  display: flex;
+  margin-bottom: 65px;
+  border-radius: 10px;
+  border: 1px solid #dadada;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  .slick-track {
+    display: grid;
+    grid-auto-columns: auto;
+    grid-auto-flow: column;
+  }
+}
+.deput__card {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: stretch;
+  width: 28%;
+  height: 100%;
+  border-right: 1px solid #dadada;
+  transition: all ease-out 0.3s;
+
+  &:hover {
+    background-color: $gray;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  }
+}
+.deput__head {
+  position: relative;
+  padding: 30px 15%;
+}
+.deput__consignment {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  max-width: 15%;
+}
+.deput__caption {
+  padding: 30px;
+}
+.deput__photo {
+  max-width: 217px;
+  max-height: 214px;
+  height: 100%;
+  object-fit: cover;
+}
+.deput__name {
+  margin-bottom: 8px;
+  font-family: $semi;
+  font-size: 20px;
+  line-height: 130%;
+  text-align: center;
+}
+.deput__post {
+  text-align: center;
+  color: $d-gray;
+}
+.deput__post,
+.deput__text,
+.deput__schedule,
+.deput__registration {
+  margin-bottom: 35px;
+  font-size: 14px;
+  line-height: 150%;
+}
+.deput__schedule {
+  margin-bottom: 20px;
+}
+.deput__button {
+  margin-top: auto;
+  width: 100%;
+  text-align: center;
+  border-radius: 0;
+}
+.deput__slider-nav {
+  justify-content: space-between;
+}
+
+@media (max-width: 1600px) {
+  .deput__head {
+    padding: 20px 25%;
+  }
+  .deput__consignment {
+    top: 20px;
+    right: 70px;
+    max-width: 10%;
+  }
+  .deput__caption {
+    padding: 0 20px;
+  }
+  .deput__post,
+  .deput__text,
+  .deput__schedule,
+  .deput__registration {
+    margin-bottom: 20px;
+  }
+  .deput__slider {
+    margin-bottom: 45px;
+  }
+}
+@media (max-width: 900px) {
+  .deput__consignment {
+    right: 50px;
+    max-width: 10%;
+  }
+}
+@media (max-width: 768px) {
+  .deput__consignment {
+    right: 70px;
+  }
+}
+@media (max-width: 580px) {
+  .deput__consignment {
+    right: 30px;
+  }
+}
+@media (max-width: 440px) {
+  .deput__slider {
+    margin-bottom: 25px;
+  }
+  .deput__head {
+    padding: 30px 30%;
+    padding-bottom: 20px;
+  }
+  .deput__caption {
+    padding: 0 30px;
+  }
+  .deput__post,
+  .deput__text,
+  .deput__schedule,
+  .deput__registration {
+    margin-bottom: 15px;
+  }
+}

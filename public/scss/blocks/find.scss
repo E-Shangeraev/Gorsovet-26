@@ -1,0 +1,42 @@
+.find__wrapper {
+  font-size: 18px;
+  line-height: 160%;
+  column-gap: 35px;
+
+  div {
+    width: 50%;
+  }
+}
+
+@media (max-width: 1600px) {
+  .find__text {
+    font-size: 16px;
+  }
+}
+@media (max-width: 1440px) {
+  .find__text {
+    font-size: 16px;
+  }
+}
+@media (max-width: 900px) {
+  .find__wrapper {
+    flex-direction: column;
+
+    div,
+    form {
+      width: 100%;
+    }
+    .form__field {
+      margin-bottom: 20px;
+    }
+  }
+  .find__text {
+    margin-bottom: 25px;
+  }
+}
+@media (max-width: 440px) {
+  .find__text {
+    font-size: 14px;
+    line-height: 160%;
+  }
+}
