@@ -77,6 +77,11 @@
 .deput__slider-nav {
   justify-content: space-between;
 }
+.deput__text {
+  max-height: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
 @media (max-width: 1600px) {
   .deput__head {

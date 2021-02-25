@@ -174,21 +174,31 @@
             <p class="deput__post">
               {{post}}
             </p>
-            <p class="deput__text">
-              {{about}}
-            </p>
-            <p class="deput__schedule">
-              <span class="red">
-                График приема:
-              </span>
-              {{schedule}}
-            </p>
+            {{#if about}}
+              <p class="deput__text">
+                {{trimString about}}
+              </p>
+            {{else}}
+              <p class="deput__text">
+                {{about}}
+              </p>
+            {{/if}}
+            {{#if schedule}}
+              <p class="deput__schedule">
+                <span class="red">
+                  График приема:
+                </span>
+                {{schedule}}
+              </p>
+            {{/if}}
+            {{#if appointment}}
             <p class="deput__registration">
               <span class="red">
                 Запись:
               </span>
               {{appointment}}
             </p>
+            {{/if}}
           </figcaption>
           <a href="/reception/{{_id}}" class="button deput__button">
             Задать вопрос

@@ -22,6 +22,7 @@ const {
   receptionRoutes,
   newsRoutes,
   buildAdminRouter,
+  searchRoutes,
 } = require('./routes/index');
 
 const app = express();
@@ -66,6 +67,7 @@ app.use('/news', newsRoutes);
 app.use('/contacts', contactsRoutes);
 app.use('/corruption', corruptionRoutes);
 app.use('/reception', receptionRoutes);
+app.use('/search', searchRoutes);
 
 const PORT = process.env.PORT || 8089;
 
@@ -73,7 +75,6 @@ const start = async () => {
   try {
     const url =
       'mongodb+srv://gorsovet26:gfhjkmujhcjdtnf26@cluster0.a8cvf.mongodb.net/gorsovet26?retryWrites=true&w=majority';
-    // 'mongodb+srv://admin:1234509876@cluster0.ts9am.mongodb.net/deputies?retryWrites=true&w=majority';
     await mongoose.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

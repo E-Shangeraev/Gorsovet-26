@@ -8,6 +8,7 @@ const corruptionRoutes = require('./corruption');
 const receptionRoutes = require('./reception');
 const newsRoutes = require('./news');
 const buildAdminRouter = require('./admin');
+const searchRoutes = require('./search');
 
 module.exports = {
   homeRoutes,
@@ -20,4 +21,5 @@ module.exports = {
   receptionRoutes,
   newsRoutes,
   buildAdminRouter,
+  searchRoutes,
 };
