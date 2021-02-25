@@ -35,8 +35,8 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('veiws', 'views');
 
-handlebars.registerHelper('trimString', function (passedString) {
-  const theString = passedString.substring(0, 200) + '...';
+handlebars.registerHelper('trimString', function (passedString, symbols) {
+  const theString = passedString.substring(0, symbols) + '...';
   return new handlebars.SafeString(theString);
 });
 handlebars.registerHelper('if_eq', function (a, b, opts) {

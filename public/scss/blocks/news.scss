@@ -30,13 +30,12 @@
 }
 
 @media (max-width: 1700px) {
-  .news__container {
+  .read .news__container {
     grid-template-columns: repeat(3, 1fr);
     margin-bottom: 60px;
-
-    a:last-of-type {
-      display: none !important;
-    }
+  }
+  .read .news__container a:last-of-type {
+    display: none !important;
   }
 }
 @media (max-width: 1200px) {

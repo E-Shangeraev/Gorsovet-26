@@ -31,13 +31,29 @@
                   {{post}}
                 </p>
               </div>
-              <img src="img/edro.png" />
+              <img src="{{fraction}}" />
             </header>
-            <p class="your-deputie__desc">
+            <p>
               {{about}}
             </p>
             <footer class="your-deputie__footer">
+            {{#if schedule}}
               <p>
+                <span class="red">
+                  График приема:
+                </span>
+                {{schedule}}
+              </p>
+            {{/if}}
+            {{#if appointment}}
+              <p>
+                <span class="red">
+                  Запись:
+                </span>
+                {{appointment}}
+              </p>
+            {{/if}}
+              {{!-- <p>
                 <span class="red">
                   График приема:
                 </span>
@@ -48,7 +64,7 @@
                   Запись:
                 </span>
                 {{appointment}}
-              </p>
+              </p> --}}
             </footer>
           </div>
         </div>

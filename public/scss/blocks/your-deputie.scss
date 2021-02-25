@@ -2,23 +2,31 @@
   margin-top: 60px;
 }
 .your-deputie__wrapper {
-  // display: flex;
-
   display: grid;
   grid-template-columns: auto 1fr;
   column-gap: 60px;
 
   padding: 70px;
+
+  & > p {
+    margin-bottom: 15px;
+  }
 }
 .your-deputie__photo {
-  // margin-right: 60px;
   grid-row-start: 1;
   grid-row-end: 4;
   max-width: 260px;
   border-radius: 6px;
 }
 .your-deputie__header {
+  display: flex;
+  align-items: start;
   margin-bottom: 27px;
+
+  img {
+    max-width: 50px;
+    object-fit: contain;
+  }
 }
 .your-deputie__name {
   margin-bottom: 10px;
@@ -39,10 +47,11 @@
 }
 .your-deputie__footer {
   display: flex;
-  column-gap: 120px;
+  justify-content: space-between;
+  // column-gap: 2%;
 
   p {
-    max-width: 360px;
+    max-width: 48%;
   }
 }
 
