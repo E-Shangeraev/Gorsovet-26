@@ -35,4 +35,6 @@ const Deputie = new Schema(
   { collection: 'deputies' },
 );
 
+Deputie.index({ name: 'text' }, { default_language: 'russian' });
+
 module.exports = model('Deputie', Deputie);

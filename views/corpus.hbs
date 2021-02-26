@@ -53,18 +53,6 @@
                 {{appointment}}
               </p>
             {{/if}}
-              {{!-- <p>
-                <span class="red">
-                  График приема:
-                </span>
-                {{schedule}}
-              </p>
-              <p>
-                <span class="red">
-                  Запись:
-                </span>
-                {{appointment}}
-              </p> --}}
             </footer>
           </div>
         </div>
@@ -82,11 +70,13 @@
         Введите адрес своего проживания и узнайте, какой депутат отвечает за ваш округ!
       </p>
     </div>
-    <form class="form" action="#">
+    <form class="form" action="/corpus/search" method="POST">
       <input
         class="form__field"
+        id="deputie-search"
         type="search"
         placeholder="Введите адерс своего проживания*"
+         autocomplete="off"
       />
       <button class="button form__button">
         Найти

@@ -6,6 +6,39 @@
   div {
     width: 50%;
   }
+  .searchHolder {
+    position: relative;
+    width: 100%;
+    margin-bottom: 35px;
+
+    .form__field {
+      margin-bottom: 0;
+    }
+  }
+  .autoFillBar {
+    position: absolute;
+    width: 100%;
+    padding: 15px 30px;
+    border-radius: 0 0 6px 6px;
+    background: $gray;
+    box-sizing: border-box;
+    z-index: 100;
+
+    .item {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 150%;
+    }
+    .item:hover,
+    .item.active {
+      background-color: #e6e6e6;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  }
 }
 
 @media (max-width: 1600px) {

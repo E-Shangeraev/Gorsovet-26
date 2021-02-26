@@ -79,7 +79,13 @@ const start = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
+      useCreateIndex: true,
     });
+
+    // const db = mongoose.connection;
+    // console.log(db.collections.deputies);
+
+    // db.deputies.createIndex({ name: 'text' });
 
     app.listen(PORT, () => {
       console.log(`Server has been started on port ${PORT}...`);
