@@ -11,6 +11,10 @@
       searchCheck();
     });
 
+    document.querySelector('.form').addEventListener('submit', (e) => {
+      e.preventDefault();
+    });
+
     input.on('keyup', function (e) {
       if (e.keyCode == 40) {
         if (autoFillBar.find('.active').length == 0) {
