@@ -27,6 +27,10 @@ const Deputie = new Schema(
       type: String,
       required: false,
     },
+    address: {
+      type: Array,
+      required: false,
+    },
     ownerId: {
       type: Types.ObjectId,
       ref: 'Admin',
@@ -35,6 +39,6 @@ const Deputie = new Schema(
   { collection: 'deputies' },
 );
 
-Deputie.index({ name: 'text' }, { default_language: 'russian' });
+Deputie.index({ address: 'text' }, { default_language: 'russian' });
 
 module.exports = model('Deputie', Deputie);

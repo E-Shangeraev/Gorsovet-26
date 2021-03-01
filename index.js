@@ -84,8 +84,7 @@ const start = async () => {
 
     // const db = mongoose.connection;
     // console.log(db.collections.deputies);
-
-    // db.deputies.createIndex({ name: 'text' });
+    // db.collections.deputies.dropIndexes();
 
     app.listen(PORT, () => {
       console.log(`Server has been started on port ${PORT}...`);

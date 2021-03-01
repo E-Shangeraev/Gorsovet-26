@@ -75,13 +75,9 @@
 
     function searchCheck() {
       if (input.val().length >= 2) {
-        // тут нужно будет описать ajax-запрос к бэкэнду, который вернет результаты поиска
-
         var data = {};
         data.action = 'search';
         data.request = input.val();
-
-        // ajax-запрос на сервер, откомментируй, когда будет куда отсылать POST
 
         $.ajax({
           url: '/corpus',
@@ -92,48 +88,48 @@
           autoFillBar.children().remove();
 
           // console.log(data);
-          // следующая строчка читает результат ajax-запроса, откомментируй ее, когда будет готов бэкэнд
+
           var articlesArray = data.result;
+          console.log(articlesArray);
 
-          // Здесь я описываю фейковый поиск, чтобы продемонстрировать работу плагина
-          // строки 241 - 262 можно выпилить несчадно
-          // поиск ведется только по одному слову, но твоя база точно может лучше ;)
+          articlesArray.forEach((item, index) => {
+            let addresses = item.address;
 
-          // Здесь фейк заканчивается и начинаются чудеса
+            for (var i = 0; i <= addresses.length - 1; i++) {
+              var address = addresses[i];
 
-          for (var i = 0; i <= articlesArray.length - 1; i++) {
-            var name = articlesArray[i].name;
-            var regex = input.val();
+              var regex = input.val();
 
-            if (regex.indexOf(' ') == -1) {
-              var searchMask = regex;
-              var regEx = new RegExp(searchMask, 'ig');
+              if (regex.indexOf(' ') == -1) {
+                var searchMask = regex;
+                var regEx = new RegExp(searchMask, 'ig');
 
-              var num = name.toLowerCase().indexOf(regex.toLowerCase());
-              var strname = name.substr(num, regex.length);
-              var replaceMask = '<b class="highlighted">' + strname + '</b>';
-              name = name.replace(regEx, replaceMask);
-            } else {
-              var regexArr = regex.split(' ');
+                var num = address.toLowerCase().indexOf(regex.toLowerCase());
+                var straddress = address.substr(num, regex.length);
+                var replaceMask = '<b class="highlighted">' + straddress + '</b>';
+                address = address.replace(regEx, replaceMask);
+              } else {
+                var regexArr = regex.split(' ');
 
-              for (var n = 0; n < regexArr.length; n++) {
-                if (regexArr[n].length > 0) {
-                  var searchMask = regexArr[n];
-                  var regEx = new RegExp(searchMask, 'ig');
+                for (var n = 0; n < regexArr.length; n++) {
+                  if (regexArr[n].length > 0) {
+                    var searchMask = regexArr[n];
+                    var regEx = new RegExp(searchMask, 'ig');
 
-                  var num = name.toLowerCase().indexOf(regexArr[n].toLowerCase());
-                  var strname = name.substr(num, regexArr[n].length);
-                  var replaceMask = '<b class="highlighted">' + strname + '</b>';
-                  var stopWords = '<b class="highlighted"></b>';
-                  if (stopWords.indexOf(strname.toLowerCase()) == -1) {
-                    name = name.replace(regEx, replaceMask);
+                    var num = address.toLowerCase().indexOf(regexArr[n].toLowerCase());
+                    var straddress = address.substr(num, regexArr[n].length);
+                    var replaceMask = '<b class="highlighted">' + straddress + '</b>';
+                    var stopWords = '<b class="highlighted"></b>';
+                    if (stopWords.indexOf(straddress.toLowerCase()) == -1) {
+                      address = address.replace(regEx, replaceMask);
+                    }
                   }
                 }
               }
-            }
 
-            autoFillBar.append('<div class="item">' + '<span>' + name + '</span>' + '</div>');
-          }
+              autoFillBar.append('<div class="item">' + '<span>' + address + '</span>' + '</div>');
+            }
+          });
 
           autoFillBar.slideDown('fast');
 
@@ -157,7 +153,7 @@
 
         let data = {};
         data.action = 'search';
-        data.request = input.val();
+        data.request = input.val().split('. ')[1];
 
         $.ajax({
           url: '/corpus/search',
@@ -165,7 +161,7 @@
           dataType: 'json',
           data: data,
         }).done(function (data) {
-          console.log(data);
+          // console.log(data);
           const deput = data.result[0];
           const about = deput.about ? deput.about : '';
           const schedule = deput.schedule
@@ -215,6 +211,8 @@
             </div>
           </div>
           `;
+
+          console.log(deput);
           removeDeputie();
           find.insertAdjacentHTML('beforeend', res);
         });
