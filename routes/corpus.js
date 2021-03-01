@@ -7,14 +7,6 @@ router.get('/', async (req, res) => {
   const deputies = await Deputie.find().lean();
   const activities = await Activity.find().lean();
 
-  // await Deputie.find(
-  //   { $text: { $search: 'ул. Восточная, 30' } },
-  //   { score: { $meta: 'textScore' } },
-  //   (err, deputie) => {
-  //     console.log(deputie);
-  //   },
-  // ).sort({ $max: { score: { $meta: 'textScore' } } });
-
   res.render('corpus', {
     title: 'Депутатский корпус',
     isCorpus: true,
@@ -41,7 +33,6 @@ router.get('/:id', async (req, res) => {
 
 router.post('/', async (req, res) => {
   if (req.body.action == 'search') {
-    //   console.log(req.body);
     let params = {};
     const textArray = req.body.request.split(' ');
     let textKey = '';
@@ -52,30 +43,50 @@ router.post('/', async (req, res) => {
         textKey += ' ' + '"' + text + '"';
       }
     });
-
     params.$text = { $search: textKey };
 
+    let inputValue = req.body.request
+      .replace(/ул. /g, '')
+      .replace(/просп. /g, '')
+      .replace(/проезд /g, '')
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+      .replace(/\s{2,}/g, ' ');
+    console.log(inputValue);
+    inputValue = inputValue.split(' ');
+    console.log(inputValue);
+    let reg = '';
+
+    if (typeof inputValue[1] == Number) {
+      reg = new RegExp(inputValue[0] + ', ' + inputValue[1], 'gi');
+    } else {
+      reg = new RegExp(inputValue[0], 'gi');
+    }
+
+    console.log(reg);
     // let params = {};
     // let textKey = req.body.request;
     // params.$text = { $search: textKey };
 
     await Deputie.find(params, (err, deputie) => {
+      deputie.forEach((deput) => {
+        let a = deput.address
+          .map((addr) => {
+            if (addr.match(reg)) {
+              return addr;
+            }
+          })
+          .filter((addr) => addr);
+        deput.address = a;
+      });
       res.send({ result: deputie });
     }).sort({ score: { $meta: 'textScore' } });
   }
 });
 
 router.post('/search', async (req, res) => {
-  console.log(req.body);
-  await Deputie.find(
-    { $text: { $search: req.body.request } },
-    { score: { $meta: 'textScore' } },
-    (err, deputie) => {
-      res.send({ result: deputie });
-    },
-  )
-    .sort({ score: { $meta: 'textScore' } })
-    .limit(1);
+  await Deputie.find({ _id: req.body.request }, (err, deputie) => {
+    res.send({ result: deputie });
+  });
 });
 
 module.exports = router;

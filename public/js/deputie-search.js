@@ -1,7 +1,15 @@
 (function ($) {
+  // const string = 'ул. Восточная, 32';
+  // const reg = /восточная/gi;
+  // console.log(string.match(reg));
+
+  // const ar = ['курчатова', '64'];
+  // console.log(ar[1].match(/\d/g).join(''));
+
   $.fn.autoSearch = function () {
     var request = '';
     var input = this;
+    var inputId = document.querySelector('.form__id');
 
     input.wrap('<div class="searchHolder"></div>');
     input.parent().append('<div class="autoFillBar"></div>');
@@ -24,7 +32,10 @@
         }
 
         var val = autoFillBar.find('.active').text();
+        var id = autoFillBar.find('.active').attr('id');
         input.val(val);
+        inputId.value = id;
+        console.log(inputId.value);
       } else if (e.keyCode == 38) {
         if (autoFillBar.find('.active').length == 0) {
           autoFillBar.find('.item:last').addClass('active');
@@ -33,7 +44,10 @@
         }
 
         var val = autoFillBar.find('.active').text();
-        input.val(val);
+        var id = autoFillBar.find('.active').attr('id');
+        console.log(id);
+        inputId.value = id;
+        console.log(inputId.value);
       } else if (e.keyCode == 13) {
         showDeputie();
         //тут можно сделать переход на страницу статьи или все что пожелаешь
@@ -45,6 +59,8 @@
     autoFillBar.on('click', '.item', function () {
       //тут можно сделать переход на страницу статьи или все что пожелаешь
       input.val($(this).text());
+      inputId.value = $(this).attr('id');
+      console.log(inputId.value);
       showDeputie();
       return false;
     });
@@ -90,10 +106,11 @@
           // console.log(data);
 
           var articlesArray = data.result;
-          console.log(articlesArray);
+          // console.log(articlesArray);
 
           articlesArray.forEach((item, index) => {
             let addresses = item.address;
+            let id = item._id;
 
             for (var i = 0; i <= addresses.length - 1; i++) {
               var address = addresses[i];
@@ -127,7 +144,7 @@
                 }
               }
 
-              autoFillBar.append('<div class="item">' + '<span>' + address + '</span>' + '</div>');
+              autoFillBar.append(`<div class="item" id="${id}"><span>${address}</span></div>`);
             }
           });
 
@@ -146,14 +163,15 @@
     function showDeputie() {
       document.querySelector('.form').addEventListener('submit', (e) => {
         e.preventDefault();
-        removeDeputie();
+        // removeDeputie();
         const find = document.querySelector('.find');
 
         autoFillBar.children().remove();
 
         let data = {};
         data.action = 'search';
-        data.request = input.val().split('. ')[1];
+        // data.request = input.val().split('. ')[1];
+        data.request = inputId.value;
 
         $.ajax({
           url: '/corpus/search',
@@ -161,7 +179,7 @@
           dataType: 'json',
           data: data,
         }).done(function (data) {
-          // console.log(data);
+          console.log(data);
           const deput = data.result[0];
           const about = deput.about ? deput.about : '';
           const schedule = deput.schedule
