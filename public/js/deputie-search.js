@@ -23,6 +23,33 @@
       e.preventDefault();
     });
 
+    // input.on('input', function (e) {
+    //   const autoFillfBar = document.querySelector('.autoFillBar');
+    //   const searchMask = input.val();
+    //   const elements = autoFillfBar.querySelectorAll('.item');
+
+    //   const regEx = new RegExp(/.+[0-9]/, 'ig');
+
+    //   if (elements) {
+    //     elements.forEach((el) => {
+    //       // if (!el.classList.contains('matched')) {
+    //       //   autoFillBar.remove(el);
+    //       // }
+    //       if (el.textContent.match(regEx)) {
+    //         el.classList.add('matched');
+    //         console.log(el);
+    //         // autoFillfBar.insertAdjacentHTML('afterBegin', el);
+    //       } else {
+    //         el.classList.remove('matched');
+    //       }
+    //     });
+
+    //   }
+
+    //   console.log(autoFillfBar);
+    //   console.log(regEx);
+    // });
+
     input.on('keyup', function (e) {
       if (e.keyCode == 40) {
         if (autoFillBar.find('.active').length == 0) {
@@ -35,7 +62,6 @@
         var id = autoFillBar.find('.active').attr('id');
         input.val(val);
         inputId.value = id;
-        console.log(inputId.value);
       } else if (e.keyCode == 38) {
         if (autoFillBar.find('.active').length == 0) {
           autoFillBar.find('.item:last').addClass('active');
@@ -49,10 +75,32 @@
         inputId.value = id;
         console.log(inputId.value);
       } else if (e.keyCode == 13) {
+        // var searchMask = input.val();
+        // var regEx = new RegExp(searchMask, 'ig');
         showDeputie();
         //тут можно сделать переход на страницу статьи или все что пожелаешь
       } else {
         searchCheck();
+        // const autoFillfBar = document.querySelector('.autoFillBar');
+        // const searchMask = input.val();
+        // const elements = document.querySelectorAll('.autoFillBar .item');
+        // const regEx = new RegExp(/.+[0-9]/, 'ig');
+
+        // if (autoFillfBar.children) {
+        //   elements.forEach((el) => {
+        //     // console.log(autoFillfBar);
+        //     if (!el.textContent.match(regEx)) {
+        //       // console.log(el);
+        //       el.style.display = 'none';
+        //       // autoFillfBar.insertAdjacentHTML('afterbegin', el);
+        //     } else {
+        //       // console.log(el);
+        //       el.style.display = 'block';
+        //     }
+        //   });
+        // }
+
+        // console.log(elements);
       }
     });
 
@@ -89,6 +137,38 @@
       }
     });
 
+    function relevantData() {
+      let val = document.querySelector('#deputie-search').value;
+      let elements = document.querySelectorAll('.autoFillBar .item');
+      let searchMask = val;
+      let regEx;
+
+      if (searchMask.indexOf('ул. ') != -1) {
+        searchMask = searchMask.replace(/ул[, .-]+/gi, '');
+      }
+
+      if (searchMask.indexOf(' ') != -1) {
+        console.log(searchMask);
+        searchMask = searchMask.split(/[, .-]+/gi);
+        regEx = new RegExp('[а-я, .-]+' + searchMask[0] + '[, .-]+' + searchMask[1], 'ig');
+      } else {
+        console.log(searchMask);
+        regEx = new RegExp('[а-я, .-]+' + searchMask + '[, .-]+', 'ig');
+      }
+      // console.log(searchMask);
+      console.log(regEx);
+
+      if (elements.length) {
+        // console.log(elements[0].innerText.match(regEx));
+
+        elements.forEach((el) => {
+          if (!el.textContent.match(regEx)) {
+            el.remove();
+          }
+        });
+      }
+    }
+
     function searchCheck() {
       if (input.val().length >= 2) {
         var data = {};
@@ -106,11 +186,12 @@
           // console.log(data);
 
           var articlesArray = data.result;
-          // console.log(articlesArray);
 
           articlesArray.forEach((item, index) => {
-            let addresses = item.address;
+            let addresses = item.address.sort();
             let id = item._id;
+
+            // console.log(addresses);
 
             for (var i = 0; i <= addresses.length - 1; i++) {
               var address = addresses[i];
@@ -120,7 +201,6 @@
               if (regex.indexOf(' ') == -1) {
                 var searchMask = regex;
                 var regEx = new RegExp(searchMask, 'ig');
-
                 var num = address.toLowerCase().indexOf(regex.toLowerCase());
                 var straddress = address.substr(num, regex.length);
                 var replaceMask = '<b class="highlighted">' + straddress + '</b>';
@@ -132,11 +212,12 @@
                   if (regexArr[n].length > 0) {
                     var searchMask = regexArr[n];
                     var regEx = new RegExp(searchMask, 'ig');
-
                     var num = address.toLowerCase().indexOf(regexArr[n].toLowerCase());
                     var straddress = address.substr(num, regexArr[n].length);
+                    // console.log(straddress);
                     var replaceMask = '<b class="highlighted">' + straddress + '</b>';
                     var stopWords = '<b class="highlighted"></b>';
+                    // console.log(stopWords);
                     if (stopWords.indexOf(straddress.toLowerCase()) == -1) {
                       address = address.replace(regEx, replaceMask);
                     }
@@ -147,6 +228,8 @@
               autoFillBar.append(`<div class="item" id="${id}"><span>${address}</span></div>`);
             }
           });
+
+          relevantData();
 
           autoFillBar.slideDown('fast');
 
