@@ -75,41 +75,20 @@
         inputId.value = id;
         console.log(inputId.value);
       } else if (e.keyCode == 13) {
-        // var searchMask = input.val();
-        // var regEx = new RegExp(searchMask, 'ig');
-        showDeputie();
+        // showDeputie(e);
         //тут можно сделать переход на страницу статьи или все что пожелаешь
       } else {
         searchCheck();
-        // const autoFillfBar = document.querySelector('.autoFillBar');
-        // const searchMask = input.val();
-        // const elements = document.querySelectorAll('.autoFillBar .item');
-        // const regEx = new RegExp(/.+[0-9]/, 'ig');
-
-        // if (autoFillfBar.children) {
-        //   elements.forEach((el) => {
-        //     // console.log(autoFillfBar);
-        //     if (!el.textContent.match(regEx)) {
-        //       // console.log(el);
-        //       el.style.display = 'none';
-        //       // autoFillfBar.insertAdjacentHTML('afterbegin', el);
-        //     } else {
-        //       // console.log(el);
-        //       el.style.display = 'block';
-        //     }
-        //   });
-        // }
-
-        // console.log(elements);
       }
     });
 
-    autoFillBar.on('click', '.item', function () {
+    autoFillBar.on('click', '.item', function (e) {
       //тут можно сделать переход на страницу статьи или все что пожелаешь
       input.val($(this).text());
       inputId.value = $(this).attr('id');
       console.log(inputId.value);
-      showDeputie();
+
+      showDeputie(e);
       return false;
     });
 
@@ -143,27 +122,80 @@
       let searchMask = val;
       let regEx;
 
-      if (searchMask.indexOf('ул. ') != -1) {
-        searchMask = searchMask.replace(/ул[, .-]+/gi, '');
-      }
+      // if (searchMask.indexOf('ул. ') != -1) {
+      //   searchMask = searchMask.replace(/ул[, .-]+/gi, '');
+      // }
 
-      if (searchMask.indexOf(' ') != -1) {
-        console.log(searchMask);
-        searchMask = searchMask.split(/[, .-]+/gi);
-        regEx = new RegExp('[а-я, .-]+' + searchMask[0] + '[, .-]+' + searchMask[1], 'ig');
-      } else {
-        console.log(searchMask);
-        regEx = new RegExp('[а-я, .-]+' + searchMask + '[, .-]+', 'ig');
+      // if (searchMask.indexOf('просп. ') != -1) {
+      //   searchMask = searchMask.replace(/просп[, .-]+/gi, '');
+      //   console.log(searchMask);
+      // }
+
+      // if (searchMask.indexOf('проезд') != -1) {
+      //   searchMask = searchMask.replace(/проезд[, .-]+/gi, '');
+      //   console.log(searchMask);
+      // }
+
+      // if (searchMask.indexOf('товарищества') != -1) {
+      //   searchMask = searchMask.replace(/товарищества[, .-]+/gi, '');
+      //   console.log(searchMask);
+      // }
+
+      // ==============top==================
+
+      // if (searchMask.indexOf(' ') != -1) {
+      //   searchMask = searchMask.split(/[, .-]+/gi);
+
+      //   regEx = new RegExp('([а-я, .-]+)?' + searchMask[0] + '[а-я, .-]+' + searchMask[1], 'ig');
+      //   console.log(regEx);
+      // } else {
+      //   console.log(searchMask);
+      //   regEx = new RegExp('[а-я, .-]+' + searchMask + '[, .-]+', 'ig');
+      // }
+
+      // =====================================
+
+      // const regStr1 = /[а-я,.-]+/gi;
+      // const regStr2 = /[а-я, .-]+/gi;
+      // let string = '';
+
+      // if (searchMask.search(/\d+/) != -1) {
+      //   string += regStr2.exec(searchMask);
+      //   string = string.trim();
+      //   const regNum = /\d+/g;
+      //   const number = regNum.exec(searchMask);
+      //   regEx = new RegExp('[а-я, .-]+' + string + '[, .-]+' + number, 'ig');
+      //   console.log('Цифра: ', regEx);
+      // } else {
+      //   string += regStr2.exec(searchMask);
+      //   regEx = new RegExp('([а-я, .-]+)?' + string, 'ig');
+      //   console.log('Пробел: ', regEx);
+      // }
+
+      // =============top===================
+      const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
+
+      if (searchMask.search(/[., /#!$%^&*;:{}=-_`~()]+/g) != -1) {
+        let string = searchMask.split(/[., /#!$%^&*;:{}=-_`~()]+/g).join(regMarks);
+        // console.log(string.match(/\d+/g));
+
+        if (string.match(/\d+/g)) {
+          console.log('Цифра!');
+          string += '$';
+        } else {
+          string = string.replace('$', '');
+        }
+        console.log(string);
+        regEx = new RegExp('([а-я, .-]+)?' + string, 'ig');
       }
-      // console.log(searchMask);
-      console.log(regEx);
 
       if (elements.length) {
-        // console.log(elements[0].innerText.match(regEx));
-
         elements.forEach((el) => {
           if (!el.textContent.match(regEx)) {
             el.remove();
+          } else {
+            // console.log(elements);
+            inputId.value = el.getAttribute('id');
           }
         });
       }
@@ -214,16 +246,16 @@
                     var regEx = new RegExp(searchMask, 'ig');
                     var num = address.toLowerCase().indexOf(regexArr[n].toLowerCase());
                     var straddress = address.substr(num, regexArr[n].length);
-                    // console.log(straddress);
                     var replaceMask = '<b class="highlighted">' + straddress + '</b>';
                     var stopWords = '<b class="highlighted"></b>';
-                    // console.log(stopWords);
                     if (stopWords.indexOf(straddress.toLowerCase()) == -1) {
                       address = address.replace(regEx, replaceMask);
                     }
                   }
                 }
               }
+
+              // console.log(address);
 
               autoFillBar.append(`<div class="item" id="${id}"><span>${address}</span></div>`);
             }
@@ -240,51 +272,50 @@
 
     function removeDeputie() {
       const yourDeputie = document.querySelectorAll('.find .your-deputie');
-      yourDeputie.forEach((item) => (item.innerHTML = ''));
+      yourDeputie.forEach((item) => item.remove());
     }
 
-    function showDeputie() {
-      document.querySelector('.form').addEventListener('submit', (e) => {
-        e.preventDefault();
-        // removeDeputie();
-        const find = document.querySelector('.find');
+    function showDeputie(e) {
+      e.preventDefault();
 
-        autoFillBar.children().remove();
+      const find = document.querySelector('.find');
 
-        let data = {};
-        data.action = 'search';
-        // data.request = input.val().split('. ')[1];
-        data.request = inputId.value;
+      autoFillBar.children().remove();
 
-        $.ajax({
-          url: '/corpus/search',
-          type: 'POST',
-          dataType: 'json',
-          data: data,
-        }).done(function (data) {
-          console.log(data);
-          const deput = data.result[0];
-          const about = deput.about ? deput.about : '';
-          const schedule = deput.schedule
-            ? `
+      let data = {};
+      data.action = 'search';
+      data.request = inputId.value;
+      console.log(data);
+
+      $.ajax({
+        url: '/corpus/search',
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+      }).done(function (data) {
+        console.log(data);
+        const deput = data.result[0];
+        const about = deput.about ? deput.about : '';
+        const schedule = deput.schedule
+          ? `
           <p>
             <span class="red">
               График приема:
             </span>
             ${deput.schedule}
           </p>`
-            : '';
-          const appointment = deput.appointment
-            ? `
+          : '';
+        const appointment = deput.appointment
+          ? `
           <p>
             <span class="red">
               Запись:
             </span>
             ${deput.appointment}
           </p>`
-            : '';
+          : '';
 
-          const res = `
+        const res = `
           <div class="your-deputie">
             <h2 class="subtitle">
               Ваш депутат
@@ -313,12 +344,13 @@
           </div>
           `;
 
-          console.log(deput);
-          removeDeputie();
-          find.insertAdjacentHTML('beforeend', res);
-        });
+        console.log(deput);
+        removeDeputie();
+        find.insertAdjacentHTML('beforeend', res);
       });
     }
+
+    document.querySelector('.form').addEventListener('submit', (e) => showDeputie(e));
 
     return input;
   };

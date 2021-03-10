@@ -47,25 +47,13 @@ router.post('/', async (req, res) => {
 
     let inputValue = req.body.request
       .replace(/ул. /g, '')
-      .replace(/просп. /g, '')
-      .replace(/проезд /g, '')
       .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
       .replace(/\s{2,}/g, ' ');
-    console.log(inputValue);
-    inputValue = inputValue.split(' ');
-    console.log(inputValue);
-    let reg = '';
 
-    if (typeof inputValue[1] == Number) {
-      reg = new RegExp(inputValue[0] + ', ' + inputValue[1], 'gi');
-    } else {
-      reg = new RegExp(inputValue[0], 'gi');
-    }
-
+    const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
+    inputValue = inputValue.split(' ').join(regMarks);
+    const reg = new RegExp(inputValue, 'gi');
     console.log(reg);
-    // let params = {};
-    // let textKey = req.body.request;
-    // params.$text = { $search: textKey };
 
     await Deputie.find(params, (err, deputie) => {
       deputie.forEach((deput) => {
