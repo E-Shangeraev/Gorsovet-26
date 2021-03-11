@@ -1,15 +1,15 @@
-let gulp = require('gulp'),
-  sass = require('gulp-sass'),
-  browserSync = require('browser-sync'),
-  uglify = require('gulp-uglify'),
-  csso = require('gulp-csso'),
-  concat = require('gulp-concat'),
-  imagemin = require('gulp-imagemin'),
-  cache = require('gulp-cache'),
-  rename = require('gulp-rename'),
-  babel = require('gulp-babel'),
-  autoprefixer = require('gulp-autoprefixer'),
-  nodemon = require('gulp-nodemon');
+const gulp = require('gulp');
+const babel = require('gulp-babel');
+const sass = require('gulp-sass');
+const browserSync = require('browser-sync');
+const uglify = require('gulp-uglify');
+const csso = require('gulp-csso');
+const concat = require('gulp-concat');
+const imagemin = require('gulp-imagemin');
+const cache = require('gulp-cache');
+const rename = require('gulp-rename');
+const autoprefixer = require('gulp-autoprefixer');
+const nodemon = require('gulp-nodemon');
 
 gulp.task('scss', function () {
   return gulp
@@ -30,6 +30,7 @@ gulp.task('css', function () {
     .src([
       'node_modules/slick-carousel/slick/slick.css',
       'node_modules/magnific-popup/dist/magnific-popup.css',
+      'node_modules/sweetalert2/dist/sweetalert2.min.css',
       'public/css/libs/bvi.min.css',
       'public/css/libs/eventCalendar.css',
       'public/css/libs/eventCalendar_theme_responsive.css',
@@ -60,6 +61,7 @@ gulp.task('libs', function () {
       'node_modules/slick-carousel/slick/slick.min.js',
       'node_modules/magnific-popup/dist/jquery.magnific-popup.min.js',
       'node_modules/inputmask/dist/inputmask.min.js',
+      'node_modules/sweetalert2/dist/sweetalert2.min.js',
       'public/js/libs/js.cookie.min.js',
       'public/js/libs/bvi-init.min.js',
       'public/js/libs/bvi.min.js',
@@ -83,7 +85,7 @@ gulp.task('browser-sync', function (cb) {
     port: 8090,
   });
 
-  let started = false;
+  const started = false;
 
   return nodemon({
     script: 'index.js',

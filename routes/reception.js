@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const Deputie = require('../models/Deputie');
+const fs = require('fs');
 // const bodyParser = require('body-parser');
 
 router.get('/', async (req, res) => {
@@ -19,9 +20,10 @@ router.get('/:id', async (req, res) => {
   });
 });
 
-// router.post('/appeal', bodyParser(), async (req, res) => {
 router.post('/appeal', async (req, res) => {
-  console.log(req.file);
+  console.log(req.body);
+  let file;
+
   if (
     req.body.name.length != 0 ||
     req.body.phone.length != 0 ||
@@ -31,7 +33,7 @@ router.post('/appeal', async (req, res) => {
     req.body.deput.length != 0
   ) {
     try {
-      const message = `
+      let message = `
         <h2>Обращение с сайта gorsovet-26.ru</h2>
         <hr>
         <p>
@@ -64,13 +66,23 @@ router.post('/appeal', async (req, res) => {
           ${req.body.question}
         </p>
         <hr>
-        <p>
-          <b>Прикрепленный файл: </b>
-          ${req.file}
-        </p>
-        <hr>
       `;
-      await sendQuestion(message);
+
+      if (req.file) {
+        file = req.file;
+
+        message += `
+          <p>
+            <b>Прикрепленный файл: </b>
+            ${file.originalname}
+          </p>
+          <hr>
+        `;
+
+        await sendQuestion(message, file.filename, file.originalname);
+      } else {
+        await sendQuestion(message);
+      }
       res.send('1');
     } catch (err) {
       console.log(err);

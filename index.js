@@ -1,16 +1,15 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const mongoose = require('mongoose');
 const handlebars = require('handlebars');
 const exphbs = require('express-handlebars');
-// const bodyParser = require('body-parser');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const helpers = require('handlebars-helpers')(['date']);
 const { default: AdminBro } = require('admin-bro');
 const AdminBroExpress = require('admin-bro-expressjs');
 const options = require('./admin/admin.options');
-// const formidable = require('express-formidable');
 const {
   homeRoutes,
   councilRoutes,
@@ -50,14 +49,13 @@ handlebars.registerHelper('if_eq', function (a, b, opts) {
 const admin = new AdminBro(options);
 const router = buildAdminRouter(admin);
 app.use(admin.options.rootPath, router);
-
 // app.use(bodyParser.urlencoded({ extended: false }));
 // app.use(bodyParser.json());
 // app.use(formidable());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(multer({ dest: 'uploads' }).single('file'));
+app.use(multer({ dest: 'uploads/' }).single('file'));
 app.use('/', homeRoutes);
 app.use('/council', councilRoutes);
 app.use('/activity', activityRoutes);
@@ -95,7 +93,8 @@ const start = async () => {
 };
 start();
 
-sendQuestion = async (data) => {
+// Функция отправки обращения
+sendQuestion = async (data, fileName = '', originalName = '') => {
   let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
@@ -111,10 +110,32 @@ sendQuestion = async (data) => {
     to: 'zickrail@gmail.com',
     subject: 'Сайт gorsovet-26.ru',
     html: data,
-    // attachments: [{ filename: 'test.txt', path: '/uploads' }],
   };
 
+  if (fileName) {
+    mailOption.attachments = [
+      {
+        filename: originalName,
+        path: path.join(__dirname, 'uploads/', fileName),
+        encoding: 'base64',
+      },
+    ];
+  }
+
   let info = await transporter.sendMail(mailOption);
+
+  // Удаление файлов из директории после отправки письма
+  const directory = path.join(__dirname, 'uploads');
+
+  fs.readdir(directory, (err, files) => {
+    if (err) throw err;
+
+    for (let file of files) {
+      fs.unlink(path.join(directory, file), (err) => {
+        if (err) throw err;
+      });
+    }
+  });
 
   console.log('Message sent: %s', info.messageId);
   return true;
