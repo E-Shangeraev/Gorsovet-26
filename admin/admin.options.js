@@ -1,4 +1,5 @@
 const { default: AdminBro } = require('admin-bro');
+const uploadFeature = require('@admin-bro/upload');
 const AdminBroMongoose = require('admin-bro-mongoose');
 const Admin = require('./admin.resourceOptions');
 const Activity = require('../models/Activity');
@@ -6,6 +7,7 @@ const Calendar = require('../models/Calendar');
 const Deputie = require('../models/Deputie');
 const News = require('../models/News');
 const Report = require('../models/Report');
+const Document = require('../models/Session');
 
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
 const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
@@ -13,6 +15,10 @@ const {
   before: uploadBeforeFractionHook,
   after: uploadAfterFractionHook,
 } = require('./actions/upload-fraction.hook');
+const {
+  before: uploadBeforeFileHook,
+  after: uploadAfterFileHook,
+} = require('./actions/upload-file.hook');
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
@@ -34,6 +40,7 @@ const options = {
         Deputie: 'Депутатский корпус',
         News: 'Новости',
         Report: 'Фотоотчет',
+        Document: 'Документы',
       },
       buttons: {
         filter: 'Фильтр',
@@ -87,6 +94,14 @@ const options = {
           properties: {
             img: 'Путь к фотографии',
             uploadImage: 'Фото',
+          },
+        },
+        Document: {
+          properties: {
+            file: 'Путь к файлу',
+            uploadFile: 'Файл',
+            name: 'Документ',
+            category: 'Категория',
           },
         },
       },
@@ -304,6 +319,49 @@ const options = {
             },
             after: async (res, req, context) => {
               const modifiedResponse = await passwordAfterHook(res, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+          },
+        },
+      },
+    },
+    {
+      resource: Document,
+      options: {
+        // listProperties: ['name', 'category'],
+        // editProperties: ['uploadFile', 'category'],
+        parent: {
+          name: 'Документы',
+        },
+        properties: {
+          uploadFile: {
+            components: {
+              edit: AdminBro.bundle('./components/upload-file.edit.tsx'),
+            },
+          },
+        },
+        actions: {
+          new: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              uploadBeforeFileHook(modifiedRequest, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              uploadAfterFileHook(modifiedResponse, req, context);
+              return uploadAfterHook(modifiedResponse, req, context);
+            },
+          },
+          edit: {
+            before: async (req, context) => {
+              const modifiedRequest = await passwordBeforeHook(req, context);
+              uploadBeforeFileHook(modifiedRequest, context);
+              return uploadBeforeHook(modifiedRequest, context);
+            },
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              uploadAfterFileHook(modifiedResponse, req, context);
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
