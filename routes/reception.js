@@ -1,8 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const Deputie = require('../models/Deputie');
-const fs = require('fs');
-// const bodyParser = require('body-parser');
+const Swal = require('sweetalert2');
 
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().lean();
@@ -21,17 +20,10 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/appeal', async (req, res) => {
-  console.log(req.body);
+  console.log(typeof req.body.deput);
   let file;
 
-  if (
-    req.body.name.length != 0 ||
-    req.body.phone.length != 0 ||
-    req.body.question.length != 0 ||
-    req.body.email.length != 0 ||
-    req.body.address.length != 0 ||
-    req.body.deput.length != 0
-  ) {
+  if (req.body.deput) {
     try {
       let message = `
         <h2>Обращение с сайта gorsovet-26.ru</h2>
@@ -90,6 +82,52 @@ router.post('/appeal', async (req, res) => {
   } else {
     res.send('0');
   }
+});
+
+router.post('/', async (req, res) => {
+  if (req.body.action == 'search') {
+    let params = {};
+    const textArray = req.body.request.split(' ');
+    let textKey = '';
+    textArray.forEach((text, index) => {
+      if (index == 0) {
+        textKey = '"' + text + '"';
+      } else {
+        textKey += ' ' + '"' + text + '"';
+      }
+    });
+    params.$text = { $search: textKey };
+
+    let inputValue = req.body.request
+      .replace(/ул. /g, '')
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+      .replace(/\s{2,}/g, ' ');
+
+    const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
+    inputValue = inputValue.split(' ').join(regMarks);
+    const reg = new RegExp(inputValue, 'gi');
+    console.log(reg);
+
+    await Deputie.find(params, (err, deputie) => {
+      deputie.forEach((deput) => {
+        let a = deput.address
+          .map((addr) => {
+            if (addr.match(reg)) {
+              return addr;
+            }
+          })
+          .filter((addr) => addr);
+        deput.address = a;
+      });
+      res.send({ result: deputie });
+    }).sort({ score: { $meta: 'textScore' } });
+  }
+});
+
+router.post('/search', async (req, res) => {
+  await Deputie.find({ _id: req.body.request }, (err, deputie) => {
+    res.send({ result: deputie });
+  });
 });
 
 module.exports = router;

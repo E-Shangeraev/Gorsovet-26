@@ -51,8 +51,8 @@
     z-index: 2;
     transition: 0.15s ease-in;
   }
-  li:nth-last-child(1),
-  li:nth-last-child(2) {
+  li:nth-last-child(1) {
+    // li:nth-last-child(2) {
     display: none;
   }
   li:hover,
@@ -94,11 +94,17 @@
   .header__nav a {
     padding: 16px 0px;
   }
+  .header__nav ul {
+    padding: 0 150px;
+  }
   .header__search {
     font-size: 16px;
   }
   .header__title {
     font-size: 30px;
+  }
+  .header__top {
+    padding: 10px 150px;
   }
   .header__top img {
     max-width: 80px;

@@ -85,7 +85,7 @@ gulp.task('browser-sync', function (cb) {
     port: 8090,
   });
 
-  const started = false;
+  let started = false;
 
   return nodemon({
     script: 'index.js',

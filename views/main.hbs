@@ -243,12 +243,15 @@
         Введите адрес своего проживания и узнайте, какой депутат отвечает за ваш округ!
       </p>
     </div>
-    <form class="form" action="#">
+    <form class="form" action="/main/search" method="POST">
       <input
         class="form__field"
+        id="deputie-search"
         type="search"
         placeholder="Введите адерс своего проживания*"
+        autocomplete="off"
       />
+      <input type="hidden" class="form__id">
       <button class="button form__button">
         Найти
       </button>
@@ -354,18 +357,21 @@
         type="text"
         placeholder="Ваш вопрос*"
         name="question"
+        required
       />
       <input
         class="form__field form__field--white"
         type="name"
         placeholder="Ваше имя*"
         name="name"
+        required
       />
       <input
         class="form__field form__field--white"
         type="tel"
         placeholder="Ваш телефон*" 
         name="phone"
+        required
       />
       <button class="button button--white" type="submit">
         Отправить

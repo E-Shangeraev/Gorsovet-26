@@ -83,54 +83,18 @@
         Введите адрес своего проживания и узнайте, какой депутат отвечает за ваш округ!
       </p>
     </div>
-    <form class="form" action="#">
+    <form class="form" action="/reception/search" method="POST">
       <input
         class="form__field"
+        id="deputie-search"
         type="search"
         placeholder="Введите адерс своего проживания*"
+        autocomplete="off"
       />
+      <input type="hidden" class="form__id">
       <button class="button form__button">
         Найти
       </button>
     </form>
-  </div>
-  <div class="your-deputie">
-    <h2 class="subtitle">
-      Ваш депутат
-    </h2>
-    <div class="your-deputie__wrapper bg-gray bg-gray--border">
-      <img class="your-deputie__photo" src="/img/corpus.jpg" />
-      <header class="your-deputie__header d-flex">
-        <div>
-          <h3 class="your-deputie__name">
-            Антонов Эдуард Юрьевич
-          </h3>
-          <p class="your-deputie__post">
-            МАУ СШ «Юность», директор
-          </p>
-        </div>
-        <img src="/img/edro.png" />
-      </header>
-      <p class="your-deputie__desc">
-        Антонов Эдуард Юрьевич, директор спортивной школы «Юность». 40 лет. Живёт и работает в
-          Железногорске. Прошёл путь от тренера до руководителя спортивного учреждения.
-          Воспитывает сына и дочь. Ведёт здоровый образ жизни, своим собственным примером
-          пропагандирует физическую культуру.
-      </p>
-      <footer class="your-deputie__footer">
-        <p>
-          <span class="red">
-            График приема:
-          </span>
-          каждая среда месяца с 18 до 20 ГИМНАЗИЯ № 96
-        </p>
-        <p>
-          <span class="red">
-            Запись:
-          </span>
-          предварительная запись по телефону 8-913-199-65-67
-        </p>
-      </footer>
-    </div>
   </div>
 </section>

@@ -22,12 +22,10 @@ router.get('/calendar', async (req, res) => {
   res.json(calendar);
 });
 
-// router.post('/question', bodyParser(), async (req, res) => {
 router.post('/question', async (req, res) => {
   console.log(req.body);
-  if (req.body.name.length != 0 || req.body.phone.length != 0 || req.body.question.length != 0) {
-    try {
-      const message = `
+  try {
+    const message = `
         <h2>Письмо с сайта gorsovet-26.ru</h2>
         <hr>
         <p>
@@ -46,14 +44,58 @@ router.post('/question', async (req, res) => {
         </p>
         <hr>
       `;
-      await sendQuestion(message);
-      res.send('1');
-    } catch (err) {
-      console.log(err);
-    }
-  } else {
+    await sendQuestion(message);
+    res.send('1');
+  } catch (err) {
+    console.log(err);
     res.send('0');
   }
+});
+
+router.post('/main', async (req, res) => {
+  if (req.body.action == 'search') {
+    let params = {};
+    const textArray = req.body.request.split(' ');
+    let textKey = '';
+    textArray.forEach((text, index) => {
+      if (index == 0) {
+        textKey = '"' + text + '"';
+      } else {
+        textKey += ' ' + '"' + text + '"';
+      }
+    });
+    params.$text = { $search: textKey };
+
+    let inputValue = req.body.request
+      .replace(/ул. /g, '')
+      .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, '')
+      .replace(/\s{2,}/g, ' ');
+
+    const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
+    inputValue = inputValue.split(' ').join(regMarks);
+    const reg = new RegExp(inputValue, 'gi');
+    console.log(reg);
+
+    await Deputie.find(params, (err, deputie) => {
+      deputie.forEach((deput) => {
+        let a = deput.address
+          .map((addr) => {
+            if (addr.match(reg)) {
+              return addr;
+            }
+          })
+          .filter((addr) => addr);
+        deput.address = a;
+      });
+      res.send({ result: deputie });
+    }).sort({ score: { $meta: 'textScore' } });
+  }
+});
+
+router.post('/main/search', async (req, res) => {
+  await Deputie.find({ _id: req.body.request }, (err, deputie) => {
+    res.send({ result: deputie });
+  });
 });
 
 module.exports = router;

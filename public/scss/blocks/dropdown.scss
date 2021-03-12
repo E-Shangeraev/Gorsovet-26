@@ -50,6 +50,8 @@
   width: 100%;
   left: 0;
   margin-top: 1px;
+  padding: 0;
+  list-style: none;
   box-shadow: 0 1px 2px rgb(197, 197, 197);
   border-radius: 0 1px 2px 2px;
   overflow: hidden;
@@ -57,15 +59,22 @@
   max-height: 135px;
   overflow-y: auto;
   z-index: 9;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    background-color: $gray;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $d-gray;
+    border-radius: 9em;
+  }
 }
 .dropdown .dropdown-menu li {
   padding: 10px;
+  font-family: $semi;
+  font-size: 14px;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
-}
-.dropdown .dropdown-menu {
-  padding: 0;
-  list-style: none;
 }
 .dropdown .dropdown-menu li:hover {
   background-color: #f2f2f2;

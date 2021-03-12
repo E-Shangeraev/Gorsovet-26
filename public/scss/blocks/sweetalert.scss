@@ -1,0 +1,52 @@
+.swal2-title {
+  font-family: $semi;
+}
+.swal2-html-container {
+  font-family: $reg;
+}
+.swal2-actions {
+  justify-content: center;
+}
+.swal2-styled.swal2-confirm {
+  flex-shrink: 0;
+  padding: 18px 30px;
+  font-family: $semi;
+  font-size: 18px;
+  line-height: 130%;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: $red;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: box-shadow, background-color ease-in-out 0.3s;
+  box-sizing: border-box;
+}
+.swal2-actions:not(.swal2-loading) .swal2-styled:hover {
+  background-color: $d-red !important;
+  box-shadow: 0 0 6px rgb(197, 197, 197);
+}
+.swal2-actions:not(.swal2-loading) .swal2-styled:focus,
+.swal2-actions:not(.swal2-loading) .swal2-styled:active {
+  outline: none;
+  box-shadow: inset 0 2px 5px -1px rgba(0, 0, 0, 0.5) !important;
+}
+
+@media (max-width: 1600px) {
+  .swal2-styled.swal2-confirm {
+    font-size: 16px;
+  }
+}
+@media (max-width: 1440px) {
+  .swal2-styled.swal2-confirm {
+    padding: 14px 22px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 440px) {
+  .swal2-styled.swal2-confirm {
+    padding: 12px 17px;
+    font-size: 12px;
+    line-height: 130%;
+  }
+}

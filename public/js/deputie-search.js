@@ -1,12 +1,5 @@
 (function ($) {
-  // const string = 'ул. Восточная, 32';
-  // const reg = /восточная/gi;
-  // console.log(string.match(reg));
-
-  // const ar = ['курчатова', '64'];
-  // console.log(ar[1].match(/\d/g).join(''));
-
-  $.fn.autoSearch = function () {
+  $.fn.autoSearch = function (page) {
     var request = '';
     var input = this;
     var inputId = document.querySelector('.form__id');
@@ -208,7 +201,7 @@
         data.request = input.val();
 
         $.ajax({
-          url: '/corpus',
+          url: `${page}`,
           type: 'POST',
           dataType: 'json',
           data: data,
@@ -288,7 +281,7 @@
       console.log(data);
 
       $.ajax({
-        url: '/corpus/search',
+        url: `${page}/search`,
         type: 'POST',
         dataType: 'json',
         data: data,
@@ -356,6 +349,10 @@
   };
 
   $(document).ready(function () {
-    $('#deputie-search').autoSearch();
+    if (fileName === '') {
+      $('#deputie-search').autoSearch('/main');
+    } else {
+      $('#deputie-search').autoSearch(`/${fileName}`);
+    }
   });
 })(jQuery);

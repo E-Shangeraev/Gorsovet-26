@@ -13,7 +13,14 @@
   background-position: 96% center;
 
   &:focus {
-    outline-color: #9b9b9b;
+    outline-color: rgb(197, 197, 197) !important;
+    background-image: none;
+  }
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 0 6px rgb(197, 197, 197) !important;
+    background-color: transparent !important;
   }
 }
 
