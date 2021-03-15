@@ -10,50 +10,24 @@
       <h3 class="subtitle">
         Решения сессии
       </h3>
-      <ul class="documents__list">
-        <li class="documents__item">
-          2020
-          <ul>
-            <li>
-              <a href="#">
-                Январь
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Февраль
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Март
-              </a>
+      {{#if sessions.length}}
+        {{#each sessions}}
+          <ul class="documents__list">
+            <li class="documents__item">
+              {{dir}}
+              <ul>
+                {{#each documents}}
+                  <li>
+                    <a href="./public/uploads/documents/sessions/{{dir}}/{{file}}" download>
+                      {{name}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
             </li>
           </ul>
-        </li>
-      </ul>
-      <ul class="documents__list">
-        <li class="documents__item">
-          2020
-          <ul>
-            <li>
-              <a href="#">
-                Январь
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Февраль
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Март
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+        {{/each}}
+      {{/if}}
     </div>
     <div class="documents__block">
       <h3 class="subtitle">
@@ -64,7 +38,7 @@
           Статистическая информация
           <ul>
             <li>
-              <a href="#">
+              <a href="/public/uploads/documents/sessions/2020/robots.txt" data-url="/public/uploads/documents/sessions/2020/robots.txt">
                 Январь
               </a>
             </li>
@@ -108,38 +82,24 @@
       <h3 class="subtitle">
         Нормативная правовая база
       </h3>
-      <ul class="documents__list">
-        <li class="documents__item">
-          Раздел 1
-          <ul>
-            <li>
-              Январь
-            </li>
-            <li>
-              Февраль
-            </li>
-            <li>
-              Март
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="documents__list">
-        <li class="documents__item">
-          Раздел 2
-          <ul>
-            <li>
-              Январь
-            </li>
-            <li>
-              Февраль
-            </li>
-            <li>
-              Март
+      {{#if base.length}}
+        {{#each base}}
+          <ul class="documents__list">
+            <li class="documents__item">
+              {{dir}}
+              <ul>
+                {{#each documents}}
+                  <li>
+                    <a href="./public/uploads/documents/base/{{dir}}/{{file}}" download>
+                      {{name}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
             </li>
           </ul>
-        </li>
-      </ul>
+        {{/each}}
+      {{/if}}
     </div>
     <a href="#" class="documents__download">
       <span>

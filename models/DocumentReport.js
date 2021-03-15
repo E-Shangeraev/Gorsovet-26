@@ -1,13 +1,10 @@
 const { Schema, model, Types } = require('mongoose');
 
-const Session = new Schema(
+const DocumentReport = new Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
-    file: String,
-    category: {
+    name: String,
+    title: String,
+    files: {
       type: String,
       required: true,
     },
@@ -16,9 +13,9 @@ const Session = new Schema(
       ref: 'Admin',
     },
   },
-  { collection: 'documents' },
+  { collection: 'documents_reports' },
 );
 
 // Deputie.index({ address: 'text' }, { default_language: 'russian' });
 
-module.exports = model('Session', Session);
+module.exports = model('DocumentReport', DocumentReport);

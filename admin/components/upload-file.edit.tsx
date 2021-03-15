@@ -6,12 +6,13 @@ const Edit: React.FC<BasePropertyProps> = (props) => {
   const { property, onChange, record } = props;
 
   const handleDropZoneChange: DropZoneProps['onChange'] = (files) => {
-    onChange('file', '/uploads/documents/' + files[0]?.name);
+    onChange('files', '/uploads/documents/' + files[0]?.name);
     onChange('name', files[0]?.name);
+    onChange('title', files[0]?.name.split('.')[0]);
     onChange(property.name, files[0]);
   };
 
-  const uploadedFile = record.params.fraction;
+  const uploadedFile = record.params.files;
 
   const fileToUpload = record.params[property.name];
 
