@@ -5,8 +5,9 @@ const DocumentBase = require('../models/DocumentBase');
 const router = Router();
 const path = require('path');
 const fs = require('fs');
+const archiver = require('archiver');
 
-const getDocuments = (directorie) => {
+const getDocuments = (model, directorie) => {
   let array = [];
 
   const directories = fs.readdirSync(
@@ -24,15 +25,53 @@ const getDocuments = (directorie) => {
     array.push(obj);
   });
 
-  console.log(array);
+  // console.log(array);
+  removeUnavailableDocs(model, directorie);
 
   return array;
 };
 
+async function removeUnavailableDocs(model, directorie) {
+  const documents = await model.find().lean();
+  const directories = fs.readdirSync(
+    path.join(__dirname, `../public/uploads/documents/${directorie}`),
+  );
+  const searchArr = documents.map((item) => item.title);
+  // console.log(`Документы в базе данных ${directorie}:`, searchArr);
+  // console.log('Локально', directories);
+
+  directories.forEach((dir) => {
+    if (searchArr.indexOf(dir) == -1) {
+      // console.log(`Элемента ${dir} нет`);
+      deleteFolderRecursive(
+        path.join(__dirname, `../public/uploads/documents/${directorie}/${dir}`),
+      );
+    }
+  });
+}
+
+function deleteFolderRecursive(path) {
+  if (fs.existsSync(path)) {
+    fs.readdirSync(path).forEach(function (file) {
+      const curPath = path + '/' + file;
+      if (fs.lstatSync(curPath).isDirectory()) {
+        deleteFolderRecursive(curPath);
+      } else {
+        fs.unlinkSync(curPath);
+      }
+    });
+    fs.rmdirSync(path);
+  }
+}
+
 router.get('/', async (req, res) => {
-  const documentSessions = getDocuments('sessions');
-  const documentReports = getDocuments('reports');
-  const documentBases = getDocuments('base');
+  const documentSessions = getDocuments(DocumentSession, 'sessions');
+  const documentReports = getDocuments(DocumentReport, 'reports');
+  const documentBases = getDocuments(DocumentBase, 'base');
+
+  const files = fs.readdirSync(path.join(__dirname, '../public/uploads/documents/sessions/2020'));
+
+  console.log(files);
 
   res.render('documents', {
     title: 'Документы',
@@ -43,12 +82,8 @@ router.get('/', async (req, res) => {
   });
 });
 
-// router.post('/download', async (req, res) => {
-//   const param = JSON.parse(req.body.param);
-//   console.log(param);
-//   const file = path.join(__dirname, '..', param.path);
-//   console.log(file);
-//   res.download(file);
-// });
+router.get('/download', async (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/uploads/documents/all/documents.zip'));
+});
 
 module.exports = router;

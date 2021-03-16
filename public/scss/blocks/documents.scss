@@ -48,6 +48,8 @@
     padding-left: 15px;
     padding-top: -15px;
     height: 0;
+    // height: fit-content;
+    // transform: scaleY(0);
     opacity: 0;
     z-index: -1;
     transition: 0.5s ease-in-out 0s;
@@ -98,6 +100,8 @@
       padding-top: 15px;
       top: 0;
       height: auto;
+      // height: 100px;
+      // transform: scaleY(1);
       opacity: 1;
       z-index: 1;
     }

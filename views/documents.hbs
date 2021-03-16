@@ -33,50 +33,24 @@
       <h3 class="subtitle">
         Отчёты о деятельности
       </h3>
-      <ul class="documents__list">
-        <li class="documents__item">
-          Статистическая информация
-          <ul>
-            <li>
-              <a href="/public/uploads/documents/sessions/2020/robots.txt" data-url="/public/uploads/documents/sessions/2020/robots.txt">
-                Январь
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Февраль
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Март
-              </a>
+      {{#if reports.length}}
+        {{#each reports}}
+          <ul class="documents__list">
+            <li class="documents__item">
+              {{dir}}
+              <ul>
+                {{#each documents}}
+                  <li>
+                    <a href="./public/uploads/documents/reports/{{dir}}/{{file}}" download>
+                      {{name}}
+                    </a>
+                  </li>
+                {{/each}}
+              </ul>
             </li>
           </ul>
-        </li>
-      </ul>
-      <ul class="documents__list">
-        <li class="documents__item">
-          Сведения о доходах
-          <ul>
-            <li>
-              <a href="#">
-                Январь
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Февраль
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                Март
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+        {{/each}}
+      {{/if}}
     </div>
     <div class="documents__block">
       <h3 class="subtitle">
@@ -101,7 +75,7 @@
         {{/each}}
       {{/if}}
     </div>
-    <a href="#" class="documents__download">
+    <a href="/documents/download" class="documents__download" download>
       <span>
         Скачать все фалы архивом
       </span>
