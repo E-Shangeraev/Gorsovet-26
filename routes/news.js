@@ -2,6 +2,7 @@ const { Router } = require('express');
 const News = require('../models/News');
 const Report = require('../models/Report');
 const router = Router();
+const url = require('url');
 
 // const changeStream = News.watch().on('change', async (data) => {
 //   console.log(data.fullDocument);
@@ -98,5 +99,17 @@ function paginatedResults(model) {
     next();
   };
 }
+
+router.post('/', paginatedResults(News), async (req, res) => {
+  if (req.body.request) {
+    await News.find(
+      { $text: { $search: req.body.request } },
+      { score: { $meta: 'textScore' } },
+      (err, news) => {
+        res.send({ result: news });
+      },
+    ).sort({ score: { $meta: 'textScore' } });
+  }
+});
 
 module.exports = router;

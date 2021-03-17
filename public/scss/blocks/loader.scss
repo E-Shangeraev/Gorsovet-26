@@ -11,6 +11,14 @@
   border-right: 3px solid transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
+
+  &__news {
+    width: 30px;
+    height: 30px;
+  }
+  &--black {
+    border-top-color: #000;
+  }
 }
 
 @keyframes rotation {

@@ -26,4 +26,6 @@ const News = new Schema(
   { collection: 'news' },
 );
 
+News.index({ text: 'text' }, { default_language: 'russian' });
+
 module.exports = model('News', News);

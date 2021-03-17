@@ -3,7 +3,16 @@
     <h2 class="title">
       Документы
     </h2>
-    <input type="search" class="search" placeholder="Поиск по документам" />
+    <form class="form" action="/documents/search" method="POST">
+      <input
+        class="search"
+        id="documents-search"
+        type="search"
+        placeholder="Поиск по документам"
+        autocomplete="off"
+      />
+      <input type="hidden" class="form__id">
+    </form>
   </div>
   <div class="documents__container">
     <div class="documents__block">

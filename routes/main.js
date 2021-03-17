@@ -72,7 +72,7 @@ router.post('/main', async (req, res) => {
       .replace(/\s{2,}/g, ' ');
 
     const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
-    inputValue = inputValue.split(' ').join(regMarks);
+    inputValue = inputValue.split(' ').join(regMarks) + '$';
     const reg = new RegExp(inputValue, 'gi');
     console.log(reg);
 

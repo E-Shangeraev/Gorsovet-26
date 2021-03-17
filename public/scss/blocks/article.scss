@@ -1,8 +1,10 @@
 .article__wrapper {
   display: flex;
+  justify-content: space-between;
 
   article {
     margin-right: 35px;
+    flex-grow: 1;
   }
 }
 .article__title {
@@ -24,6 +26,7 @@
   margin-bottom: 30px;
   border-radius: 6px;
   width: 100%;
+  max-width: 900px;
   object-fit: cover;
 }
 .article__text {

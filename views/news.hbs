@@ -3,7 +3,16 @@
     <h2 class="title">
       Новости
     </h2>
-    <input type="search" class="search" placeholder="Поиск по новостям" />
+    <form class="form" action="/news/search" method="POST">
+      <input
+        class="search"
+        id="news-search"
+        type="search"
+        placeholder="Поиск по новостям"
+        autocomplete="off"
+      />
+      <input type="hidden" class="form__id">
+    </form>
   </div>
   <div class="news__container">
     {{#if news.length}}

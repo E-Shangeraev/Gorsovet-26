@@ -1,3 +1,10 @@
+.slick-slide {
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
 .slider__nav {
   display: flex;
   align-items: center;

@@ -25,9 +25,10 @@ router.get('/:id', async (req, res) => {
     .lean();
 
   res.render('article', {
-    title: 'Новости',
+    title: 'Деятельность совета',
     article,
     activities,
+    isActivity: true,
   });
 });
 
@@ -51,7 +52,7 @@ router.post('/', async (req, res) => {
       .replace(/\s{2,}/g, ' ');
 
     const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
-    inputValue = inputValue.split(' ').join(regMarks);
+    inputValue = inputValue.split(' ').join(regMarks) + '$';
     const reg = new RegExp(inputValue, 'gi');
     console.log(reg);
 

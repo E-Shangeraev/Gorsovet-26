@@ -16,33 +16,6 @@
       e.preventDefault();
     });
 
-    // input.on('input', function (e) {
-    //   const autoFillfBar = document.querySelector('.autoFillBar');
-    //   const searchMask = input.val();
-    //   const elements = autoFillfBar.querySelectorAll('.item');
-
-    //   const regEx = new RegExp(/.+[0-9]/, 'ig');
-
-    //   if (elements) {
-    //     elements.forEach((el) => {
-    //       // if (!el.classList.contains('matched')) {
-    //       //   autoFillBar.remove(el);
-    //       // }
-    //       if (el.textContent.match(regEx)) {
-    //         el.classList.add('matched');
-    //         console.log(el);
-    //         // autoFillfBar.insertAdjacentHTML('afterBegin', el);
-    //       } else {
-    //         el.classList.remove('matched');
-    //       }
-    //     });
-
-    //   }
-
-    //   console.log(autoFillfBar);
-    //   console.log(regEx);
-    // });
-
     input.on('keyup', function (e) {
       if (e.keyCode == 40) {
         if (autoFillBar.find('.active').length == 0) {
@@ -115,68 +88,10 @@
       let searchMask = val;
       let regEx;
 
-      // if (searchMask.indexOf('ул. ') != -1) {
-      //   searchMask = searchMask.replace(/ул[, .-]+/gi, '');
-      // }
-
-      // if (searchMask.indexOf('просп. ') != -1) {
-      //   searchMask = searchMask.replace(/просп[, .-]+/gi, '');
-      //   console.log(searchMask);
-      // }
-
-      // if (searchMask.indexOf('проезд') != -1) {
-      //   searchMask = searchMask.replace(/проезд[, .-]+/gi, '');
-      //   console.log(searchMask);
-      // }
-
-      // if (searchMask.indexOf('товарищества') != -1) {
-      //   searchMask = searchMask.replace(/товарищества[, .-]+/gi, '');
-      //   console.log(searchMask);
-      // }
-
-      // ==============top==================
-
-      // if (searchMask.indexOf(' ') != -1) {
-      //   searchMask = searchMask.split(/[, .-]+/gi);
-
-      //   regEx = new RegExp('([а-я, .-]+)?' + searchMask[0] + '[а-я, .-]+' + searchMask[1], 'ig');
-      //   console.log(regEx);
-      // } else {
-      //   console.log(searchMask);
-      //   regEx = new RegExp('[а-я, .-]+' + searchMask + '[, .-]+', 'ig');
-      // }
-
-      // =====================================
-
-      // const regStr1 = /[а-я,.-]+/gi;
-      // const regStr2 = /[а-я, .-]+/gi;
-      // let string = '';
-
-      // if (searchMask.search(/\d+/) != -1) {
-      //   string += regStr2.exec(searchMask);
-      //   string = string.trim();
-      //   const regNum = /\d+/g;
-      //   const number = regNum.exec(searchMask);
-      //   regEx = new RegExp('[а-я, .-]+' + string + '[, .-]+' + number, 'ig');
-      //   console.log('Цифра: ', regEx);
-      // } else {
-      //   string += regStr2.exec(searchMask);
-      //   regEx = new RegExp('([а-я, .-]+)?' + string, 'ig');
-      //   console.log('Пробел: ', regEx);
-      // }
-
-      // =============top===================
       const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
 
       if (searchMask.search(/[., /#!$%^&*;:{}=-_`~()]+/g) != -1) {
         let string = searchMask.split(/[., /#!$%^&*;:{}=-_`~()]+/g).join(regMarks);
-
-        // if (string.match(/\d+/g)) {
-        //   console.log('Цифра!');
-        //   string += '$';
-        // } else {
-        //   string = string.replace('$', '');
-        // }
         console.log(string);
         regEx = new RegExp('([а-я, .-]+)?' + string, 'ig');
       }
@@ -186,7 +101,6 @@
           if (!el.textContent.match(regEx)) {
             el.remove();
           } else {
-            // console.log(elements);
             inputId.value = el.getAttribute('id');
           }
         });
@@ -207,15 +121,11 @@
         }).done(function (data) {
           autoFillBar.children().remove();
 
-          // console.log(data);
-
           var articlesArray = data.result;
 
           articlesArray.forEach((item, index) => {
             let addresses = item.address.sort();
             let id = item._id;
-
-            // console.log(addresses);
 
             for (var i = 0; i <= addresses.length - 1; i++) {
               var address = addresses[i];
@@ -247,8 +157,6 @@
                 }
               }
 
-              // console.log(address);
-
               autoFillBar.append(`<div class="item" id="${id}"><span>${address}</span></div>`);
             }
           });
@@ -256,8 +164,6 @@
           relevantData();
 
           autoFillBar.slideDown('fast');
-
-          // конец ajax-запроса, ты знаешь, что делать ;)
         });
       }
     }
@@ -348,10 +254,6 @@
   };
 
   $(document).ready(function () {
-    if (fileName === '') {
-      $('#deputie-search').autoSearch('/main');
-    } else {
-      $('#deputie-search').autoSearch(`/${fileName}`);
-    }
+    $('#deputie-search').autoSearch(`/${fileName}`);
   });
 })(jQuery);
