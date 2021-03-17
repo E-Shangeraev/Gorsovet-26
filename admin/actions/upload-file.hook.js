@@ -4,33 +4,11 @@ const path = require('path');
 const fs = require('fs');
 const unzipper = require('unzipper');
 const archiver = require('archiver');
-const JSZip = require('jszip');
 
 async function downloadArchive(folderName) {
-  // const zip = new JSZip();
   const zipName = 'documents.zip';
   const source = path.join(__dirname, '../../public/uploads/documents/', folderName);
   const out = path.join(__dirname, '../../public/uploads/documents/all', zipName);
-
-  // zip.file(
-  //   'robots.txt',
-  //   fs.readFileSync(
-  //     path.join(__dirname, '../../public/uploads/documents/sessions/2020/robots.txt'),
-  //   ),
-  // );
-  // zip.file(
-  //   'test.doc',
-  //   fs.readFileSync(path.join(__dirname, '../../public/uploads/documents/sessions/2020/test.doc')),
-  // );
-
-  // const data = await zip.generateAsync({
-  //   base64: false,
-  //   compression: 'DEFLATE',
-  //   type: 'nodebuffer',
-  // });
-
-  // fs.writeFileSync(out, data, 'binary');
-
   const archive = archiver('zip', { zlib: { level: 9 } });
   const stream = fs.createWriteStream(out);
 
@@ -72,19 +50,15 @@ const before = async (req, context) => {
 };
 
 /** @type {AdminBro.After<AdminBro.ActionResponse>}*/
-const after = async (res, req, context, directory) => {
+const after = async (res, req, context, page, directory) => {
   const { record, uploadFile } = context;
 
   if (record.isValid() && uploadFile) {
     const fileDir = uploadFile.name.split('.')[0];
-    const filePath = path.join(
-      __dirname,
-      `../../public/uploads/documents/archives`,
-      uploadFile.name,
-    );
+    const filePath = path.join(__dirname, `../../public/uploads/${page}/archives`, uploadFile.name);
     const pathToExtract = path.join(
       __dirname,
-      `../../public/uploads/documents/${directory}/${fileDir}`,
+      `../../public/uploads/${page}/${directory}/${fileDir}`,
     );
 
     await fs.promises.mkdir(path.dirname(filePath), { recursive: true });

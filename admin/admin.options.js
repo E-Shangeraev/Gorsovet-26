@@ -10,6 +10,9 @@ const Report = require('../models/Report');
 const DocumentSession = require('../models/DocumentSession');
 const DocumentReport = require('../models/DocumentReport');
 const DocumentBase = require('../models/DocumentBase');
+const ActivityWork = require('../models/ActivityWork');
+const ActivityHearing = require('../models/ActivityHearing');
+const ActivitySession = require('../models/ActivitySession');
 
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
 const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
@@ -24,13 +27,13 @@ const {
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
-const getDocumentOptions = (model, category) => ({
+const getDocumentOptions = (model, page, category, parent) => ({
   resource: model,
   options: {
     listProperties: ['title'],
     editProperties: ['uploadFile', 'title'],
     parent: {
-      name: 'Документы',
+      name: parent,
     },
     properties: {
       uploadFile: {
@@ -48,7 +51,7 @@ const getDocumentOptions = (model, category) => ({
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          uploadAfterFileHook(modifiedResponse, req, context, category);
+          uploadAfterFileHook(modifiedResponse, req, context, page, category);
           return uploadAfterHook(modifiedResponse, req, context);
         },
       },
@@ -60,7 +63,7 @@ const getDocumentOptions = (model, category) => ({
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          uploadAfterFileHook(modifiedResponse, req, context, category);
+          uploadAfterFileHook(modifiedResponse, req, context, page, category);
           return uploadAfterHook(modifiedResponse, req, context);
         },
       },
@@ -89,6 +92,9 @@ const options = {
         DocumentSession: 'Решения сессии',
         DocumentReport: 'Отчёты о деятельности',
         DocumentBase: 'Нормативная правовая база',
+        ActivityWork: 'Работа комиссий',
+        ActivityHearing: 'Публичные слушания',
+        ActivitySession: 'Сессии',
       },
       buttons: {
         filter: 'Фильтр',
@@ -161,6 +167,30 @@ const options = {
           },
         },
         DocumentBase: {
+          properties: {
+            file: 'Путь к файлу',
+            uploadFile: 'Файл',
+            name: 'Документ',
+            title: 'Название раздела',
+          },
+        },
+        ActivityWork: {
+          properties: {
+            file: 'Путь к файлу',
+            uploadFile: 'Файл',
+            name: 'Документ',
+            title: 'Название раздела',
+          },
+        },
+        ActivityHearing: {
+          properties: {
+            file: 'Путь к файлу',
+            uploadFile: 'Файл',
+            name: 'Документ',
+            title: 'Название раздела',
+          },
+        },
+        ActivitySession: {
           properties: {
             file: 'Путь к файлу',
             uploadFile: 'Файл',
@@ -389,52 +419,12 @@ const options = {
         },
       },
     },
-    getDocumentOptions(DocumentSession, 'sessions'),
-    getDocumentOptions(DocumentReport, 'reports'),
-    getDocumentOptions(DocumentBase, 'base'),
-    // {
-    //   resource: Document,
-    //   options: {
-    //     listProperties: ['year'],
-    //     editProperties: ['uploadFile', 'year'],
-    //     parent: {
-    //       name: 'Документы',
-    //     },
-    //     properties: {
-    //       uploadFile: {
-    //         components: {
-    //           edit: AdminBro.bundle('./components/upload-file.edit.tsx'),
-    //         },
-    //       },
-    //     },
-    //     actions: {
-    //       new: {
-    //         before: async (req, context) => {
-    //           const modifiedRequest = await passwordBeforeHook(req, context);
-    //           uploadBeforeFileHook(modifiedRequest, context);
-    //           return uploadBeforeHook(modifiedRequest, context);
-    //         },
-    //         after: async (res, req, context) => {
-    //           const modifiedResponse = await passwordAfterHook(res, req, context);
-    //           uploadAfterFileHook(modifiedResponse, req, context, 'sessions');
-    //           return uploadAfterHook(modifiedResponse, req, context);
-    //         },
-    //       },
-    //       edit: {
-    //         before: async (req, context) => {
-    //           const modifiedRequest = await passwordBeforeHook(req, context);
-    //           uploadBeforeFileHook(modifiedRequest, context);
-    //           return uploadBeforeHook(modifiedRequest, context);
-    //         },
-    //         after: async (res, req, context) => {
-    //           const modifiedResponse = await passwordAfterHook(res, req, context);
-    //           uploadAfterFileHook(modifiedResponse, req, context, 'sessions');
-    //           return uploadAfterHook(modifiedResponse, req, context);
-    //         },
-    //       },
-    //     },
-    //   },
-    // },
+    getDocumentOptions(DocumentSession, 'documents', 'sessions', 'Документы'),
+    getDocumentOptions(DocumentReport, 'documents', 'reports', 'Документы'),
+    getDocumentOptions(DocumentBase, 'documents', 'base', 'Документы'),
+    getDocumentOptions(ActivityWork, 'activity', 'work', 'Деятельность совета'),
+    getDocumentOptions(ActivityHearing, 'activity', 'hearings', 'Деятельность совета'),
+    getDocumentOptions(ActivitySession, 'activity', 'sessions', 'Деятельность совета'),
   ],
   branding: {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',

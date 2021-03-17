@@ -5,7 +5,6 @@ const DocumentBase = require('../models/DocumentBase');
 const router = Router();
 const path = require('path');
 const fs = require('fs');
-const archiver = require('archiver');
 
 const getDocuments = (model, directorie) => {
   let array = [];
@@ -25,7 +24,6 @@ const getDocuments = (model, directorie) => {
     array.push(obj);
   });
 
-  // console.log(array);
   removeUnavailableDocs(model, directorie);
 
   return array;
@@ -42,7 +40,6 @@ async function removeUnavailableDocs(model, directorie) {
 
   directories.forEach((dir) => {
     if (searchArr.indexOf(dir) == -1) {
-      // console.log(`Элемента ${dir} нет`);
       deleteFolderRecursive(
         path.join(__dirname, `../public/uploads/documents/${directorie}/${dir}`),
       );
@@ -68,10 +65,6 @@ router.get('/', async (req, res) => {
   const documentSessions = getDocuments(DocumentSession, 'sessions');
   const documentReports = getDocuments(DocumentReport, 'reports');
   const documentBases = getDocuments(DocumentBase, 'base');
-
-  const files = fs.readdirSync(path.join(__dirname, '../public/uploads/documents/sessions/2020'));
-
-  console.log(files);
 
   res.render('documents', {
     title: 'Документы',
