@@ -13,6 +13,7 @@ const DocumentBase = require('../models/DocumentBase');
 const ActivityWork = require('../models/ActivityWork');
 const ActivityHearing = require('../models/ActivityHearing');
 const ActivitySession = require('../models/ActivitySession');
+const Comission = require('../models/Comission');
 
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
 const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
@@ -27,7 +28,7 @@ const {
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
-const getDocumentOptions = (model, page, category, parent) => ({
+const getDocumentOptions = (model, block, category, parent) => ({
   resource: model,
   options: {
     listProperties: ['title'],
@@ -51,7 +52,7 @@ const getDocumentOptions = (model, page, category, parent) => ({
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          uploadAfterFileHook(modifiedResponse, req, context, page, category);
+          uploadAfterFileHook(modifiedResponse, req, context, block, category);
           return uploadAfterHook(modifiedResponse, req, context);
         },
       },
@@ -63,7 +64,7 @@ const getDocumentOptions = (model, page, category, parent) => ({
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          uploadAfterFileHook(modifiedResponse, req, context, page, category);
+          uploadAfterFileHook(modifiedResponse, req, context, block, category);
           return uploadAfterHook(modifiedResponse, req, context);
         },
       },
@@ -95,6 +96,7 @@ const options = {
         ActivityWork: 'Работа комиссий',
         ActivityHearing: 'Публичные слушания',
         ActivitySession: 'Сессии',
+        Comission: 'Постоянные комиссии',
       },
       buttons: {
         filter: 'Фильтр',
@@ -425,6 +427,7 @@ const options = {
     getDocumentOptions(ActivityWork, 'activity', 'work', 'Деятельность совета'),
     getDocumentOptions(ActivityHearing, 'activity', 'hearings', 'Деятельность совета'),
     getDocumentOptions(ActivitySession, 'activity', 'sessions', 'Деятельность совета'),
+    getDocumentOptions(Comission, 'council', 'comissions', 'Совет депутатов'),
   ],
   branding: {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',

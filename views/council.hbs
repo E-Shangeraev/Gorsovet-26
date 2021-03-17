@@ -195,118 +195,30 @@
       Постоянные комиссии
     </h3>
     <div class="commission__container">
-      <div class="bg-gray commission__block">
-        <h4 class="commission__name">
-          Комиссия по бюджету, финансам и налогам
-        </h4>
-        <button class="details commission__details">
-          <span>
-            Подробнее
-          </span>
-          <img src="svg/mark.svg" />
-        </button>
-        <ul class="commission__list">
-          <li>
-            <a href="#">
-              Пункт 1
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 2
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 3
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="bg-gray commission__block">
-        <h4 class="commission__name">
-          Комиссия по вопросам экономики, собственности и ЖКХ
-        </h4>
-        <button class="details commission__details">
-          <span>
-            Подробнее
-          </span>
-          <img src="svg/mark.svg" />
-        </button>
-        <ul class="commission__list">
-          <li>
-            <a href="#">
-              Пункт 1
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 2
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 3
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="bg-gray commission__block">
-        <h4 class="commission__name">
-          Комиссия по социальным вопросам
-        </h4>
-        <button class="details commission__details">
-          <span>
-            Подробнее
-          </span>
-          <img src="svg/mark.svg" />
-        </button>
-        <ul class="commission__list">
-          <li>
-            <a href="#">
-              Пункт 1
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 2
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 3
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="bg-gray commission__block">
-        <h4 class="commission__name">
-          Комиссия по вопросам местного самоуправления и законности
-        </h4>
-        <button class="details commission__details">
-          <span>
-            Подробнее
-          </span>
-          <img src="svg/mark.svg" />
-        </button>
-        <ul class="commission__list">
-          <li>
-            <a href="#">
-              Пункт 1
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 2
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              Пункт 3
-            </a>
-          </li>
-        </ul>
-      </div>
+      {{#if comissions.length}}
+        {{#each comissions}}
+          <div class="bg-gray commission__block">
+            <h4 class="commission__name">
+              {{dir}}
+            </h4>
+            <button class="details commission__details">
+              <span>
+                Подробнее
+              </span>
+              <img src="svg/mark.svg" />
+            </button>
+            <ul class="commission__list">
+              {{#each documents}}
+                <li>
+                  <a href="./public/uploads/council/comissions/{{dir}}/{{file}}" download>
+                    {{name}}
+                  </a>
+                </li>
+              {{/each}}
+            </ul>
+          </div>
+        {{/each}}
+      {{/if}}
     </div>
   </section>
   <section class="fractions">
