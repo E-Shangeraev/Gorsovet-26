@@ -1,17 +1,6 @@
 <section class="article">
     <div class="d-flex">
       <h2 class="title">{{title}}</h2>
-      <form class="form" action="/news/search" method="POST">
-        <input
-          class="search"
-          id="news-search"
-          type="search"
-          name="search"
-          placeholder="Поиск по новостям"
-          autocomplete="off"
-        />
-        <input type="hidden" class="form__id">
-      </form>
     </div>
     <button class="back" onclick="window.history.back()">
       <img src="/svg/arrow-prev.svg" />
