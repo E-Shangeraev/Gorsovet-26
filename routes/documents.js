@@ -4,7 +4,6 @@ const router = Router();
 
 router.get('/', documentsController.documents);
 router.get('/download', documentsController.download);
-router.post('/', documentsController.autoFillbar);
-router.post('/search', documentsController.search);
+router.post('/', documentsController.search);
 
 module.exports = router;

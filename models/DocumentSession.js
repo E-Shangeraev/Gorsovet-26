@@ -16,6 +16,4 @@ const DocumentSession = new Schema(
   { collection: 'documents_sessions' },
 );
 
-// Deputie.index({ address: 'text' }, { default_language: 'russian' });
-
 module.exports = model('DocumentSession', DocumentSession);
