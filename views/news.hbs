@@ -8,6 +8,7 @@
         class="search"
         id="news-search"
         type="search"
+        name="search"
         placeholder="Поиск по новостям"
         autocomplete="off"
       />
@@ -32,7 +33,7 @@
                   {{moment date format="DD.MM.YYYY"}}
                 </time>
                 <p class="preview__views">
-                  <img src="svg/views.svg" />
+                  <img src="/svg/views.svg" />
                   <span class="preview__count">
                     {{views}}
                   </span>
@@ -72,7 +73,7 @@
           <span>
             Следующая страница
           </span>
-          <img src="svg/arrow-next.svg" alt="" />
+          <img src="/svg/arrow-next.svg" alt="" />
         </a>
       {{/if}}
     </div>
