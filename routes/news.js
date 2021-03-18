@@ -100,49 +100,15 @@ function paginatedResults(model) {
   };
 }
 
-router.post('/?search', paginatedResults(News), async (req, res) => {
-  res.redirect(`/news/search/${req.body.search}`);
-  // if (req.body.search) {
-  //   await News.find(
-  //     { $text: { $search: req.body.request } },
-  //     { score: { $meta: 'textScore' } },
-  //     (err, news) => {
-  //       res.send({ result: news });
-  //     },
-  //   ).sort({ score: { $meta: 'textScore' } });
-  // }
-});
-
-router.get('/search/:search', paginatedResults(News), async (req, res) => {
-  // console.log(req.params);
-
-  const photos = await Report.find().lean();
-  if (req.params.search) {
+router.post('/', paginatedResults(News), async (req, res) => {
+  if (req.body.request) {
     await News.find(
-      { $text: { $search: req.params.search } },
+      { $text: { $search: req.body.request } },
       { score: { $meta: 'textScore' } },
       (err, news) => {
-        const page = res.paginatedResults.page;
-        const pagesCount = res.paginatedResults.pagesCount;
-        const pageNums = res.paginatedResults.pageNums;
-        // res.send({ result: news });
-        // console.log(news);
-
-        res.render('news', {
-          title: 'Новости',
-          isNews: true,
-          news: news,
-          page,
-          pagesCount,
-          pageNums,
-          next: page + 1,
-          isNext: pagesCount > page,
-          photos,
-        });
+        res.send({ result: news });
       },
-    )
-      .sort({ score: { $meta: 'textScore' } })
-      .lean();
+    ).sort({ score: { $meta: 'textScore' } });
   }
 });
 
