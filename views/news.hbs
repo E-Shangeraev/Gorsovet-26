@@ -86,7 +86,7 @@
 <section class="report">
   <div class="d-flex">
     <h2 class="title">
-      Фотоотчет
+      Медиаотчет
     </h2>
     <div class="slider__nav">
       <p class="slider__buttons">
@@ -107,12 +107,25 @@
     </div>
   </div>
   <ul class="report__slider slider">
-    {{#if photos.length}}
-      {{#each photos}}
-        <li>
-          <img src="{{img}}" />
-        </li>
+    {{#if report.length}}
+      {{#each report}}
+        {{#if img}}
+          <li>
+            <a href="{{img}}" class='open-report-popup'>
+              <img src="{{img}}" />
+            </a>
+          </li>
+        {{/if}}
+        {{#if video}}
+          <li>
+            <a href="{{url}}" class='open-video-popup' rel="nofollow">
+              <iframe src="{{video}}?rel=0" class="report__video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </a>
+          </li>
+        {{/if}}
       {{/each}}
     {{/if}}
   </ul>
+
+  {{!-- <div id="report-popup" class="mfp-hide"></div> --}}
 </section>

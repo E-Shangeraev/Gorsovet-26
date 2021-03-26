@@ -89,7 +89,7 @@ const options = {
         Calendar: 'Календарь событий',
         Deputie: 'Депутатский корпус',
         News: 'Новости',
-        Report: 'Фотоотчет',
+        Report: 'Медиаотчет',
         DocumentSession: 'Решения сессии',
         DocumentReport: 'Отчёты о деятельности',
         DocumentBase: 'Нормативная правовая база',
@@ -151,6 +151,7 @@ const options = {
           properties: {
             img: 'Путь к фотографии',
             uploadImage: 'Фото',
+            video: 'Видео',
           },
         },
         DocumentSession: {
@@ -393,7 +394,7 @@ const options = {
     {
       resource: Report,
       options: {
-        listProperties: ['uploadImage', 'img'],
+        listProperties: ['uploadImage', 'video'],
         parent: {
           name: 'Контент сайта',
         },

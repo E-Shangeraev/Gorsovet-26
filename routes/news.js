@@ -22,7 +22,14 @@ router.get('/', paginatedResults(News), async (req, res) => {
   const page = res.paginatedResults.page;
   const pagesCount = res.paginatedResults.pagesCount;
   const pageNums = res.paginatedResults.pageNums;
-  const photos = await Report.find().lean();
+  const report = await Report.find().lean();
+
+  report.forEach((rep) => {
+    if (rep.video) {
+      rep.url = rep.video;
+      rep.video = rep.video.replace('watch?v=', 'embed/');
+    }
+  });
 
   res.render('news', {
     title: 'Новости',
@@ -33,7 +40,7 @@ router.get('/', paginatedResults(News), async (req, res) => {
     pageNums,
     next: page + 1,
     isNext: pagesCount > page,
-    photos,
+    report,
   });
 });
 

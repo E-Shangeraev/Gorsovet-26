@@ -5,8 +5,67 @@
   .d-flex {
     margin-bottom: 60px;
   }
+}
+
+.report__slider {
   img {
     width: 100%;
+  }
+  .slick-slide {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .open-report-popup {
+    &:active,
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+  .slick-track {
+    display: flex !important;
+    gap: 15px;
+  }
+  .slick-slide {
+    // margin-right: 15px;
+    width: 100% !important;
+    height: inherit !important;
+  }
+}
+
+.report__video {
+  width: 100% !important;
+  height: 100%;
+}
+
+.mfp-image-holder {
+  cursor: default;
+}
+.mfp-bottom-bar {
+  display: none !important;
+}
+.mfp-zoom-out-cur .mfp-content,
+.mfp-zoom-out-cur .mfp-image-holder .mfp-close {
+  cursor: pointer !important;
+}
+.mfp-img {
+  width: 50vw !important;
+  height: auto !important;
+}
+.open-video-popup {
+  display: inline-block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  &::after {
+    position: absolute;
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
   }
 }
 
