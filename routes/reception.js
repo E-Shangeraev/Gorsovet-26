@@ -4,7 +4,7 @@ const Deputie = require('../models/Deputie');
 const Swal = require('sweetalert2');
 
 router.get('/', async (req, res) => {
-  const deputies = await Deputie.find().lean();
+  const deputies = await Deputie.find().sort({ id: 1 }).lean();
   res.render('reception', {
     title: 'Онлайн-приемная',
     deputies,
@@ -12,10 +12,12 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const deputie = await Deputie.find({ _id: req.params.id }).lean();
+  const deputieSelected = await Deputie.find({ _id: req.params.id }).lean();
+  const deputies = await Deputie.find().sort({ id: 1 }).lean();
   res.render('reception', {
     title: 'Онлайн-приемная',
-    deputie: deputie[0],
+    deputie: deputieSelected[0],
+    deputies,
   });
 });
 
@@ -104,7 +106,7 @@ router.post('/', async (req, res) => {
       .replace(/\s{2,}/g, ' ');
 
     const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
-    inputValue = inputValue.split(' ').join(regMarks) + '$';
+    inputValue = inputValue.split(' ').join(regMarks);
     const reg = new RegExp(inputValue, 'gi');
     console.log(reg);
 

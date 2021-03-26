@@ -14,9 +14,10 @@
           <img src="/svg/calendar.svg" />
           <time pubdate>{{moment article.date format="DD.MM.YYYY"}}</time>
         </p>
-        <img class="article__image" src="{{article.img}}" alt="{{article.title}}" />
-        <p class="article__text">{{article.text}}</p>
-
+        {{#if article.img}}
+          <img class="article__image" src="{{article.img}}" alt="{{article.title}}" />
+        {{/if}}
+        <div class="article__text ql-editor">{{{article.text}}}</div>
         <footer class="article__footer">
           <span>Поделиться:</span>
           {{> share}}

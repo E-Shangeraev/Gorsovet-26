@@ -121,6 +121,12 @@
   }
 }
 
+.documents__result {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 @media (max-width: 1600px) {
   .documents__item {
     font-size: 18px;

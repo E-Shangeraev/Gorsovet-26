@@ -4,7 +4,7 @@ const Activity = require('../models/Activity');
 const router = Router();
 
 router.get('/', async (req, res) => {
-  const deputies = await Deputie.find().lean();
+  const deputies = await Deputie.find().sort({ id: 1 }).lean();
   const activities = await Activity.find().lean();
 
   res.render('corpus', {
@@ -52,7 +52,7 @@ router.post('/', async (req, res) => {
       .replace(/\s{2,}/g, ' ');
 
     const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
-    inputValue = inputValue.split(' ').join(regMarks) + '$';
+    inputValue = inputValue.split(' ').join(regMarks);
     const reg = new RegExp(inputValue, 'gi');
     console.log(reg);
 

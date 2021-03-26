@@ -27,14 +27,32 @@
   border-radius: 6px;
   width: 100%;
   max-width: 900px;
+  max-height: 400px;
   object-fit: cover;
 }
 .article__text {
+  padding: 0;
   padding-bottom: 40px;
-  font-size: 18px;
-  line-height: 160%;
-  // white-space: pre-line;
+  height: fit-content;
+
   border-bottom: 2px solid #cfcfcf;
+
+  p {
+    // font-family: $reg;
+    // font-size: 18px;
+    // line-height: 160%;
+    white-space: pre-wrap;
+  }
+  img {
+    width: 100%;
+  }
+  iframe {
+    width: 100%;
+    // width: 400px;
+    // height: auto;
+    // margin: 0 auto;
+    min-height: 500px;
+  }
 }
 .article__footer {
   display: flex;

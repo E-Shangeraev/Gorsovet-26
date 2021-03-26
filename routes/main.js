@@ -6,7 +6,7 @@ const News = require('../models/News');
 // const bodyParser = require('body-parser');
 
 router.get('/', async (req, res) => {
-  const deputies = await Deputie.find().lean();
+  const deputies = await Deputie.find().sort({ id: 1 }).lean();
   const news = await News.find().sort({ x: 1 }).limit(20).lean();
 
   res.render('main', {
@@ -72,7 +72,7 @@ router.post('/main', async (req, res) => {
       .replace(/\s{2,}/g, ' ');
 
     const regMarks = '([., /#!$%^&*;:{}=-_`~()]+)?';
-    inputValue = inputValue.split(' ').join(regMarks) + '$';
+    inputValue = inputValue.split(' ').join(regMarks);
     const reg = new RegExp(inputValue, 'gi');
     console.log(reg);
 

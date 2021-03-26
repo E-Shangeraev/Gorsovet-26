@@ -3,7 +3,7 @@
     <h2 class="title">
       Новости
     </h2>
-    <form class="form" action="/news/search" method="POST">
+    <form class="form news__form" action="/news/search" method="POST">
       <input
         class="search"
         id="news-search"
@@ -20,7 +20,11 @@
       {{#each news}}
         <a href="/news/{{_id}}">
           <figure class="preview">
-            <img class="preview__image" src="{{img}}" alt="{{title}}" />
+            {{#if img}}
+              <img class="preview__image" src="{{img}}" alt="{{title}}" />
+            {{else}}
+              <img class="preview__image" src="/img/no-image.jpg" alt="{{title}}" />
+            {{/if}}
             <figcaption class="preview__caption">
               <h4 class="preview__title">
                 {{title}}

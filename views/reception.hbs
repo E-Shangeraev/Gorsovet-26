@@ -52,6 +52,9 @@
         </p>
         <input type="hidden" name="deput" required/>
         <ul class="dropdown-menu">
+          <li>
+            Совет депутатов
+          </li>
           {{#if deputies.length}}
             {{#each deputies}}
               <li>
@@ -83,7 +86,7 @@
         Введите адрес своего проживания и узнайте, какой депутат отвечает за ваш округ!
       </p>
     </div>
-    <form class="form" action="/reception/search" method="POST">
+    <form class="form corpus__form" action="/reception/search" method="POST">
       <input
         class="form__field"
         id="deputie-search"

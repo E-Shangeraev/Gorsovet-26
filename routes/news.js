@@ -38,7 +38,12 @@ router.get('/', paginatedResults(News), async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const article = await News.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } }).lean();
+  const article = await News.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } })
+    .sort({
+      views: -1,
+    })
+    .lean();
+
   const news = await News.find({
     _id: { $ne: article['_id'] },
   })

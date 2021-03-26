@@ -3,7 +3,7 @@
     <h2 class="title">
       Документы
     </h2>
-    <form class="form" action="/documents/search" method="POST">
+    <form class="form documents__form" action="/documents/search" method="POST">
       <input
         class="search"
         id="documents-search"
@@ -27,7 +27,7 @@
               <ul>
                 {{#each documents}}
                   <li>
-                    <a href="./public/uploads/documents/sessions/{{dir}}/{{file}}" download>
+                    <a href="/documents/file?cat=sessions&dir={{dir}}&file={{file}}" download="{{file}}">
                       {{name}}
                     </a>
                   </li>

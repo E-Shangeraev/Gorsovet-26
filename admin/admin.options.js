@@ -125,6 +125,7 @@ const options = {
         },
         Deputie: {
           properties: {
+            id: 'Порядковый номер',
             name: 'Имя',
             uploadImage: 'Фото',
             img: 'Путь к фотографии',
@@ -213,6 +214,9 @@ const options = {
           name: 'Контент сайта',
         },
         properties: {
+          text: {
+            type: 'richtext',
+          },
           uploadImage: {
             components: {
               edit: AdminBro.bundle('./components/upload-image.edit.tsx'),
@@ -290,6 +294,7 @@ const options = {
       resource: Deputie,
       options: {
         listProperties: [
+          'id',
           'name',
           'uploadImage',
           'post',
@@ -346,11 +351,14 @@ const options = {
     {
       resource: News,
       options: {
-        listProperties: ['title', 'text', 'img', 'date', 'views'],
+        listProperties: ['title', 'text', 'uploadImage', 'date', 'views'],
         parent: {
           name: 'Контент сайта',
         },
         properties: {
+          text: {
+            type: 'richtext',
+          },
           uploadImage: {
             components: {
               edit: AdminBro.bundle('./components/upload-image.edit.tsx'),

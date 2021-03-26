@@ -10,7 +10,9 @@ const News = new Schema(
       type: String,
       required: true,
     },
-    img: String,
+    img: {
+      type: String,
+    },
     date: {
       type: Date,
       default: Date.now,

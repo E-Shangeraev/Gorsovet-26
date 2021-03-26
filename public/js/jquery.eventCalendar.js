@@ -58,6 +58,7 @@
     onlyOneDescription: true,
     openEventInNewWindow: true,
     eventsScrollable: false,
+    dateFormatMonth: 'MM',
     dateFormat: 'D/MM/YYYY',
     jsonDateFormat: 'timestamp', // you can use also "human" 'YYYY-MM-DD HH:MM:SS'
     moveSpeed: 500, // speed of month move when you clic on a new date
@@ -516,22 +517,48 @@
               ) {
                 // if initial load then load only future events
                 if (month === false && eventDate < new Date()) {
+                  document.querySelector('.event__closest time').textContent =
+                    'Нет запланированных событий';
+                  document.querySelector('.event__name').textContent = '';
                 } else {
                   moment.locale(eventsOpts.locales.locale);
                   //eventStringDate = eventDay + "/" + eventMonthToShow + "/" + eventYear;
+
+                  const eventMonth = +moment(eventDate).format(eventsOpts.dateFormatMonth);
+                  console.log(eventMonth);
                   eventStringDate = moment(eventDate).format(eventsOpts.dateFormat).split('');
-                  eventStringDate[eventStringDate.length - 1] = 'я';
+
+                  if (eventMonth === 3 || eventMonth === 8) {
+                    eventStringDate.push('a');
+                  } else {
+                    eventStringDate[eventStringDate.length - 1] = 'я';
+                  }
+
+                  console.log(eventStringDate);
+
+                  // if (eventStringDate === 'март') {
+                  //   eventStringDate = 'марта';
+                  // }
                   eventStringDate = eventStringDate.join('').toLowerCase();
                   promoEventDate.push(eventStringDate);
                   promoEventTitle.push(event.title);
+
+                  console.log(eventStringDate);
+                  console.log(promoEventDate);
+                  console.log(eventHour);
+                  console.log(eventMinute);
+
+                  if (promoEventDate.length || eventHour || eventMinute) {
+                    document.querySelector(
+                      '.event__closest time',
+                    ).textContent = `${promoEventDate[0]} ${eventHour}:${eventMinute}`;
+                    document.querySelector('.event__name').textContent = promoEventTitle[0];
+                  }
 
                   // console.log(document.querySelector('.event__closest time'));
                   // console.log(promoEventDate[0]);
                   // console.log(document.querySelector('.event__name'));
                   // console.log(promoEventTitle[0]);
-
-                  document.querySelector('.event__closest time').textContent = promoEventDate[0];
-                  document.querySelector('.event__name').textContent = promoEventTitle[0];
 
                   var eventTitle;
 
@@ -573,7 +600,6 @@
                 }
               }
             }
-
             // add mark in the dayList to the days with events
             if (
               eventYear == flags.wrap.attr('data-current-year') &&

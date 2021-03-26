@@ -126,25 +126,33 @@ function searchByText(res, directorie, inputValue) {
 }
 
 function searchByFilename(directorie, inputValue) {
+  const regExp = new RegExp(inputValue, 'gi');
   let array = [];
 
   const directories = fs.readdirSync(
     path.join(__dirname, `../public/uploads/documents/${directorie}`),
   );
   directories.forEach((dir) => {
-    let obj = {};
-    obj.dir = dir;
-
     const files = fs.readdirSync(
       path.join(__dirname, `../public/uploads/documents/${directorie}/`, dir),
     );
 
-    files.forEach((f) => {});
+    console.log(files);
 
-    obj.documents = files.map((file) => ({ file, dir, name: file.split('.')[0] }));
-    array.push(obj);
+    files.forEach((file) => {
+      const fileName = file.split('.')[0];
+      console.log(fileName);
+      console.log(regExp);
+
+      if (fileName.match(regExp)) {
+        const filePath = path.join(`/public/uploads/documents/${directorie}/${dir}`, file);
+        obj = { filePath, name: fileName };
+        array.push(obj);
+      }
+    });
   });
 
+  console.log(array);
   return array;
 }
 
@@ -175,4 +183,20 @@ exports.search = async (req, res) => {
   // const documents = buffer.toString('utf8');
   // console.log(documents);
   res.send({ result: documents });
+};
+
+exports.file = async (req, res) => {
+  console.log(req.query);
+  console.log(
+    path.join(
+      __dirname,
+      `../public/uploads/documents/${req.query.cat}/${req.query.dir}/${req.query.file}`,
+    ),
+  );
+  res.sendFile(
+    path.join(
+      __dirname,
+      `../public/uploads/documents/${req.query.cat}/${req.query.dir}/${req.query.file}`,
+    ),
+  );
 };

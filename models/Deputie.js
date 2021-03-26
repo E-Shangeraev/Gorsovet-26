@@ -2,6 +2,9 @@ const { Schema, model, Types } = require('mongoose');
 
 const Deputie = new Schema(
   {
+    id: {
+      type: Number,
+    },
     name: {
       type: String,
       required: true,
