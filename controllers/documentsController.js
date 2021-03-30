@@ -13,20 +13,11 @@ var iconv = require('iconv-lite');
 const getDocuments = (model, directorie) => {
   let array = [];
 
-  const directories = fs.readdirSync(
-    path.join(__dirname, `../public/uploads/documents/${directorie}`),
-  );
-  directories.forEach((dir) => {
-    let obj = {};
-    obj.dir = dir;
+  const files = fs.readdirSync(path.join(__dirname, `../public/uploads/documents/${directorie}`));
 
-    const files = fs.readdirSync(
-      path.join(__dirname, `../public/uploads/documents/${directorie}/`, dir),
-    );
+  // console.log(files);
 
-    obj.documents = files.map((file) => ({ file, dir, name: file.split('.')[0] }));
-    array.push(obj);
-  });
+  array = files.map((file) => ({ directorie, file }));
 
   removeUnavailableDocs(model, directorie);
 
@@ -36,17 +27,16 @@ const getDocuments = (model, directorie) => {
 async function removeUnavailableDocs(model, directorie) {
   const documents = await model.find().lean();
   // Документы локально
-  const directories = fs.readdirSync(
-    path.join(__dirname, `../public/uploads/documents/${directorie}`),
-  );
+  const files = fs.readdirSync(path.join(__dirname, `../public/uploads/documents/${directorie}`));
   // Документы в базе данных
-  const searchArr = documents.map((item) => item.title);
+  const searchArr = documents.map((item) => item.fileName);
 
-  directories.forEach((dir) => {
-    if (searchArr.indexOf(dir) == -1) {
-      deleteFolderRecursive(
-        path.join(__dirname, `../public/uploads/documents/${directorie}/${dir}`),
-      );
+  // console.log('searchArr', searchArr);
+
+  files.forEach((f) => {
+    if (searchArr.indexOf(f) == -1) {
+      const curPath = path.join(__dirname, `../public/uploads/documents/${directorie}/${f}`);
+      fs.unlinkSync(curPath);
     }
   });
 }
@@ -85,7 +75,7 @@ function searchByText(res, directorie, inputValue) {
     );
   });
 
-  console.log(fileArray);
+  // console.log(fileArray);
 
   // processArray(files)
 
@@ -99,7 +89,7 @@ function searchByText(res, directorie, inputValue) {
       await extracted.then((doc) => {
         const text = doc.getBody();
         if (text.match(regExp)) {
-          console.log('Совпадает в файле:', filePath);
+          // console.log('Совпадает в файле:', filePath);
 
           results.push(filePath);
         }
@@ -122,7 +112,7 @@ function searchByText(res, directorie, inputValue) {
     }
   }
 
-  console.log(results);
+  // console.log(results);
 }
 
 function searchByFilename(directorie, inputValue) {
@@ -137,12 +127,12 @@ function searchByFilename(directorie, inputValue) {
       path.join(__dirname, `../public/uploads/documents/${directorie}/`, dir),
     );
 
-    console.log(files);
+    // console.log(files);
 
     files.forEach((file) => {
       const fileName = file.split('.')[0];
-      console.log(fileName);
-      console.log(regExp);
+      // console.log(fileName);
+      // console.log(regExp);
 
       if (fileName.match(regExp)) {
         const filePath = path.join(`/public/uploads/documents/${directorie}/${dir}`, file);
@@ -152,21 +142,65 @@ function searchByFilename(directorie, inputValue) {
     });
   });
 
-  console.log(array);
+  // console.log(array);
   return array;
 }
 
 exports.documents = async (req, res) => {
-  const documentSessions = getDocuments(DocumentSession, 'sessions');
-  const documentReports = getDocuments(DocumentReport, 'reports');
-  const documentBases = getDocuments(DocumentBase, 'base');
+  const sessions = await DocumentSession.findOne().sort({ year: -1, month: -1 }).lean();
+  const reports = await DocumentReport.findOne().sort({ year: -1, month: -1 }).lean();
+  const base = await DocumentBase.findOne().sort({ year: -1, month: -1 }).lean();
+
+  console.log(reports);
 
   res.render('documents', {
     title: 'Документы',
     isDocuments: true,
-    reports: documentReports,
-    sessions: documentSessions,
-    base: documentBases,
+    sessions,
+    reports,
+    base,
+  });
+};
+
+exports.sessions = async (req, res) => {
+  const docs = getDocuments(DocumentSession, 'sessions');
+  const documents = await DocumentSession.find({ year: req.query.y, month: req.query.m }).lean();
+  const availableYears = await DocumentReport.find().distinct('year').lean();
+
+  res.render('documents-folder', {
+    title: 'Решения сессии',
+    isDocuments: true,
+    documents,
+    availableYears,
+    m: req.query.m,
+    y: req.query.y,
+  });
+};
+
+exports.reports = async (req, res) => {
+  const docs = getDocuments(DocumentReport, 'reports');
+  const documents = await DocumentReport.find({ year: req.query.y, month: req.query.m }).lean();
+  const availableYears = await DocumentReport.find().distinct('year').lean();
+
+  res.render('documents-folder', {
+    title: 'Отчёты о деятельности',
+    isDocuments: true,
+    documents,
+    availableYears,
+    m: req.query.m,
+    y: req.query.y,
+  });
+};
+
+exports.base = async (req, res) => {
+  const documents = getDocuments(DocumentBase, 'base');
+
+  res.render('documents-folder', {
+    title: 'Нормативная правовая база',
+    isDocuments: true,
+    documents,
+    month: req.query.m,
+    year: req.query.y,
   });
 };
 
@@ -186,13 +220,13 @@ exports.search = async (req, res) => {
 };
 
 exports.file = async (req, res) => {
-  console.log(req.query);
-  console.log(
-    path.join(
-      __dirname,
-      `../public/uploads/documents/${req.query.cat}/${req.query.dir}/${req.query.file}`,
-    ),
-  );
+  // console.log(req.query);
+  // console.log(
+  //   path.join(
+  //     __dirname,
+  //     `../public/uploads/documents/${req.query.cat}/${req.query.dir}/${req.query.file}`,
+  //   ),
+  // );
   res.sendFile(
     path.join(
       __dirname,

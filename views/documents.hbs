@@ -14,81 +14,36 @@
       <input type="hidden" class="form__id">
     </form>
   </div>
-  <div class="documents__container">
-    <div class="documents__block">
-      <h3 class="subtitle">
-        Решения сессии
-      </h3>
-      {{#if sessions.length}}
-        {{#each sessions}}
-          <ul class="documents__list">
-            <li class="documents__item">
-              {{dir}}
-              <ul>
-                {{#each documents}}
-                  <li>
-                    <a href="/documents/file?cat=sessions&dir={{dir}}&file={{file}}" download="{{file}}">
-                      {{name}}
-                    </a>
-                  </li>
-                {{/each}}
-              </ul>
-            </li>
-          </ul>
-        {{/each}}
-      {{/if}}
-    </div>
-    <div class="documents__block">
-      <h3 class="subtitle">
-        Отчёты о деятельности
-      </h3>
-      {{#if reports.length}}
-        {{#each reports}}
-          <ul class="documents__list">
-            <li class="documents__item">
-              {{dir}}
-              <ul>
-                {{#each documents}}
-                  <li>
-                    <a href="./public/uploads/documents/reports/{{dir}}/{{file}}" download>
-                      {{name}}
-                    </a>
-                  </li>
-                {{/each}}
-              </ul>
-            </li>
-          </ul>
-        {{/each}}
-      {{/if}}
-    </div>
-    <div class="documents__block">
-      <h3 class="subtitle">
-        Нормативная правовая база
-      </h3>
-      {{#if base.length}}
-        {{#each base}}
-          <ul class="documents__list">
-            <li class="documents__item">
-              {{dir}}
-              <ul>
-                {{#each documents}}
-                  <li>
-                    <a href="./public/uploads/documents/base/{{dir}}/{{file}}" download>
-                      {{name}}
-                    </a>
-                  </li>
-                {{/each}}
-              </ul>
-            </li>
-          </ul>
-        {{/each}}
-      {{/if}}
-    </div>
-    <a href="/documents/download" class="documents__download" download>
-      <span>
-        Скачать все фалы архивом
-      </span>
-      <img src="../svg/download.svg" />
-    </a>
-  </div>
+  <ul class="documents__container">
+    <li class="documents__item">
+      <a href="/documents/sessions?y={{sessions.year}}&m={{sessions.month}}">
+        <img src="/img/folder.svg" alt="Решения сессии">
+        <h3 class="subtitle">Решения сессии</h3>
+      </a>
+      <a class="documents__download" href="/documents/download">
+        <img src="/img/download.svg" alt="Скачать архивом">
+        <span>Скачать архивом</span>
+      </a>
+    </li>
+    <li class="documents__item">
+      <a href="/documents/reports?y={{reports.year}}&m={{reports.month}}">
+        <img src="/img/folder.svg" alt="Отчёты о деятельности">
+        <h3 class="subtitle">Отчёты о деятельности</h3>
+      </a>
+      <a class="documents__download" href="/documents/download">
+        <img src="/img/download.svg" alt="Скачать архивом">
+        <span>Скачать архивом</span>
+      </a>
+    </li>
+    <li class="documents__item">
+      <a href="/documents/base?y={{base.year}}&m={{base.month}}">
+        <img src="/img/folder.svg" alt="Нормативная правовая база">
+        <h3 class="subtitle">Нормативная правовая база</h3>
+      </a>
+      <a class="documents__download" href="/documents/download">
+        <img src="/img/download.svg" alt="Скачать архивом">
+        <span>Скачать архивом</span>
+      </a>
+    </li>
+  </ul>
 </section>

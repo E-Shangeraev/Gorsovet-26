@@ -1,3 +1,0 @@
-User-agent: Yandex
-Allow: /
-Sitemap: http://gorsovet-26.ru/4764605_52.xml

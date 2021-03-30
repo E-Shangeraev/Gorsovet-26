@@ -1,0 +1,60 @@
+<section class="folder">
+  <div class="d-flex">
+    <h2 class="title">{{title}}</h2>
+    <form class="form documents__form" action="/documents/search" method="POST">
+      <input
+        class="search"
+        id="documents-search"
+        type="search"
+        placeholder="Поиск по документам"
+        autocomplete="off"
+      />
+      <input type="hidden" class="form__id">
+    </form>
+  </div>
+  <button class="back" onclick="window.history.back()">
+    <img src="/svg/arrow-prev.svg" />
+    <span>Назад</span>
+  </button>
+  <div class="folder__container">
+    <div>
+      <nav class="folder__months" id="nav">
+        <a class="{{isActive m 1 'selected'}}" href="?y={{y}}&m=1">Январь</a>
+        <a class="{{isActive m 2 'selected'}}" href="?y={{y}}&m=2">Февраль</a>
+        <a class="{{isActive m 3 'selected'}}" href="?y={{y}}&m=3">Март</a>
+        <a class="{{isActive m 4 'selected'}}" href="?y={{y}}&m=4">Апрель</a>
+        <a class="{{isActive m 5 'selected'}}" href="?y={{y}}&m=5">Май</a>
+        <a class="{{isActive m 6 'selected'}}" href="?y={{y}}&m=6">Июнь</a>
+        <a class="{{isActive m 7 'selected'}}" href="?y={{y}}&m=7">Июль</a>
+        <a class="{{isActive m 8 'selected'}}" href="?y={{y}}&m=8">Август</a>
+        <a class="{{isActive m 9 'selected'}}" href="?y={{y}}&m=9">Сентябрь</a>
+        <a class="{{isActive m 10 'selected'}}" href="?y={{y}}&m=10">Октябрь</a>
+        <a class="{{isActive m 11 'selected'}}" href="?y={{y}}&m=11">Ноябрь</a>
+        <a class="{{isActive m 12 'selected'}}" href="?y={{y}}&m=12">Декабрь</a>
+      </nav>
+
+      <ul class="folder__documents">
+        {{#if documents.length}}
+          {{#each documents}}
+            <li>
+              <span class="bage">{{category}}</span>
+              <a href="{{filePath}}" download>
+                {{name}}
+              </a>
+            </li>
+          {{/each}}
+        {{/if}}
+      </ul>
+    </div>
+    <aside>
+      <ul class="folder__years">
+        {{#if availableYears.length}}
+          {{#each availableYears}}
+            <li><a class="{{isActive ../y this 'active'}}" href="?y={{this}}&m={{../m}}">{{this}}</a></li>
+          {{/each}}
+        {{/if}}
+      </ul>
+    </aside>
+  </div>
+  
+</section>

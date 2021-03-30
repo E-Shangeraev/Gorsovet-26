@@ -25,6 +25,9 @@
   .slick-track {
     display: flex !important;
     gap: 15px;
+    margin-left: 0;
+    max-width: calc(25% - 30px);
+    min-height: 250px;
   }
   .slick-slide {
     // margin-right: 15px;

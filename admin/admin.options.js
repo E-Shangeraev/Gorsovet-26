@@ -31,8 +31,8 @@ AdminBro.registerAdapter(AdminBroMongoose);
 const getDocumentOptions = (model, block, category, parent) => ({
   resource: model,
   options: {
-    listProperties: ['title'],
-    editProperties: ['uploadFile', 'title'],
+    listProperties: ['category', 'year', 'month', 'name'],
+    editProperties: ['category', 'year', 'month', 'name', 'uploadFile', 'filePath', 'fileName'],
     parent: {
       name: parent,
     },
@@ -40,6 +40,9 @@ const getDocumentOptions = (model, block, category, parent) => ({
       uploadFile: {
         components: {
           edit: AdminBro.bundle('./components/upload-file.edit.tsx'),
+        },
+        props: {
+          category,
         },
       },
     },
@@ -156,26 +159,32 @@ const options = {
         },
         DocumentSession: {
           properties: {
-            file: 'Путь к файлу',
+            category: 'Категория',
+            year: 'Год',
+            month: 'Месяц',
+            name: 'Название документа',
+            filePath: 'Путь к файлу',
             uploadFile: 'Файл',
-            name: 'Документ',
-            title: 'Год проведения сессии',
           },
         },
         DocumentReport: {
           properties: {
-            file: 'Путь к файлу',
+            category: 'Категория',
+            year: 'Год',
+            month: 'Месяц',
+            name: 'Название документа',
+            filePath: 'Путь к файлу',
             uploadFile: 'Файл',
-            name: 'Документ',
-            title: 'Название раздела',
           },
         },
         DocumentBase: {
           properties: {
-            file: 'Путь к файлу',
+            category: 'Категория',
+            year: 'Год',
+            month: 'Месяц',
+            name: 'Название документа',
+            filePath: 'Путь к файлу',
             uploadFile: 'Файл',
-            name: 'Документ',
-            title: 'Название раздела',
           },
         },
         ActivityWork: {
@@ -442,5 +451,7 @@ const options = {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',
   },
 };
+
+console.dir(options.resources[1].options);
 
 module.exports = options;

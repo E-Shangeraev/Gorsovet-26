@@ -6,6 +6,7 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transition: ease-in 0.15s;
 
   img {
     margin-right: 20px;
@@ -14,6 +15,13 @@
     font-family: $semi;
     font-size: 20px;
     color: #9b9b9b;
+  }
+  &:hover {
+    opacity: 0.7;
+  }
+  &:active,
+  &:focus {
+    outline: none;
   }
 }
 

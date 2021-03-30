@@ -4,11 +4,11 @@ import { BasePropertyProps } from 'admin-bro/src/frontend/components/property-ty
 
 const Edit: React.FC<BasePropertyProps> = (props) => {
   const { property, onChange, record } = props;
+  const { category } = props.property.props;
 
   const handleDropZoneChange: DropZoneProps['onChange'] = (files) => {
-    onChange('files', '/uploads/documents/' + files[0]?.name);
-    onChange('name', files[0]?.name);
-    onChange('title', files[0]?.name.split('.')[0]);
+    onChange('filePath', `/uploads/documents/${category}/` + files[0]?.name);
+    onChange('fileName', files[0]?.name);
     onChange(property.name, files[0]);
   };
 

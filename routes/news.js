@@ -92,7 +92,13 @@ function paginatedResults(model) {
     }
 
     try {
-      results.results = await model.find().limit(limit).skip(startIndex).lean().exec();
+      results.results = await model
+        .find()
+        .limit(limit)
+        .sort({ date: -1 })
+        .skip(startIndex)
+        .lean()
+        .exec();
       const count = await model.find().count();
       const pagesCount = Math.ceil(count / limit);
       results.pagesCount = pagesCount;
