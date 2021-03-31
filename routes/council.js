@@ -1,7 +1,11 @@
 const { Router } = require('express');
-const comissionController = require('../controllers/comissionController');
 const router = Router();
 
-router.get('/', comissionController.documents);
+router.get('/', (req, res) => {
+  res.render('council', {
+    title: 'Совет депутатов',
+    isCouncil: true,
+  });
+});
 
 module.exports = router;

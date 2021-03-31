@@ -36,13 +36,13 @@
   margin-top: auto;
 }
 .structure__biography {
-  position: relative;
-  top: -100%;
-  margin-top: 25px;
-  height: 0;
-  opacity: 0;
-  z-index: -1;
-  transition: 0.5s ease-in-out 0s;
+  // position: relative;
+  // top: -100%;
+  // margin-top: 25px;
+  // height: 0;
+  // opacity: 0;
+  // z-index: -1;
+  // transition: 0.5s ease-in-out 0s;
 
   h5 {
     margin: 0;
@@ -57,12 +57,12 @@
     font-size: 16px;
   }
 }
-.structure__data.open .structure__biography {
-  top: 0;
-  height: auto;
-  opacity: 1;
-  z-index: 1;
-}
+// .structure__data.open .structure__biography {
+//   top: 0;
+//   height: auto;
+//   opacity: 1;
+//   z-index: 1;
+// }
 
 @media (max-width: 1440px) {
   .structure__photo {
@@ -192,8 +192,9 @@
       padding-left: 5px;
     }
     li {
+      margin-bottom: 15px;
       font-size: 12px;
-      line-height: 200%;
+      line-height: 150%;
     }
   }
 }

@@ -2,12 +2,12 @@ const { Schema, model, Types } = require('mongoose');
 
 const ActivityWork = new Schema(
   {
+    year: Number,
+    month: String,
     name: String,
-    title: String,
-    files: {
-      type: String,
-      required: true,
-    },
+    filePath: String,
+    fileName: String,
+    category: String,
     ownerId: {
       type: Types.ObjectId,
       ref: 'Admin',

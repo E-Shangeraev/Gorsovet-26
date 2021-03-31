@@ -35,5 +35,3 @@ import Component17 from '../admin/components/upload-file.edit'
 AdminBro.UserComponents.Component17 = Component17
 import Component18 from '../admin/components/upload-file.edit'
 AdminBro.UserComponents.Component18 = Component18
-import Component19 from '../admin/components/upload-file.edit'
-AdminBro.UserComponents.Component19 = Component19

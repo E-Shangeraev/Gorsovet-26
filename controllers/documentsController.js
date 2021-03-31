@@ -10,18 +10,20 @@ const WordExtractor = require('word-extractor');
 var iconv = require('iconv-lite');
 // var windows1252 = require('windows-1252');
 
-const getDocuments = (model, directorie) => {
-  let array = [];
+const getDocuments = async (req, res, model, title) => {
+  const documents = await model.find({ year: req.query.y, month: req.query.m }).lean();
+  const availableYears = await model.find().distinct('year').lean();
 
-  const files = fs.readdirSync(path.join(__dirname, `../public/uploads/documents/${directorie}`));
+  res.render('documents-folder', {
+    title,
+    isDocuments: true,
+    documents,
+    availableYears,
+    m: req.query.m,
+    y: req.query.y,
+  });
 
-  // console.log(files);
-
-  array = files.map((file) => ({ directorie, file }));
-
-  removeUnavailableDocs(model, directorie);
-
-  return array;
+  // removeUnavailableDocs(model, directorie);
 };
 
 async function removeUnavailableDocs(model, directorie) {
@@ -151,8 +153,6 @@ exports.documents = async (req, res) => {
   const reports = await DocumentReport.findOne().sort({ year: -1, month: -1 }).lean();
   const base = await DocumentBase.findOne().sort({ year: -1, month: -1 }).lean();
 
-  console.log(reports);
-
   res.render('documents', {
     title: 'Документы',
     isDocuments: true,
@@ -162,46 +162,53 @@ exports.documents = async (req, res) => {
   });
 };
 
-exports.sessions = async (req, res) => {
-  const docs = getDocuments(DocumentSession, 'sessions');
-  const documents = await DocumentSession.find({ year: req.query.y, month: req.query.m }).lean();
-  const availableYears = await DocumentReport.find().distinct('year').lean();
+exports.sessions = (req, res) => {
+  // const docs = getDocuments(DocumentSession, 'sessions');
 
-  res.render('documents-folder', {
-    title: 'Решения сессии',
-    isDocuments: true,
-    documents,
-    availableYears,
-    m: req.query.m,
-    y: req.query.y,
-  });
+  getDocuments(req, res, DocumentSession, 'Решения сессии');
+  // const documents = await DocumentSession.find({ year: req.query.y, month: req.query.m }).lean();
+  // const availableYears = await DocumentReport.find().distinct('year').lean();
+
+  // res.render('documents-folder', {
+  //   title: 'Решения сессии',
+  //   isDocuments: true,
+  //   documents,
+  //   availableYears,
+  //   m: req.query.m,
+  //   y: req.query.y,
+  // });
 };
 
-exports.reports = async (req, res) => {
-  const docs = getDocuments(DocumentReport, 'reports');
-  const documents = await DocumentReport.find({ year: req.query.y, month: req.query.m }).lean();
-  const availableYears = await DocumentReport.find().distinct('year').lean();
+exports.reports = (req, res) => {
+  // const docs = getDocuments(DocumentReport, 'reports');
 
-  res.render('documents-folder', {
-    title: 'Отчёты о деятельности',
-    isDocuments: true,
-    documents,
-    availableYears,
-    m: req.query.m,
-    y: req.query.y,
-  });
+  // const documents = await DocumentReport.find({ year: req.query.y, month: req.query.m }).lean();
+  // const availableYears = await DocumentReport.find().distinct('year').lean();
+
+  // res.render('documents-folder', {
+  //   title: 'Отчёты о деятельности',
+  //   isDocuments: true,
+  //   documents,
+  //   availableYears,
+  //   m: req.query.m,
+  //   y: req.query.y,
+  // });
+
+  getDocuments(req, res, DocumentReport, 'Отчёты о деятельности');
 };
 
-exports.base = async (req, res) => {
-  const documents = getDocuments(DocumentBase, 'base');
-
-  res.render('documents-folder', {
-    title: 'Нормативная правовая база',
-    isDocuments: true,
-    documents,
-    month: req.query.m,
-    year: req.query.y,
-  });
+exports.base = (req, res) => {
+  // const docs = getDocuments(DocumentBase, 'base');
+  // const documents = await DocumentBase.find({ year: req.query.y, month: req.query.m }).lean();
+  // const availableYears = await DocumentBase.find().distinct('year').lean();
+  // res.render('documents-folder', {
+  //   title: 'Нормативная правовая база',
+  //   isDocuments: true,
+  //   documents,
+  //   month: req.query.m,
+  //   year: req.query.y,
+  // });
+  getDocuments(req, res, DocumentBase, 'Нормативная правовая база');
 };
 
 exports.download = async (req, res) => {

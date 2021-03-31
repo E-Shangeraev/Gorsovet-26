@@ -13,7 +13,6 @@ const DocumentBase = require('../models/DocumentBase');
 const ActivityWork = require('../models/ActivityWork');
 const ActivityHearing = require('../models/ActivityHearing');
 const ActivitySession = require('../models/ActivitySession');
-const Comission = require('../models/Comission');
 
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
 const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
@@ -88,7 +87,7 @@ const options = {
       },
       labels: {
         Admin: 'Администраторы',
-        Activity: 'Активности',
+        Activity: 'Деятельность депутатов Совета депутатов',
         Calendar: 'Календарь событий',
         Deputie: 'Депутатский корпус',
         News: 'Новости',
@@ -189,26 +188,32 @@ const options = {
         },
         ActivityWork: {
           properties: {
-            file: 'Путь к файлу',
+            category: 'Категория',
+            year: 'Год',
+            month: 'Месяц',
+            name: 'Название документа',
+            filePath: 'Путь к файлу',
             uploadFile: 'Файл',
-            name: 'Документ',
-            title: 'Название раздела',
           },
         },
         ActivityHearing: {
           properties: {
-            file: 'Путь к файлу',
+            category: 'Категория',
+            year: 'Год',
+            month: 'Месяц',
+            name: 'Название документа',
+            filePath: 'Путь к файлу',
             uploadFile: 'Файл',
-            name: 'Документ',
-            title: 'Название раздела',
           },
         },
         ActivitySession: {
           properties: {
-            file: 'Путь к файлу',
+            category: 'Категория',
+            year: 'Год',
+            month: 'Месяц',
+            name: 'Название документа',
+            filePath: 'Путь к файлу',
             uploadFile: 'Файл',
-            name: 'Документ',
-            title: 'Название раздела',
           },
         },
       },
@@ -221,7 +226,7 @@ const options = {
       options: {
         listProperties: ['title', 'text', 'date', 'views', 'uploadImage'],
         parent: {
-          name: 'Контент сайта',
+          name: 'Депутатский корпус',
         },
         properties: {
           text: {
@@ -266,7 +271,7 @@ const options = {
       options: {
         listProperties: ['title', 'text', 'date', 'url', 'uploadImage'],
         parent: {
-          name: 'Контент сайта',
+          name: 'Главная',
         },
         properties: {
           uploadImage: {
@@ -314,7 +319,7 @@ const options = {
           'uploadFraction',
         ],
         parent: {
-          name: 'Контент сайта',
+          name: 'Депутатский корпус',
         },
         properties: {
           uploadImage: {
@@ -363,7 +368,7 @@ const options = {
       options: {
         listProperties: ['title', 'text', 'uploadImage', 'date', 'views'],
         parent: {
-          name: 'Контент сайта',
+          name: 'Новости',
         },
         properties: {
           text: {
@@ -405,7 +410,7 @@ const options = {
       options: {
         listProperties: ['uploadImage', 'video'],
         parent: {
-          name: 'Контент сайта',
+          name: 'Новости',
         },
         properties: {
           uploadImage: {
@@ -445,7 +450,6 @@ const options = {
     getDocumentOptions(ActivityWork, 'activity', 'work', 'Деятельность совета'),
     getDocumentOptions(ActivityHearing, 'activity', 'hearings', 'Деятельность совета'),
     getDocumentOptions(ActivitySession, 'activity', 'sessions', 'Деятельность совета'),
-    getDocumentOptions(Comission, 'council', 'comissions', 'Совет депутатов'),
   ],
   branding: {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',

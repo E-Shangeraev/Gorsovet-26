@@ -29,7 +29,7 @@
     Структура совета
   </h2>
   <ul class="structure__container">
-    <li class="structure__data">
+    <li class="structure__data collapsible">
       <figure>
         <img
           class="structure__photo"
@@ -43,15 +43,13 @@
           <span class="structure__name">
             Проскурнин Сергей Дмитриевич
           </span>
-          <button class="details structure__details">
-            <span>
-              Подробнее
-            </span>
+          <button class="structure__details details">
+            <span>Подробнее</span>
             <img src="svg/mark.svg" />
           </button>
         </figcaption>
       </figure>
-      <div class="structure__biography">
+      <div class="structure__biography details__content">
         <h5>
           Образование:
         </h5>
@@ -109,7 +107,7 @@
         </ul>
       </div>
     </li>
-    <li class="structure__data">
+    <li class="structure__data collapsible">
       <figure>
         <img
           class="structure__photo"
@@ -123,7 +121,7 @@
           <span class="structure__name">
             Двирный Гурий Валерьевич
           </span>
-          <button class="details structure__details">
+          <button class="structure__details details">
             <span>
               Подробнее
             </span>
@@ -131,7 +129,7 @@
           </button>
         </figcaption>
       </figure>
-      <div class="structure__biography">
+      <div class="structure__biography details__content">
         <h5>
           Образование:
         </h5>
@@ -195,30 +193,134 @@
       Постоянные комиссии
     </h3>
     <div class="commission__container">
-      {{#if comissions.length}}
-        {{#each comissions}}
-          <div class="bg-gray commission__block">
-            <h4 class="commission__name">
-              {{dir}}
-            </h4>
-            <button class="details commission__details">
-              <span>
-                Подробнее
-              </span>
-              <img src="svg/mark.svg" />
-            </button>
-            <ul class="commission__list">
-              {{#each documents}}
-                <li>
-                  <a href="./public/uploads/council/comissions/{{dir}}/{{file}}" download>
-                    {{name}}
-                  </a>
-                </li>
-              {{/each}}
-            </ul>
-          </div>
-        {{/each}}
-      {{/if}}
+      <div class="bg-gray commission__block collapsible">
+        <h4 class="commission__name">Комиссия по бюджету, финансам и налогам</h4>
+        <button class="details">
+          <span>Подробнее</span>
+          <img src="svg/mark.svg" />
+        </button>
+        <div class="commission__content details__content">
+          <h5>Председатель комиссии:</h5>
+          <span>Разумник Юрий Иванович</span>
+
+          <h5>Заместитель председателя комиссии:</h5>
+          <span>Мамонтова Вера Анатольевна</span>
+
+          <h5>Члены комиссии:</h5>
+          <ul>
+            <li>Балашов Евгений Александрович</li>
+            <li>Беллер Роман Валерьевич</li>
+            <li>Бель Анна Василисовна</li>
+            <li>Двирный Гурий Валерьевич</li>
+            <li>Дубровский Владимир Михайлович</li>
+            <li>Кротова Людмила Георгиевна</li>
+            <li>Матроницкий Дмитрий Анатольевич</li>
+            <li>Новаковский Анатолий Вадимович</li>
+            <li>Руденко Ксения Андреевна</li>
+            <li>Семерикова Наталия Юрьевна</li>
+            <li>Ташев Семен Олегович</li>
+            <li>Травников Никита Андреевич</li>
+            <li>Токарев Олег Васильевич</li>
+            <li>Харабет Алексей Иванович</li>
+            <li>Шелепов Глеб Владимирович</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gray commission__block collapsible">
+        <h4 class="commission__name">Комиссия по вопросам экономики, собственности и ЖКХ</h4>
+        <button class="details">
+          <span>Подробнее</span>
+          <img src="svg/mark.svg" />
+        </button>
+        <div class="commission__content details__content">
+          <h5>Председатель комиссии:</h5>
+          <span>Матроницкий Дмитрий Анатольевич</span>
+
+          <h5>Заместитель председателя комиссии:</h5>
+          <span>Ташев Семён Олегович</span>
+
+          <h5>Члены комиссии:</h5>
+          <ul>
+            <li>Антонов Эдуард Юрьевич</li>
+            <li>Балашов Евгений Александрович</li>
+            <li>Беллер Роман Валерьевич</li>
+            <li>Бель Анна Василисовна</li>
+            <li>Двирный Гурий Валерьевич</li>
+            <li>Закалин Андрей Владимирович</li>
+            <li>Кротова Людмила Георгиевна</li>
+            <li>Мамонтова Вера Анатольевна</li>
+            <li>Новаковский Анатолий Вадимович</li>
+            <li>Разумник Юрий Иванович</li>
+            <li>Руденко Ксения Андреевна</li>
+            <li>Семерикова Наталия Юрьевна</li>
+            <li>Травников Никита Андреевич</li>
+            <li>Токарев Олег Васильевич</li>
+            <li>Харабет Алексей Иванович</li>
+            <li>Шелепов Глеб Владимирович</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gray commission__block collapsible">
+        <h4 class="commission__name">Комиссия по вопросам местного самоуправления и законности</h4>
+        <button class="details">
+          <span>Подробнее</span>
+          <img src="svg/mark.svg" />
+        </button>
+        <div class="commission__content details__content">
+          <h5>Председатель комиссии:</h5>
+          <span>Федотов Алексей Станиславович</span>
+
+          <h5>Заместитель председателя комиссии:</h5>
+          <span>Харабет Алексей Иванович</span>
+
+          <h5>Члены комиссии:</h5>
+          <ul>
+            <li>Двирный Гурий Валерьевич</li>
+            <li>Закалин Андрей Владимирович</li>
+            <li>Кротова Людмила Георгиевна</li>
+            <li>Мамонтова Вера Анатольевна</li>
+            <li>Митин Виктор Борисович</li>
+            <li>Новаковский Анатолий Вадимович</li>
+            <li>Ощепков Анатолий Владимирович</li>
+            <li>Руденко Ксения Андреевна</li>
+            <li>Травников Никита Андреевич</li>
+            <li>Шелепов Глеб Владимирович</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="bg-gray commission__block collapsible">
+        <h4 class="commission__name">Комиссия по социальным вопросам</h4>
+        <button class="details">
+          <span>Подробнее</span>
+          <img src="svg/mark.svg" />
+        </button>
+        <div class="commission__content details__content">
+          <h5>Председатель комиссии:</h5>
+          <span>Шелепов Глеб Владимирович</span>
+
+          <h5>Заместитель председателя комиссии:</h5>
+          <span>Семерикова Наталия Юрьевна</span>
+
+          <h5>Члены комиссии:</h5>
+          <ul>
+            <li>Антонов Эдуард Юрьевич</li>
+            <li>Двирный Гурий Валерьевич</li>
+            <li>Дубровский Владимир Михайлович</li>
+            <li>Закалин Андрей Владимирович</li>
+            <li>Кротова Людмила Георгиевна</li>
+            <li>Лесняк Виталий Анатольевич</li>
+            <li>Мамонтова Вера Анатольевна</li>
+            <li>Митин Виктор Борисович</li>
+            <li>Новаковский Анатолий Вадимович</li>
+            <li>Ощепков Анатолий Владимирович</li>
+            <li>Руденко Ксения Андреевна</li>
+            <li>Травников Никита Андреевич</li>
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
   <section class="fractions">

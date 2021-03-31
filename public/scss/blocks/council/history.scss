@@ -130,8 +130,16 @@
   }
 }
 @media (max-width: 440px) {
-  // .history__photo {
-  //   grid-template-rows: 190px 65px;
+  .history__photo {
+    //   grid-template-rows: 190px 65px;
+    // img {
+    //   min-width: 100px;
+    // }
+  }
+  // .history__small {
+  //   img {
+  //     max-width: 70px;
+  //   }
   // }
   .history__text {
     margin-bottom: 25px;

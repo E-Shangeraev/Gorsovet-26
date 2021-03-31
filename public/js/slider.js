@@ -146,5 +146,14 @@ if (fileName === 'council') {
     dots: false,
     centerMode: true,
     focusOnSelect: true,
+    responsive: [
+      {
+        breakpoint: 580,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   });
 }
