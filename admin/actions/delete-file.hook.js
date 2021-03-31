@@ -1,8 +1,6 @@
 const AdminBro = require('admin-bro');
-const AdminBroMongoose = require('admin-bro-mongoose');
 const path = require('path');
 const fs = require('fs');
-// const unzipper = require('unzipper');
 const archiver = require('archiver');
 
 async function addToArchive(page, folderName) {
@@ -34,39 +32,14 @@ async function addToArchive(page, folderName) {
   console.log('zip file created');
 }
 
-/** @type {AdminBro.Before} */
-const before = async (req, context) => {
-  if (req.method === 'post') {
-    const { uploadFile, ...other } = req.payload;
-
-    context.uploadFile = uploadFile;
-
-    return {
-      ...req,
-      payload: other,
-    };
-  }
-  return req;
-};
-
 /** @type {AdminBro.After<AdminBro.ActionResponse>}*/
 const after = async (res, req, context, page, directory) => {
-  const { record, uploadFile } = context;
+  const { record } = context;
+  const filePath = record.params.filePath;
 
-  if (record.isValid() && uploadFile) {
-    const filePath = path.join(
-      __dirname,
-      `../../public/uploads/${page}/${directory}`,
-      uploadFile.name,
-    );
+  fs.unlink(path.join(__dirname, '../../public', filePath), () => addToArchive(page, directory));
 
-    await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
-
-    await fs.promises.rename(uploadFile.path, filePath);
-
-    addToArchive(page, directory);
-  }
   return res;
 };
 
-module.exports = { after, before };
+module.exports = { after };

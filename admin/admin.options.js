@@ -24,10 +24,12 @@ const {
   before: uploadBeforeFileHook,
   after: uploadAfterFileHook,
 } = require('./actions/upload-file.hook');
+const { after: deleteAfterFileHook } = require('./actions/delete-file.hook');
+const { after: deleteAfterImageHook } = require('./actions/delete-image.hook');
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
-const getDocumentOptions = (model, block, category, parent) => ({
+const getDocumentOptions = (model, page, category, parent) => ({
   resource: model,
   options: {
     listProperties: ['category', 'year', 'month', 'name'],
@@ -49,25 +51,27 @@ const getDocumentOptions = (model, block, category, parent) => ({
       new: {
         before: async (req, context) => {
           const modifiedRequest = await passwordBeforeHook(req, context);
-          uploadBeforeFileHook(modifiedRequest, context);
-          return uploadBeforeHook(modifiedRequest, context);
+          return uploadBeforeFileHook(modifiedRequest, context);
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          uploadAfterFileHook(modifiedResponse, req, context, block, category);
-          return uploadAfterHook(modifiedResponse, req, context);
+          return uploadAfterFileHook(modifiedResponse, req, context, page, category);
         },
       },
       edit: {
         before: async (req, context) => {
           const modifiedRequest = await passwordBeforeHook(req, context);
-          uploadBeforeFileHook(modifiedRequest, context);
-          return uploadBeforeHook(modifiedRequest, context);
+          return uploadBeforeFileHook(modifiedRequest, context);
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          uploadAfterFileHook(modifiedResponse, req, context, block, category);
-          return uploadAfterHook(modifiedResponse, req, context);
+          return uploadAfterFileHook(modifiedResponse, req, context, page, category);
+        },
+      },
+      delete: {
+        after: async (res, req, context) => {
+          const modifiedResponse = await passwordAfterHook(res, req, context);
+          return deleteAfterFileHook(modifiedResponse, req, context, page, category);
         },
       },
     },
@@ -84,6 +88,8 @@ const options = {
         edit: 'Редактировать',
         show: 'Подробнее',
         delete: 'Удалить',
+        list: 'Записи',
+        search: 'Искать',
       },
       labels: {
         Admin: 'Администраторы',
@@ -260,6 +266,12 @@ const options = {
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
+          delete: {
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+            },
+          },
           show: {
             isVisible: false,
           },
@@ -360,6 +372,12 @@ const options = {
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
+          delete: {
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+            },
+          },
         },
       },
     },
@@ -402,6 +420,12 @@ const options = {
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
+          delete: {
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+            },
+          },
         },
       },
     },
@@ -441,6 +465,12 @@ const options = {
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
+          delete: {
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+            },
+          },
         },
       },
     },
@@ -453,9 +483,9 @@ const options = {
   ],
   branding: {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',
+    logo: '/img/emblem.png',
+    softwareBrothers: false,
   },
 };
-
-console.dir(options.resources[1].options);
 
 module.exports = options;

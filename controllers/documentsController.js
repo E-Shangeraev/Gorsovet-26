@@ -162,57 +162,27 @@ exports.documents = async (req, res) => {
   });
 };
 
-exports.sessions = (req, res) => {
-  // const docs = getDocuments(DocumentSession, 'sessions');
+exports.sessions = (req, res) => getDocuments(req, res, DocumentSession, 'Решения сессии');
+// const documents = await DocumentSession.find({ year: req.query.y, month: req.query.m }).lean();
+// const availableYears = await DocumentReport.find().distinct('year').lean();
 
-  getDocuments(req, res, DocumentSession, 'Решения сессии');
-  // const documents = await DocumentSession.find({ year: req.query.y, month: req.query.m }).lean();
-  // const availableYears = await DocumentReport.find().distinct('year').lean();
+// res.render('documents-folder', {
+//   title: 'Решения сессии',
+//   isDocuments: true,
+//   documents,
+//   availableYears,
+//   m: req.query.m,
+//   y: req.query.y,
+// });
+// };
 
-  // res.render('documents-folder', {
-  //   title: 'Решения сессии',
-  //   isDocuments: true,
-  //   documents,
-  //   availableYears,
-  //   m: req.query.m,
-  //   y: req.query.y,
-  // });
-};
+exports.reports = (req, res) => getDocuments(req, res, DocumentReport, 'Отчёты о деятельности');
 
-exports.reports = (req, res) => {
-  // const docs = getDocuments(DocumentReport, 'reports');
-
-  // const documents = await DocumentReport.find({ year: req.query.y, month: req.query.m }).lean();
-  // const availableYears = await DocumentReport.find().distinct('year').lean();
-
-  // res.render('documents-folder', {
-  //   title: 'Отчёты о деятельности',
-  //   isDocuments: true,
-  //   documents,
-  //   availableYears,
-  //   m: req.query.m,
-  //   y: req.query.y,
-  // });
-
-  getDocuments(req, res, DocumentReport, 'Отчёты о деятельности');
-};
-
-exports.base = (req, res) => {
-  // const docs = getDocuments(DocumentBase, 'base');
-  // const documents = await DocumentBase.find({ year: req.query.y, month: req.query.m }).lean();
-  // const availableYears = await DocumentBase.find().distinct('year').lean();
-  // res.render('documents-folder', {
-  //   title: 'Нормативная правовая база',
-  //   isDocuments: true,
-  //   documents,
-  //   month: req.query.m,
-  //   year: req.query.y,
-  // });
-  getDocuments(req, res, DocumentBase, 'Нормативная правовая база');
-};
+exports.base = (req, res) => getDocuments(req, res, DocumentBase, 'Нормативная правовая база');
 
 exports.download = async (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/uploads/documents/all/documents.zip'));
+  const zipFile = `${req.params.category}.zip`;
+  res.sendFile(path.join(__dirname, '../public/uploads/documents/archives', zipFile));
 };
 
 exports.search = async (req, res) => {
