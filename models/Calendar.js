@@ -6,12 +6,8 @@ const Calendar = new Schema(
       type: String,
       required: true,
     },
-    text: {
-      type: String,
-      required: true,
-    },
-    img: String,
-    url: String,
+    filePath: String,
+    fileName: String,
     date: {
       type: Date,
       default: Date.now,

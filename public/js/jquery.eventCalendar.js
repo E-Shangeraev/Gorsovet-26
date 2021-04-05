@@ -100,7 +100,6 @@
       $(window).resize(function () {
         setCalendarWidth(flags);
       });
-      //flags.directionLeftMove = flags.wrap.width();
 
       // show current month
       dateSlider('current', flags, eventsOpts);
@@ -110,7 +109,6 @@
       changeMonth(flags, eventsOpts);
 
       flags.wrap.on('click', '.eventCalendar-day a', function (e) {
-        //flags.wrap.find('.eventCalendar-day a').live('click',function(e){
         e.preventDefault();
         var year = flags.wrap.attr('data-current-year'),
           month = flags.wrap.attr('data-current-month'),
@@ -119,7 +117,6 @@
         getEvents(flags, eventsOpts, false, year, month, day, 'day');
       });
       flags.wrap.on('click', '.eventCalendar-monthTitle', function (e) {
-        //flags.wrap.find('.eventCalendar-monthTitle').live('click',function(e){
         e.preventDefault();
         var year = flags.wrap.attr('data-current-year'),
           month = flags.wrap.attr('data-current-month');
@@ -130,7 +127,6 @@
 
     // show event description
     flags.wrap.find('.eventCalendar-list').on('click', '.eventCalendar-eventTitle', function (e) {
-      //flags.wrap.find('.eventCalendar-list .eventCalendar-eventTitle').live('click',function(e){
       if (!eventsOpts.showDescription) {
         e.preventDefault();
         var desc = $(this).parent().find('.eventCalendar-eventDesc');
@@ -147,7 +143,7 @@
               eventTarget +
               '" class="bt">' +
               eventsOpts.locales.txt_GoToEventUrl +
-              '</a>',
+              'download </a>',
           );
         }
 
@@ -356,7 +352,6 @@
       month = '';
     }
 
-    //var month = month || '';
     flags.wrap.find('.eventCalendar-loading').fadeIn();
 
     if (eventsOpts.jsonData) {
@@ -419,7 +414,6 @@
             ' ' +
             eventsOpts.locales.txt_SpecificEvents_after,
         );
-        //eventStringDate = moment(eventDate).format(eventsOpts.dateFormat);
       } else {
         formatedDate = moment(year + ' ' + jsMonth, 'YYYY MM').format('MMMM');
         subtitle.html(
@@ -447,7 +441,6 @@
       eventsOpts.moveSpeed,
       function () {
         flags.wrap.find('.eventCalendar-list').css({ left: 0, height: 'auto' }).hide();
-        //wrap.find('.eventCalendar-list li').fadeIn();
 
         var events = [];
 
@@ -483,7 +476,6 @@
               eventYear = eventDate[0];
               eventMonth = parseInt(eventDate[1]) - 1;
               eventDay = parseInt(eventDate[2]);
-              //eventMonthToShow = eventMonth;
               eventMonthToShow = parseInt(eventMonth) + 1;
               eventHour = eventTime[0];
               eventMinute = eventTime[1];
@@ -519,17 +511,10 @@
               ) {
                 // if initial load then load only future events
                 if (month === false && eventDate < new Date()) {
-                  // console.log('События нет!');
-                  // eventClosestTime.textContent = 'Нет запланированных событий';
-                  // eventName.textContent = '';
-                  // eventClosestTime = null;
-                  // eventName = null;
                 } else {
                   moment.locale(eventsOpts.locales.locale);
-                  //eventStringDate = eventDay + "/" + eventMonthToShow + "/" + eventYear;
 
                   const eventMonth = +moment(eventDate).format(eventsOpts.dateFormatMonth);
-                  // console.log(eventMonth);
                   eventStringDate = moment(eventDate).format(eventsOpts.dateFormat).split('');
 
                   if (eventMonth === 3 || eventMonth === 8) {
@@ -538,29 +523,14 @@
                     eventStringDate[eventStringDate.length - 1] = 'я';
                   }
 
-                  // console.log(eventStringDate);
-
                   eventStringDate = eventStringDate.join('').toLowerCase();
                   promoEventDate.push(eventStringDate);
                   promoEventTitle.push(event.title);
 
-                  // console.log(eventStringDate);
-                  console.log(promoEventDate);
-                  // console.log(eventHour);
-                  // console.log(eventMinute);
-
                   if (eventClosestTime && eventName) {
-                    // console.log('Событие есть!');
                     eventClosestTime.textContent = `${promoEventDate[0]} ${eventHour}:${eventMinute}`;
                     eventName.textContent = promoEventTitle[0];
-                    // eventClosestTime = null;
-                    // eventName = null;
                   }
-
-                  // console.log(document.querySelector('.event__closest time'));
-                  // console.log(promoEventDate[0]);
-                  // console.log(document.querySelector('.event__name'));
-                  // console.log(promoEventTitle[0]);
 
                   var eventTitle;
 
@@ -570,7 +540,7 @@
                       event.url +
                       '" target="' +
                       eventLinkTarget +
-                      '" class="eventCalendar-eventTitle">' +
+                      '" class="eventCalendar-eventTitle" download>' +
                       event.title +
                       '</a>';
                   } else {
@@ -684,20 +654,4 @@
 
     flags.wrap.find('.eventCalendar-list-wrap').width(flags.wrap.width() + 'px');
   }
-
-  // function showClosestEventInPromo() {
-  //   const event = document.querySelectorAll('.eventCalendar-list li')[0];
-  //   const eventDate = event.querySelector('em').textContent;
-  //   const eventTime = event.querySelector('small').textContent;
-  //   const eventText = event.querySelector('span').textContent;
-
-  //   if (eventDate && eventTime && eventText) {
-  //     document.querySelector('.event__closest time').textContent = `${eventDate} ${eventTime}`;
-  //     document.querySelector('.event__name').textContent = eventText;
-  //   } else {
-  //     document.querySelector('.event__closest time').textContent = 'Нет запланированных событий';
-  //     document.querySelector('.event__name').textContent = '';
-  //   }
-  // }
-  // showClosestEventInPromo();
 })(jQuery);

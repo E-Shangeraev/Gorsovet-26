@@ -7,8 +7,11 @@ const after = async (res, req, context, images) => {
   const { record } = context;
 
   images.forEach((img) => {
-    const filePath = record.params[img];
-    fs.unlinkSync(path.join(__dirname, '../../public', filePath));
+    const filePath = record.params[img].toString();
+    const localFilePath = path.join(__dirname, '../../public', filePath);
+    if (localFilePath) {
+      fs.unlinkSync(localFilePath);
+    }
   });
 
   console.log(record.params);

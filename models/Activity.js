@@ -11,7 +11,10 @@ const Activity = new Schema(
       required: true,
       max: 12,
     },
-    img: String,
+    img: {
+      type: String,
+      default: 'Изображение отсутствует',
+    },
     date: {
       type: Date,
       default: Date.now,

@@ -17,6 +17,12 @@ const ActivitySession = require('../models/ActivitySession');
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
 const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
 const {
+  before: uploadBeforeEventHook,
+  after: uploadAfterEventHook,
+} = require('./actions/upload-event.hook');
+const { after: deleteAfterEventHook } = require('./actions/delete-event.hook');
+const { handler: bulkDeleteEventHook } = require('./actions/bulkDelete-event.hook');
+const {
   before: uploadBeforeFractionHook,
   after: uploadAfterFractionHook,
 } = require('./actions/upload-fraction.hook');
@@ -25,7 +31,9 @@ const {
   after: uploadAfterFileHook,
 } = require('./actions/upload-file.hook');
 const { after: deleteAfterFileHook } = require('./actions/delete-file.hook');
+const { handler: bulkDeleteFileHook } = require('./actions/bulkDelete-file.hook');
 const { after: deleteAfterImageHook } = require('./actions/delete-image.hook');
+const { handler: bulkDeleteImageHook } = require('./actions/bulkDelete-image.hook');
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
@@ -73,6 +81,10 @@ const getDocumentOptions = (model, page, category, parent) => ({
           const modifiedResponse = await passwordAfterHook(res, req, context);
           return deleteAfterFileHook(modifiedResponse, req, context, page, category);
         },
+      },
+      bulkDelete: {
+        actionType: 'bulk',
+        handler: async (req, res, context) => bulkDeleteFileHook(req, res, context, page, category),
       },
     },
   },
@@ -123,11 +135,10 @@ const options = {
         },
         Calendar: {
           properties: {
-            title: 'Заголовок',
-            text: 'Текст',
-            img: 'Путь к изображению',
-            uploadImage: 'Изображение',
-            url: 'Ссылка',
+            title: 'Название события',
+            filePath: 'Путь к файлу',
+            fileName: 'Название файла',
+            uploadFile: 'Файл',
             date: 'Дата проведения',
           },
         },
@@ -272,6 +283,10 @@ const options = {
               return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
             },
           },
+          bulkDelete: {
+            actionType: 'bulk',
+            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
+          },
           show: {
             isVisible: false,
           },
@@ -281,15 +296,14 @@ const options = {
     {
       resource: Calendar,
       options: {
-        listProperties: ['title', 'text', 'date', 'url', 'uploadImage'],
+        listProperties: ['title', 'date', 'uploadFile'],
         parent: {
           name: 'Главная',
         },
         properties: {
-          uploadImage: {
+          uploadFile: {
             components: {
-              edit: AdminBro.bundle('./components/upload-image.edit.tsx'),
-              list: AdminBro.bundle('./components/upload-image.list.tsx'),
+              edit: AdminBro.bundle('./components/upload-event.edit.tsx'),
             },
           },
         },
@@ -297,22 +311,32 @@ const options = {
           new: {
             before: async (req, context) => {
               const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              return uploadBeforeEventHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
               const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              return uploadAfterEventHook(modifiedResponse, req, context, 'calendar');
             },
           },
           edit: {
             before: async (req, context) => {
               const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              return uploadBeforeEventHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
               const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              return uploadAfterEventHook(modifiedResponse, req, context, 'calendar');
             },
+          },
+          delete: {
+            after: async (res, req, context) => {
+              const modifiedResponse = await passwordAfterHook(res, req, context);
+              return deleteAfterEventHook(modifiedResponse, req, context);
+            },
+          },
+          bulkDelete: {
+            actionType: 'bulk',
+            handler: async (req, res, context) => bulkDeleteEventHook(req, res, context),
           },
         },
       },
@@ -378,6 +402,10 @@ const options = {
               return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
             },
           },
+          bulkDelete: {
+            actionType: 'bulk',
+            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
+          },
         },
       },
     },
@@ -425,6 +453,10 @@ const options = {
               const modifiedResponse = await passwordAfterHook(res, req, context);
               return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
             },
+          },
+          bulkDelete: {
+            actionType: 'bulk',
+            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
           },
         },
       },

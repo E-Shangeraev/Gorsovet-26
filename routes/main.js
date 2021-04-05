@@ -3,11 +3,11 @@ const router = Router();
 const Deputie = require('../models/Deputie');
 const Calendar = require('../models/Calendar');
 const News = require('../models/News');
-// const bodyParser = require('body-parser');
 
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().sort({ id: 1 }).lean();
   const news = await News.find().sort({ x: 1 }).limit(20).lean();
+  // console.log(news);
 
   res.render('main', {
     title: 'Главная',
@@ -22,8 +22,13 @@ router.get('/calendar', async (req, res) => {
   res.json(calendar);
 });
 
+// router.get('/calendar/:fileName', async (req, res) => {
+//   const filePath = req.query;
+//   console.log(filePath);
+//   return res.sendFile(filePath);
+// });
+
 router.post('/question', async (req, res) => {
-  console.log(req.body);
   try {
     const message = `
         <h2>Письмо с сайта gorsovet-26.ru</h2>
@@ -47,7 +52,6 @@ router.post('/question', async (req, res) => {
     await sendQuestion(message);
     res.send('1');
   } catch (err) {
-    console.log(err);
     res.send('0');
   }
 });
