@@ -84,14 +84,6 @@ if (fileName === '') {
     infinite: true,
   });
   setupSlider({
-    section: '.about',
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    rows: 2,
-    fade: true,
-    infinite: true,
-  });
-  setupSlider({
     section: '.deput',
     slidesToShow: 4,
     slidesToShow1200: 3,

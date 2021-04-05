@@ -36,6 +36,9 @@
   let promoEventTitle = [];
   let promoEventDate = [];
 
+  let eventClosestTime = document.querySelector('.event__closest time');
+  let eventName = document.querySelector('.event__name');
+
   // define the parameters with the default values of the function
   $.fn.eventCalendar.defaults = {
     eventsjson: 'js/events.json',
@@ -509,7 +512,6 @@
 
             if (limit === 0 || limit > i) {
               // if month or day exist then only show matched events
-
               if (
                 (month === false || month == eventMonth) &&
                 (day === '' || day == eventDay) &&
@@ -517,15 +519,17 @@
               ) {
                 // if initial load then load only future events
                 if (month === false && eventDate < new Date()) {
-                  document.querySelector('.event__closest time').textContent =
-                    'Нет запланированных событий';
-                  document.querySelector('.event__name').textContent = '';
+                  // console.log('События нет!');
+                  // eventClosestTime.textContent = 'Нет запланированных событий';
+                  // eventName.textContent = '';
+                  // eventClosestTime = null;
+                  // eventName = null;
                 } else {
                   moment.locale(eventsOpts.locales.locale);
                   //eventStringDate = eventDay + "/" + eventMonthToShow + "/" + eventYear;
 
                   const eventMonth = +moment(eventDate).format(eventsOpts.dateFormatMonth);
-                  console.log(eventMonth);
+                  // console.log(eventMonth);
                   eventStringDate = moment(eventDate).format(eventsOpts.dateFormat).split('');
 
                   if (eventMonth === 3 || eventMonth === 8) {
@@ -534,25 +538,23 @@
                     eventStringDate[eventStringDate.length - 1] = 'я';
                   }
 
-                  console.log(eventStringDate);
+                  // console.log(eventStringDate);
 
-                  // if (eventStringDate === 'март') {
-                  //   eventStringDate = 'марта';
-                  // }
                   eventStringDate = eventStringDate.join('').toLowerCase();
                   promoEventDate.push(eventStringDate);
                   promoEventTitle.push(event.title);
 
-                  console.log(eventStringDate);
+                  // console.log(eventStringDate);
                   console.log(promoEventDate);
-                  console.log(eventHour);
-                  console.log(eventMinute);
+                  // console.log(eventHour);
+                  // console.log(eventMinute);
 
-                  if (promoEventDate.length || eventHour || eventMinute) {
-                    document.querySelector(
-                      '.event__closest time',
-                    ).textContent = `${promoEventDate[0]} ${eventHour}:${eventMinute}`;
-                    document.querySelector('.event__name').textContent = promoEventTitle[0];
+                  if (eventClosestTime && eventName) {
+                    // console.log('Событие есть!');
+                    eventClosestTime.textContent = `${promoEventDate[0]} ${eventHour}:${eventMinute}`;
+                    eventName.textContent = promoEventTitle[0];
+                    // eventClosestTime = null;
+                    // eventName = null;
                   }
 
                   // console.log(document.querySelector('.event__closest time'));
@@ -622,6 +624,10 @@
               eventsOpts.locales.txt_noEvents +
               '</p></li>',
           );
+          eventClosestTime.textContent = 'Нет запланированных событий';
+          eventName.textContent = '';
+          eventClosestTime = null;
+          eventName = null;
         }
         flags.wrap.find('.eventCalendar-loading').hide();
 
@@ -678,4 +684,20 @@
 
     flags.wrap.find('.eventCalendar-list-wrap').width(flags.wrap.width() + 'px');
   }
+
+  // function showClosestEventInPromo() {
+  //   const event = document.querySelectorAll('.eventCalendar-list li')[0];
+  //   const eventDate = event.querySelector('em').textContent;
+  //   const eventTime = event.querySelector('small').textContent;
+  //   const eventText = event.querySelector('span').textContent;
+
+  //   if (eventDate && eventTime && eventText) {
+  //     document.querySelector('.event__closest time').textContent = `${eventDate} ${eventTime}`;
+  //     document.querySelector('.event__name').textContent = eventText;
+  //   } else {
+  //     document.querySelector('.event__closest time').textContent = 'Нет запланированных событий';
+  //     document.querySelector('.event__name').textContent = '';
+  //   }
+  // }
+  // showClosestEventInPromo();
 })(jQuery);

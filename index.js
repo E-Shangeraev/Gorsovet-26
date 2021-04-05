@@ -108,18 +108,18 @@ start();
 // Функция отправки обращения
 sendQuestion = async (data, fileName = '', originalName = '') => {
   let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: 'smtp.yandex.ru',
     port: 587,
     secure: false,
     auth: {
-      user: 'zickrail@gmail.com',
-      pass: 'neon1miami1980e',
+      user: 'sovetdeputatov2012@yandex.ru',
+      pass: '73501505',
     },
   });
 
   let mailOption = {
-    from: '<zickrail@gmail.com>',
-    to: 'zickrail@gmail.com',
+    from: '<sovetdeputatov2012@yandex.ru>',
+    to: 'sovetdeputatov2012@yandex.ru',
     subject: 'Сайт gorsovet-26.ru',
     html: data,
   };
