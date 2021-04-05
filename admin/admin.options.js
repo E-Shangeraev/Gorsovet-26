@@ -181,6 +181,7 @@ const options = {
             name: 'Название документа',
             filePath: 'Путь к файлу',
             uploadFile: 'Файл',
+            fileName: 'Название файла',
           },
         },
         DocumentReport: {
@@ -191,6 +192,7 @@ const options = {
             name: 'Название документа',
             filePath: 'Путь к файлу',
             uploadFile: 'Файл',
+            fileName: 'Название файла',
           },
         },
         DocumentBase: {
@@ -201,6 +203,7 @@ const options = {
             name: 'Название документа',
             filePath: 'Путь к файлу',
             uploadFile: 'Файл',
+            fileName: 'Название файла',
           },
         },
         ActivityWork: {
@@ -211,6 +214,7 @@ const options = {
             name: 'Название документа',
             filePath: 'Путь к файлу',
             uploadFile: 'Файл',
+            fileName: 'Название файла',
           },
         },
         ActivityHearing: {
@@ -221,6 +225,7 @@ const options = {
             name: 'Название документа',
             filePath: 'Путь к файлу',
             uploadFile: 'Файл',
+            fileName: 'Название файла',
           },
         },
         ActivitySession: {
@@ -231,6 +236,7 @@ const options = {
             name: 'Название документа',
             filePath: 'Путь к файлу',
             uploadFile: 'Файл',
+            fileName: 'Название файла',
           },
         },
       },

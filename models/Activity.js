@@ -13,7 +13,6 @@ const Activity = new Schema(
     },
     img: {
       type: String,
-      default: 'Изображение отсутствует',
     },
     date: {
       type: Date,

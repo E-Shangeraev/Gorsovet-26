@@ -23,7 +23,7 @@
             {{#if img}}
               <img class="preview__image" src="{{img}}" alt="{{title}}" />
             {{else}}
-              <img class="preview__image" src="/img/no-image.jpg" alt="{{title}}" />
+              <img class="preview__image preview__image--no-image" src="/img/no-image.jpg" alt="{{title}}" />
             {{/if}}
             <figcaption class="preview__caption">
               <h4 class="preview__title">
@@ -31,14 +31,13 @@
               </h4>
               <div class="preview__text">
                 {{trimString text 150}}
-                {{!-- <span>...</span> --}}
               </div>
               <div class="preview__footer">
                 <time pubdate>
                   {{moment date format="DD.MM.YYYY"}}
                 </time>
                 <p class="preview__views">
-                  <img src="/svg/views.svg" />
+                  <img src="/svg/views-gray.svg" />
                   <span class="preview__count">
                     {{views}}
                   </span>

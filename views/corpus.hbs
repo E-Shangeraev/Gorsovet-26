@@ -94,20 +94,24 @@
         {{#each activities}}
         <a href="/corpus/{{_id}}">
           <figure class="preview">
-            <img class="preview__image" src="{{img}}" alt="{{title}}"/>
+            {{#if img}}
+              <img class="preview__image" src="{{img}}" alt="{{title}}" />
+            {{else}}
+              <img class="preview__image preview__image--no-image" src="/img/no-image.jpg" alt="{{title}}" />
+            {{/if}}
             <figcaption class="preview__caption">
               <h4 class="preview__title">
                 {{title}}
               </h4>
               <p class="preview__text">
-                {{text}}
+                {{{text}}}
               </p>
               <div class="preview__footer">
                 <time pubdate>
                   {{moment date format="DD.MM.YYYY"}}
                 </time>
                 <p class="preview__views">
-                  <img class="preview__eye" src="/svg/views.svg" />
+                  <img class="preview__eye" src="/svg/views-gray.svg" />
                   <span class="preview__count">
                     {{views}}
                   </span>

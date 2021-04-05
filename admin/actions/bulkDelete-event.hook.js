@@ -16,10 +16,9 @@ const handler = async (req, res, context) => {
     await Promise.all(records.map((record) => resource.delete(record.id())));
 
     records.forEach((record) => {
-      console.log(record.params.filePath);
-      const filePath = record.params.filePath;
-      const localFilePath = path.join(__dirname, '../../public', filePath);
-      if (localFilePath) {
+      if (record.params.filePath) {
+        const filePath = record.params.filePath;
+        const localFilePath = path.join(__dirname, '../../public', filePath);
         fs.unlinkSync(localFilePath);
       }
     });

@@ -57,6 +57,10 @@
     justify-content: space-between;
     height: 100%;
     text-decoration: none;
+
+    &:focus {
+      outline: none;
+    }
   }
   h4 {
     margin-bottom: 20px;
@@ -216,13 +220,6 @@
   .promo {
     height: 91vh;
   }
-  .promo__news {
-    // display: block;
-    // margin-bottom: 10vh;
-  }
-  // .promo__news li:not(:first-child) {
-  //   display: none;
-  // }
   .promo__content {
     flex-direction: column;
   }

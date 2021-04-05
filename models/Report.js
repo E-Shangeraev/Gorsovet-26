@@ -5,7 +5,6 @@ const Report = new Schema(
     img: String,
     video: {
       type: String,
-      default: 'Видео отсутствует',
     },
     ownerId: {
       type: Types.ObjectId,

@@ -5,9 +5,11 @@ const fs = require('fs');
 /** @type {AdminBro.After<AdminBro.ActionResponse>}*/
 const after = async (res, req, context) => {
   const { record } = context;
-  const filePath = record.params.filePath;
 
-  fs.unlinkSync(path.join(__dirname, '../../public', filePath));
+  if (record.params.filePath) {
+    const filePath = record.params.filePath;
+    fs.unlinkSync(path.join(__dirname, '../../public', filePath));
+  }
 
   return res;
 };

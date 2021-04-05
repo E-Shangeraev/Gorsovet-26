@@ -108,11 +108,13 @@
         <figure class="deput__card" id="{{_id}}">
           <div class="deput__head">
             <img class="deput__photo" src="{{img}}" />
-            <img
-              src="{{fraction}}"
-              alt="Единая Россия"
-              class="deput__consignment"
-            />
+            {{#if fraction}}
+              <img
+                src="{{fraction}}"
+                alt="Эмблема партии"
+                class="deput__consignment"
+              />
+            {{/if}}
           </div>
           <figcaption class="deput__caption">
             <h4 class="deput__name">

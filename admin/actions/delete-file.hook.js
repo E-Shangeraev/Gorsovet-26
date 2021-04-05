@@ -35,9 +35,11 @@ async function addToArchive(page, folderName) {
 /** @type {AdminBro.After<AdminBro.ActionResponse>}*/
 const after = async (res, req, context, page, directory) => {
   const { record } = context;
-  const filePath = record.params.filePath;
 
-  fs.unlink(path.join(__dirname, '../../public', filePath), () => addToArchive(page, directory));
+  if (record.params.filePath) {
+    const filePath = record.params.filePath;
+    fs.unlink(path.join(__dirname, '../../public', filePath), () => addToArchive(page, directory));
+  }
 
   return res;
 };
