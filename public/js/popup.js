@@ -16,8 +16,6 @@ const reportItems = Array.from(photos).map((item) => ({
   type: 'inline',
 }));
 
-console.log(reportItems);
-
 $('.open-report-popup').magnificPopup({
   type: 'image',
   mainClass: 'mfp-with-zoom',
@@ -41,4 +39,10 @@ $('.open-report-popup').magnificPopup({
 
 $('.open-video-popup').magnificPopup({
   type: 'iframe',
+});
+
+$('.open-fraction-popup').magnificPopup({
+  type: 'inline',
+  midClick: true,
+  closeBtnInside: true,
 });
