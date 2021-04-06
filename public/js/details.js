@@ -23,6 +23,8 @@ if (fileName === 'council') {
 
       const content = item.querySelector('.details__content');
       content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px';
+
+      item.classList.toggle('collapsible--opened');
     });
   });
 }

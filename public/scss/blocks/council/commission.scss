@@ -11,7 +11,18 @@
   display: flex;
   flex-direction: column;
   padding: 60px;
-  box-shadow: $shadow;
+  height: fit-content;
+  transition: ease-in 0.3s;
+  border-radius: 6px;
+  background-color: $gray;
+
+  &.collapsible--opened,
+  &:hover {
+    box-shadow: $shadow;
+  }
+  &.collapsible--opened {
+    height: auto;
+  }
 }
 .commission__name {
   margin-bottom: 25px;
@@ -73,6 +84,8 @@
 // }
 
 .commission__content {
+  padding: 0;
+
   h5 {
     margin-top: 30px;
     margin-bottom: 0px;
@@ -126,6 +139,13 @@
   .commission__name {
     font-size: 14px;
   }
+  .commission__content {
+    h5,
+    span,
+    li {
+      font-size: 14px;
+    }
+  }
 }
 @media (max-width: 768px) {
   .commission__container {
@@ -155,6 +175,9 @@
     li {
       line-height: 150%;
       font-size: 12px;
+    }
+    li:not(:last-of-type) {
+      margin-bottom: 10px;
     }
     span {
       display: inline-block;

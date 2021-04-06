@@ -11,3 +11,8 @@
   font-size: 14px;
   line-height: 18px;
 }
+
+@mixin shadow-bg {
+  box-shadow: 0 0 4px rgb(197, 197, 197);
+  background-color: $gray;
+}
