@@ -16,6 +16,6 @@ const DocumentBase = new Schema(
   { collection: 'documents_base' },
 );
 
-// Deputie.index({ address: 'text' }, { default_language: 'russian' });
+DocumentBase.index({ name: 'text' }, { default_language: 'russian' });
 
 module.exports = model('DocumentBase', DocumentBase);

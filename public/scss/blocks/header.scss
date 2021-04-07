@@ -166,6 +166,9 @@
       width: 100%;
       height: fit-content;
     }
+    li:last-of-type {
+      margin-top: auto;
+    }
     a {
       text-align: left;
     }

@@ -163,18 +163,6 @@ exports.documents = async (req, res) => {
 };
 
 exports.sessions = (req, res) => getDocuments(req, res, DocumentSession, 'Решения сессии');
-// const documents = await DocumentSession.find({ year: req.query.y, month: req.query.m }).lean();
-// const availableYears = await DocumentReport.find().distinct('year').lean();
-
-// res.render('documents-folder', {
-//   title: 'Решения сессии',
-//   isDocuments: true,
-//   documents,
-//   availableYears,
-//   m: req.query.m,
-//   y: req.query.y,
-// });
-// };
 
 exports.reports = (req, res) => getDocuments(req, res, DocumentReport, 'Отчёты о деятельности');
 
@@ -185,29 +173,62 @@ exports.download = async (req, res) => {
   res.sendFile(path.join(__dirname, '../public/uploads/documents/archives', zipFile));
 };
 
+function searchDocuments(collections, request) {
+  collections.map(async (c) => {
+    await c
+      .find(
+        { $text: { $search: request } },
+        { score: { $meta: 'textScore' } },
+        (err, documents) => {
+          res.send({ result: documents });
+        },
+      )
+      .sort({ score: { $meta: 'textScore' } });
+  });
+
+  // console.log(results);
+  // return results;
+}
+
 exports.search = async (req, res) => {
-  // const documents = searchByText(res, 'sessions', req.body.request);
-  const documents = searchByFilename('sessions', req.body.request);
+  const category = req.params.category;
+  let collection;
 
-  // const buffer = fs.readFileSync(path.join(__dirname, '../test.doc'));
-  // const documents = iconv.encode(iconv.decode(buffer, 'ISO-8859-1'), 'utf8').toString();
-  // const documents = buffer.toString('utf8');
-  // console.log(documents);
-  res.send({ result: documents });
+  switch (category) {
+    case 'sessions':
+      collection = DocumentSession;
+      break;
+    case 'reports':
+      collection = DocumentReport;
+      break;
+    case 'base':
+      collection = DocumentBase;
+      break;
+    default:
+      break;
+  }
+
+  if (req.body.request) {
+    await collection
+      .find(
+        { $text: { $search: req.body.request } },
+        { score: { $meta: 'textScore' } },
+        (err, documents) => {
+          res.send({ result: documents });
+          return;
+        },
+      )
+      .sort({ score: { $meta: 'textScore' } });
+  }
+  // const documents = searchByFilename('sessions', req.body.request);
+  // res.send({ result: documents });
 };
 
-exports.file = async (req, res) => {
-  // console.log(req.query);
-  // console.log(
-  //   path.join(
-  //     __dirname,
-  //     `../public/uploads/documents/${req.query.cat}/${req.query.dir}/${req.query.file}`,
-  //   ),
-  // );
-  res.sendFile(
-    path.join(
-      __dirname,
-      `../public/uploads/documents/${req.query.cat}/${req.query.dir}/${req.query.file}`,
-    ),
-  );
-};
+// exports.file = async (req, res) => {
+//   res.sendFile(
+//     path.join(
+//       __dirname,
+//       `../public/uploads/documents/${req.query.cat}/${req.query.dir}/${req.query.file}`,
+//     ),
+//   );
+// };

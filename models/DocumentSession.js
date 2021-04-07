@@ -16,4 +16,6 @@ const DocumentSession = new Schema(
   { collection: 'documents_sessions' },
 );
 
+DocumentSession.index({ name: 'text' }, { default_language: 'russian' });
+
 module.exports = model('DocumentSession', DocumentSession);
