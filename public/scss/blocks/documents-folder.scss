@@ -25,22 +25,34 @@
 .folder__documents {
   margin: 0;
   padding: 1.5em;
+  height: calc(100% - 58px);
   background: $gray;
   border-radius: 6px;
-  // border-top: 0.1em solid #aaa;
   box-shadow: $shadow;
+  box-sizing: border-box;
 
   li {
     position: relative;
-    margin-bottom: 30px;
 
     .bage {
       display: block;
       padding: 5px 20px 0;
       width: fit-content;
-      background-color: #eaeaea;
+      // background-color: #eaeaea;
+      background-color: $red;
+      font-size: 14px;
+      color: #fff;
       border-radius: 8px 8px 0 0;
     }
+  }
+  li:not(:last-of-type) {
+    margin-bottom: 30px;
+  }
+  a {
+    display: block;
+    padding: 10px 20px;
+    background-color: rgba(127, 127, 127, 0.2);
+    border-radius: 0 8px 8px 8px;
   }
   a:hover {
     text-decoration: underline;
@@ -50,8 +62,8 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(30px, 1fr));
   grid-column-gap: 30px;
-  padding: 30px;
-  list-style-type: disc;
+  // padding: 30px;
+  padding: 1.5em;
 
   a.active,
   a:hover {
@@ -105,5 +117,102 @@
   }
   a:not(.selected):hover::before {
     background: #eee;
+  }
+}
+
+@media (max-width: 1200px) {
+  .folder__container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-row-gap: 20px;
+
+    & > div {
+      grid-row-start: 2;
+      grid-row-end: 3;
+    }
+    aside {
+      grid-column-start: 1;
+      grid-column-end: 2;
+      grid-row-start: 1;
+      grid-row-end: 2;
+      box-shadow: $shadow;
+    }
+  }
+  .folder__years {
+    grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+    text-align: center;
+  }
+}
+@media (max-width: 900px) {
+  .folder__container {
+    grid-row-gap: 78px;
+
+    & > div {
+      position: relative;
+    }
+  }
+  .folder__months {
+    position: absolute;
+    bottom: 100%;
+    grid-template-columns: repeat(12, minmax(70px, 1fr));
+    overflow-x: scroll;
+    box-shadow: inset -8px 0 10px -12px #686868;
+    z-index: 20;
+
+    a {
+      z-index: 1;
+    }
+  }
+  .folder__documents {
+    height: 100%;
+  }
+}
+@media (max-width: 600px) {
+  .folder__years {
+    li {
+      font-size: 14px;
+    }
+  }
+  .folder__documents {
+    li {
+      a {
+        font-size: 14px;
+      }
+      .bage {
+        padding-bottom: 5px;
+        font-size: 12px;
+        line-height: 150%;
+      }
+    }
+    li:not(:last-of-type) {
+      margin-bottom: 15px;
+    }
+  }
+  .folder__months {
+    a {
+      padding: 1em 0.5em 0;
+      font-size: 12px;
+    }
+  }
+}
+@media (max-width: 440px) {
+  .folder__years,
+  .folder__documents {
+    padding: 1em;
+  }
+  .folder__documents {
+    li {
+      .bage {
+        display: inline-block;
+        width: 100%;
+        padding-bottom: 5px;
+        font-size: 12px;
+        line-height: 150%;
+        box-sizing: border-box;
+      }
+      a {
+        border-radius: 0 0 6px 6px;
+      }
+    }
   }
 }

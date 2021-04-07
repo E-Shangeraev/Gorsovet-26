@@ -25,11 +25,6 @@
   background-image: url('../svg/search.svg');
   background-repeat: no-repeat;
   background-position: 96% center;
-
-  &:focus {
-    outline: none;
-    border-bottom-color: $red;
-  }
 }
 .header__nav {
   background-color: $red;

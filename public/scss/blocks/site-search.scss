@@ -9,11 +9,6 @@
   background-image: url('../svg/search.svg') !important;
   background-repeat: no-repeat !important;
   background-position: 96% center !important;
-
-  &:focus {
-    outline: none !important;
-    border-bottom-color: $red !important;
-  }
 }
 #ya-site-form0,
 #ya-site-form0 .ya-site-form__form,
