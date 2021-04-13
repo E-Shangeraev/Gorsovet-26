@@ -13,6 +13,7 @@ const DocumentBase = require('../models/DocumentBase');
 const ActivityWork = require('../models/ActivityWork');
 const ActivityHearing = require('../models/ActivityHearing');
 const ActivitySession = require('../models/ActivitySession');
+const Subscriber = require('../models/Subscriber');
 
 const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
 const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
@@ -117,6 +118,7 @@ const options = {
         ActivityHearing: 'Публичные слушания',
         ActivitySession: 'Сессии',
         Comission: 'Постоянные комиссии',
+        Subscriber: 'Подписчики',
       },
       buttons: {
         filter: 'Фильтр',
@@ -237,6 +239,12 @@ const options = {
             filePath: 'Путь к файлу',
             uploadFile: 'Файл',
             fileName: 'Название файла',
+          },
+        },
+        Subscriber: {
+          properties: {
+            name: 'Имя',
+            email: 'Email',
           },
         },
       },
@@ -510,6 +518,12 @@ const options = {
             },
           },
         },
+      },
+    },
+    {
+      resource: Subscriber,
+      options: {
+        listProperties: ['name', 'email'],
       },
     },
     getDocumentOptions(DocumentSession, 'documents', 'sessions', 'Документы'),

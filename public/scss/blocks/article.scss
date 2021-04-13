@@ -26,7 +26,7 @@
   margin-bottom: 30px;
   border-radius: 6px;
   width: 100%;
-  max-width: 900px;
+  max-width: 1030px;
   max-height: 400px;
   object-fit: cover;
 }
@@ -91,6 +91,11 @@
     font-size: 20px;
   }
 }
+@media (max-width: 1300px) {
+  .article__wrapper {
+    display: block;
+  }
+}
 @media (max-width: 1200px) {
   .article__title {
     font-size: 20px;
@@ -110,9 +115,6 @@
     .d-flex {
       display: block;
     }
-  }
-  .article__wrapper {
-    display: block;
   }
 }
 @media (max-width: 500px) {

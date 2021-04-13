@@ -1,21 +1,23 @@
 const { Router } = require('express');
 const News = require('../models/News');
 const Report = require('../models/Report');
+const Subscriber = require('../models/Subscriber');
 const router = Router();
 const url = require('url');
 
-// const changeStream = News.watch().on('change', async (data) => {
-//   console.log(data.fullDocument);
-//   const added = data.fullDocument;
-//   if (added) {
-//     const news = `
-//       <h2>Сайт gorsovet-26.ru</h2>
-//       <hr>
-//       <h3>${added.title}</h3>
-//     `;
-//     await sendQuestion(news);
-//   }
-// });
+const changeStream = News.watch().on('change', async (data) => {
+  console.log(data.fullDocument);
+  const added = data.fullDocument;
+  if (added) {
+    const news = `
+      <h2>Сайт gorsovet-26.ru</h2>
+      <hr>
+      <h3>${added.title}</h3>
+      <p>${added.text}</p>
+    `;
+    await subscribe('smtp.yandex.ru', 587, subs, 'Подвтердите подписку на новости', news);
+  }
+});
 
 router.get('/', paginatedResults(News), async (req, res) => {
   const news = res.paginatedResults.results;
@@ -64,6 +66,43 @@ router.get('/:id', async (req, res) => {
     news,
     isNews: true,
   });
+});
+
+router.post('/subscribe', async (req, res) => {
+  try {
+    if (!req.body) return res.sendStatus(400);
+
+    const data = JSON.parse(req.body.request);
+    let alreadyExist = await Subscriber.findOne({ email: data.email });
+
+    if (alreadyExist) {
+      alreadyExist = null;
+      return res.sendStatus(403);
+    }
+
+    const newSub = Subscriber({
+      name: data.name,
+      email: data.email,
+    });
+
+    await newSub.save((err) => {
+      if (err) {
+        res.sendStatus(400);
+        throw err;
+      }
+      res.sendStatus(200);
+    });
+  } catch (err) {
+    res.sendStatus(400);
+    throw err;
+  }
+});
+
+router.post('/subscribe/:id', async (req, res) => {
+  try {
+  } catch (err) {
+    throw err;
+  }
 });
 
 function paginatedResults(model) {

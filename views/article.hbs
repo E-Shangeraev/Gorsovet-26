@@ -23,11 +23,11 @@
           {{> share}}
         </footer>
       </article>
-      <form class="subscribe" action="#">
+      <form class="subscribe" action="/news/subscribe" method="POST">
         <h4 class="subscribe__title">Подписывайтесь на наши новости!</h4>
         <p class="subscribe__desc">Получайте интересные новости и статьи, следите за нашими акциями и специальными предложениями.</p>
-        <input class="subscribe__field" type="name" placeholder="Ваше имя*" required>
-        <input class="subscribe__field" type="email" placeholder="Ваш e-mail*" required>
+        <input class="subscribe__field" type="name" placeholder="Ваше имя*" value="Thomas Shelby" required>
+        <input class="subscribe__field" type="email" placeholder="Ваш e-mail*" value="t.shelby@gmail.com" required>
         <button class="button subscribe__button">Отправить</button>
       </form>
     </div>
@@ -51,7 +51,7 @@
                 <div class="preview__footer">
                   <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
                   <p class="preview__views">
-                    <img src="/svg/views.svg" />
+                    <img src="/svg/views-gray.svg" />
                     <span class="preview__count">{{views}}</span>
                   </p>
                 </div>
@@ -76,7 +76,7 @@
                 <div class="preview__footer">
                   <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
                   <p class="preview__views">
-                    <img src="/svg/views.svg" />
+                    <img src="/svg/views-gray.svg" />
                     <span class="preview__count">{{views}}</span>
                   </p>
                 </div>
@@ -87,3 +87,5 @@
       {{/if}}   
     </div>
   </section>
+
+  <script src="//web.webformscr.com/apps/fc3/build/loader.js" async sp-form-id="41634e6b7b95bb4c76d290c1ea1f3339c9cf7559d1f3fc7d74f383b2e2e40940"></script>

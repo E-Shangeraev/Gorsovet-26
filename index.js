@@ -61,9 +61,6 @@ handlebars.registerHelper('isActive', function (getParam, num, className) {
 const admin = new AdminBro(options);
 const router = buildAdminRouter(admin);
 app.use(admin.options.rootPath, router);
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// app.use(formidable());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -112,14 +109,18 @@ sendQuestion = async (data, fileName = '', originalName = '') => {
     port: 587,
     secure: false,
     auth: {
-      user: 'sovetdeputatov2012@yandex.ru',
-      pass: '73501505',
+      // user: 'sovetdeputatov2012@yandex.ru',
+      // pass: '73501505',
+      user: 'eldar@mygang.ru',
+      pass: '1234509876',
     },
   });
 
   let mailOption = {
-    from: '<sovetdeputatov2012@yandex.ru>',
-    to: 'sovetdeputatov2012@yandex.ru',
+    // from: '<sovetdeputatov2012@yandex.ru>',
+    // to: 'sovetdeputatov2012@yandex.ru',
+    from: '<eldar@mygang.ru>',
+    to: 'eldar@mygang.ru',
     subject: 'Сайт gorsovet-26.ru',
     html: data,
   };
@@ -149,6 +150,30 @@ sendQuestion = async (data, fileName = '', originalName = '') => {
     }
   });
 
+  console.log('Message sent: %s', info.messageId);
+  return true;
+};
+
+// Подписка на новсти
+subscribe = async (host = 'smtp.yandex.ru', port = 587, subs, subject, data) => {
+  let transporter = nodemailer.createTransport({
+    host: host,
+    port: port,
+    secure: false,
+    auth: {
+      user: 'eldar@mygang.ru',
+      pass: '1234509876',
+    },
+  });
+
+  let mailOption = {
+    from: '<eldar@mygang.ru>',
+    to: subs,
+    subject,
+    html: data,
+  };
+
+  let info = await transporter.sendMail(mailOption);
   console.log('Message sent: %s', info.messageId);
   return true;
 };

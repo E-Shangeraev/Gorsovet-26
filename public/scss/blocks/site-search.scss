@@ -62,6 +62,9 @@
 .b-wrapper .b-wrapper_is-bem_yes .i-bem .b-wrapper_js_inited {
   display: none;
 }
+.b-head.b-head_type_search-simple {
+  display: none !important;
+}
 
 @media (max-width: 1600px) {
   #ya-site-form0 .ya-site-form__form .ya-site-form__input-text {

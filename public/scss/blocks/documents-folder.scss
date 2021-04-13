@@ -166,6 +166,12 @@
   .folder__documents {
     height: 100%;
   }
+  .folder .d-flex {
+    display: block;
+  }
+  .documents__form {
+    width: 100%;
+  }
 }
 @media (max-width: 600px) {
   .folder__years {

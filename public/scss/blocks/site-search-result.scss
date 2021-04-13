@@ -170,7 +170,7 @@
 }
 
 .b-specification-item__content {
-  font-family: Arial !important;
+  font-family: $reg Arial !important;
   font-size: 13px;
 }
 
@@ -186,4 +186,8 @@
 #ya-site-results .b-popupa .b-popupa__tail-i {
   background: #ffffff;
   border-color: #e0e0e0 !important;
+}
+
+.b-head.b-head_type_search-simple {
+  display: none !important;
 }

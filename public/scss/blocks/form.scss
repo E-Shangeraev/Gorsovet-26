@@ -16,13 +16,14 @@
   transition: box-shadow, background-color ease 0.2s;
 
   &:focus {
-    outline-color: rgb(197, 197, 197) !important;
+    outline: none;
+    box-shadow: 0 0 6px rgb(197, 197, 197) !important;
   }
   &:hover,
   &:focus,
   &:active {
-    box-shadow: 0 0 4px rgb(197, 197, 197) !important;
-    background-color: $gray !important;
+    box-shadow: 0 0 6px rgb(197, 197, 197) !important;
+    background-color: transparent !important;
   }
   &:-webkit-autofill {
     -webkit-box-shadow: inset 0 0 0 50px #fff !important; /* Цвет фона */
@@ -32,7 +33,7 @@
   &:-webkit-autofill:hover,
   &:-webkit-autofill:focus,
   &:-webkit-autofill:active {
-    -webkit-box-shadow: inset 0 0 0 50px $gray, 0 0 4px rgb(197, 197, 197) !important; /* Цвет фона */
+    -webkit-box-shadow: inset 0 0 0 50px #fff, 0 0 4px rgb(197, 197, 197) !important; /* Цвет фона */
   }
 }
 label .form__field {
