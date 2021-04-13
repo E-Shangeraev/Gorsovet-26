@@ -157,23 +157,39 @@ sendQuestion = async (data, fileName = '', originalName = '') => {
 // Подписка на новсти
 subscribe = async (host = 'smtp.yandex.ru', port = 587, subs, subject, data) => {
   let transporter = nodemailer.createTransport({
-    host: host,
-    port: port,
-    secure: false,
+    name: 'mail.gorsovet-26.ru',
+    host: 'mail.gorsovet-26.ru',
+    port: 465,
+    secure: true,
     auth: {
-      user: 'eldar@mygang.ru',
-      pass: '1234509876',
+      user: 'sovetdeputatov2012@yandex.ru',
+      pass: '73501505',
     },
   });
 
+  transporter.verify((err, success) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('Server is ready to take our message');
+    }
+  });
+
   let mailOption = {
-    from: '<eldar@mygang.ru>',
+    from: '<sovetdeputatov2012@yandex.ru>',
     to: subs,
     subject,
     html: data,
   };
 
-  let info = await transporter.sendMail(mailOption);
-  console.log('Message sent: %s', info.messageId);
+  let info = transporter.sendMail(mailOption, (err, response) => {
+    if (err) {
+      console.log('Error: ', err);
+    } else {
+      console.log('Email sent successfully: ', response);
+    }
+    transporter.close();
+  });
+  // console.log('Message sent: %s', info.messageId);
   return true;
 };

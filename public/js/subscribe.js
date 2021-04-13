@@ -32,7 +32,7 @@ subscribe &&
           icon: 'success',
           confirmButtonText: 'OK',
         });
-        form.reset();
+        this.reset();
       } else if (response.status === 403) {
         Swal.fire({
           title: 'Пользователь с таким email уже существует',

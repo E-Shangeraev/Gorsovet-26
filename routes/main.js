@@ -7,7 +7,6 @@ const News = require('../models/News');
 router.get('/', async (req, res) => {
   const deputies = await Deputie.find().sort({ id: 1 }).lean();
   const news = await News.find().sort({ x: 1 }).limit(20).lean();
-  // console.log(news);
 
   res.render('main', {
     title: 'Главная',
@@ -21,12 +20,6 @@ router.get('/calendar', async (req, res) => {
   const calendar = await Calendar.find({});
   res.json(calendar);
 });
-
-// router.get('/calendar/:fileName', async (req, res) => {
-//   const filePath = req.query;
-//   console.log(filePath);
-//   return res.sendFile(filePath);
-// });
 
 router.post('/question', async (req, res) => {
   try {

@@ -6,16 +6,35 @@ const router = Router();
 const url = require('url');
 
 const changeStream = News.watch().on('change', async (data) => {
-  console.log(data.fullDocument);
+  // console.log(data.fullDocument);
+  const subscribers = await Subscriber.find({ status: 1 }).lean();
+  const emails = subscribers.map((item) => item.email).join(', ');
+  // const sub = subscribers.map((item) => item.email).join(', ');
+  console.log(subscribers);
+  console.log(emails);
   const added = data.fullDocument;
   if (added) {
     const news = `
-      <h2>Сайт gorsovet-26.ru</h2>
-      <hr>
-      <h3>${added.title}</h3>
-      <p>${added.text}</p>
+      <div style="background-color: #f8f8f8; padding: 5%; border-radius: 6px;">
+        <h2>${added.title}</h2>
+        <hr>
+        <div style="margin: 5% 0;">${added.text}</div>
+        <p style="display: flex; justify-content: space-between; margin-top: 5%"></p>
+        <a 
+        style="
+          display: block; 
+          width: fit-content; 
+          background: #54b43c;
+          border: 2px solid lightgray;
+          color: #fff; 
+          border-radius: 6px; 
+          text-decoration: none; 
+          padding: 15px 30px; 
+          margin-top: 30px;" 
+        href="gorsovet-26.ru/news/${added._id}">Читать</a>
+      </div>
     `;
-    await subscribe('smtp.yandex.ru', 587, subs, 'Подвтердите подписку на новости', news);
+    await subscribe('smtp.yandex.ru', 587, emails, 'gorsovet-26.ru опубликовал новость', news);
   }
 });
 
@@ -85,11 +104,29 @@ router.post('/subscribe', async (req, res) => {
       email: data.email,
     });
 
-    await newSub.save((err) => {
+    await newSub.save(async (err) => {
       if (err) {
         res.sendStatus(400);
         throw err;
       }
+      let candidat = await Subscriber.findOne({ email: data.email });
+      console.log(candidat);
+
+      const confirmMessage = `
+        <div style="background-color: #adadad">
+          <h2>Сайт gorsovet-26.ru</h2>
+          <hr>
+          <a href="gorsovet-26.ru/news/subscribe/${candidat._id}">Подтвердить</a>
+        </div>
+      `;
+
+      subscribe(
+        'smtp.yandex.ru',
+        587,
+        'eldar@mygang.ru',
+        'Подвтердите подписку на новости',
+        confirmMessage,
+      );
       res.sendStatus(200);
     });
   } catch (err) {
@@ -98,11 +135,21 @@ router.post('/subscribe', async (req, res) => {
   }
 });
 
-router.post('/subscribe/:id', async (req, res) => {
-  try {
-  } catch (err) {
-    throw err;
-  }
+router.get('/subscribe/:subscriber', async (req, res) => {
+  console.log(`Добавляем пользователя ${req.params.subscriber}`);
+  const sub = await Subscriber.findOneAndUpdate(
+    { _id: req.params.subscriber },
+    { $set: { status: 1 } },
+    { new: true },
+  );
+  console.log(sub);
+  res.json(req.params.subscriber);
+});
+
+router.get('/unsubscribe/:subscriber', async (req, res) => {
+  console.log(`Удаляем пользователя ${req.params.subscriber}`);
+  await Subscriber.findOneAndRemove({ _id: req.params.subscriber });
+  res.json(req.params.subscriber);
 });
 
 function paginatedResults(model) {
