@@ -165,13 +165,16 @@ subscribe = async (host = 'smtp.yandex.ru', port = 587, subs, subject, data) => 
       user: 'sovetdeputatov2012@yandex.ru',
       pass: '73501505',
     },
+    tls: {
+      rejectUnauthorized: false,
+    },
   });
 
   transporter.verify((err, success) => {
     if (err) {
       console.log(err);
     } else {
-      console.log('Server is ready to take our message');
+      console.log('Server is ready to take our message: ', success);
     }
   });
 
@@ -182,7 +185,7 @@ subscribe = async (host = 'smtp.yandex.ru', port = 587, subs, subject, data) => 
     html: data,
   };
 
-  let info = transporter.sendMail(mailOption, (err, response) => {
+  transporter.sendMail(mailOption, (err, response) => {
     if (err) {
       console.log('Error: ', err);
     } else {
@@ -190,6 +193,5 @@ subscribe = async (host = 'smtp.yandex.ru', port = 587, subs, subject, data) => 
     }
     transporter.close();
   });
-  // console.log('Message sent: %s', info.messageId);
   return true;
 };
