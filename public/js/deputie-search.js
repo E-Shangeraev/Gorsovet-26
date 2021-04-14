@@ -1,6 +1,5 @@
 (function ($) {
   const corpusForm = document.querySelector('.corpus__form');
-  console.log(corpusForm);
   if (corpusForm) {
     $.fn.autoSearchCorpus = function (page) {
       var request = '';
@@ -40,11 +39,8 @@
 
           var val = autoFillBar.find('.active').text();
           var id = autoFillBar.find('.active').attr('id');
-          console.log(id);
           inputId.value = id;
-          console.log(inputId.value);
         } else if (e.keyCode == 13) {
-          // showDeputie(e);
           //тут можно сделать переход на страницу статьи или все что пожелаешь
         } else {
           searchCheck();
@@ -55,7 +51,6 @@
         //тут можно сделать переход на страницу статьи или все что пожелаешь
         input.val($(this).text());
         inputId.value = $(this).attr('id');
-        console.log(inputId.value);
 
         showDeputie(e);
         return false;
@@ -94,14 +89,6 @@
 
         if (searchMask.search(/[., /#!$%^&*;:{}=-_`~()]+/g) != -1) {
           let string = searchMask.split(/[., /#!$%^&*;:{}=-_`~()]+/g).join(regMarks);
-
-          // if (string.match(/\d+/g)) {
-          //   console.log('Цифра!');
-          //   string += '$';
-          // } else {
-          //   string = string.replace('$', '');
-          // }
-          console.log(string);
           regEx = new RegExp('([а-я, .-]+)?' + string, 'ig');
         }
 
@@ -110,7 +97,6 @@
             if (!el.textContent.match(regEx)) {
               el.remove();
             } else {
-              // console.log(elements);
               inputId.value = el.getAttribute('id');
             }
           });
@@ -131,15 +117,11 @@
           }).done(function (data) {
             autoFillBar.children().remove();
 
-            // console.log(data);
-
             var articlesArray = data.result;
 
             articlesArray.forEach((item, index) => {
               let addresses = item.address.sort();
               let id = item._id;
-
-              // console.log(addresses);
 
               for (var i = 0; i <= addresses.length - 1; i++) {
                 var address = addresses[i];
@@ -171,8 +153,6 @@
                   }
                 }
 
-                // console.log(address);
-
                 autoFillBar.append(`<div class="item" id="${id}"><span>${address}</span></div>`);
               }
             });
@@ -201,7 +181,6 @@
         let data = {};
         data.action = 'search';
         data.request = inputId.value;
-        console.log(data);
 
         $.ajax({
           url: `${page}/search`,
@@ -209,7 +188,6 @@
           dataType: 'json',
           data: data,
         }).done(function (data) {
-          console.log(data);
           const deput = data.result[0];
           const about = deput.about ? deput.about : '';
           const schedule = deput.schedule
@@ -260,7 +238,6 @@
             </div>
             `;
 
-          console.log(deput);
           removeDeputie();
           find.insertAdjacentHTML('beforeend', res);
         });

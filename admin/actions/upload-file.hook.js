@@ -2,7 +2,6 @@ const AdminBro = require('admin-bro');
 const AdminBroMongoose = require('admin-bro-mongoose');
 const path = require('path');
 const fs = require('fs');
-// const unzipper = require('unzipper');
 const archiver = require('archiver');
 
 async function addToArchive(page, folderName) {

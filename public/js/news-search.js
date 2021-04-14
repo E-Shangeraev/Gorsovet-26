@@ -24,8 +24,6 @@
             dataType: 'json',
             data: data,
           }).done(function (data) {
-            console.log(data);
-
             newsContainer.innerHTML = '';
 
             if (newsFooter) {

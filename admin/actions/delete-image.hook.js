@@ -7,8 +7,6 @@ const after = async (res, req, context, images) => {
   const { record } = context;
 
   images.forEach((img) => {
-    console.log(record.params[img]);
-
     if (record.params[img]) {
       const filePath = record.params[img];
       const localFilePath = path.join(__dirname, '../../public', filePath);

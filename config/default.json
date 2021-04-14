@@ -1,0 +1,7 @@
+{
+  "port": 8089,
+  "mongoUrl": "mongodb+srv://gorsovet26:gfhjkmujhcjdtnf26@cluster0.a8cvf.mongodb.net/gorsovet26?retryWrites=true&w=majority",
+  "baseUrl": "http://localhost:8089",
+  "user": "sovetdeputatov2012@yandex.ru",
+  "password": "73501505"
+}

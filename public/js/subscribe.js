@@ -7,14 +7,10 @@ subscribe &&
     const subscribeName = document.querySelector('.subscribe__field[type="name"]').value;
     const subscribeEmail = document.querySelector('.subscribe__field[type="email"]').value;
 
-    console.log(subscribeEmail);
-
     const obj = {
       name: subscribeName,
       email: subscribeEmail,
     };
-
-    console.log(obj);
 
     const url = '/news/subscribe';
 
@@ -27,8 +23,8 @@ subscribe &&
     }).then((response) => {
       if (response.status === 200) {
         Swal.fire({
-          title: 'Подписка оформлена!',
-          text: 'Новости будут приходить на Вашу почту',
+          title: 'Оформление подписки!',
+          text: 'Вам на почту было выслано письмо для подтверждения подписки',
           icon: 'success',
           confirmButtonText: 'OK',
         });

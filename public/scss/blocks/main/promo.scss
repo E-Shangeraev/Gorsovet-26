@@ -17,12 +17,10 @@
     height: 100%;
     z-index: -1;
     background-color: rgba(0, 0, 0, 0.35);
-    // backdrop-filter: brightness(0.5) grayscale(20%);
   }
 }
 .promo__wrapper {
   position: relative;
-  // height: 60vh;
   padding: 60px 200px;
   height: 100%;
   box-sizing: border-box;
@@ -203,7 +201,6 @@
 }
 @media (max-width: 900px) {
   .promo__news {
-    // grid-template-columns: 1fr 1fr;
     .slick-track {
       column-gap: 15px;
     }

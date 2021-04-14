@@ -28,8 +28,6 @@ const after = async (res, req, context) => {
     await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
 
     await fs.promises.rename(uploadFraction.path, filePath);
-
-    // await record.update({ img: `/${filePath}` });
   }
   return res;
 };

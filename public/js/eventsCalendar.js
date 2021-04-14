@@ -2,14 +2,11 @@ if (fileName === '') {
   fetch('/calendar')
     .then((res) => res.json())
     .then((data) => {
-      console.log(data);
       data.forEach((d) => {
         d.date = moment(d.date).format('YYYY-MM-DD HH:mm:ss');
         d.url = d.filePath;
         d.description = '';
       });
-
-      console.log(data);
 
       $('#eventsCalendar').eventCalendar({
         jsonData: data,

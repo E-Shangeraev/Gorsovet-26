@@ -1,4 +1,5 @@
 const express = require('express');
+const config = require('config');
 const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
@@ -48,9 +49,6 @@ handlebars.registerHelper('if_eq', function (a, b, opts) {
 handlebars.registerHelper('isActive', function (getParam, num, className) {
   const activeClass = className;
 
-  console.log('getParam', getParam);
-  console.log('num', num);
-
   if (getParam == num) {
     return activeClass;
   } else {
@@ -76,22 +74,17 @@ app.use('/corruption', corruptionRoutes);
 app.use('/reception', receptionRoutes);
 app.use('/search', searchRoutes);
 
-const PORT = process.env.PORT || 8089;
+const PORT = config.get('port') || 8089;
 
 const start = async () => {
   try {
-    const url =
-      'mongodb+srv://gorsovet26:gfhjkmujhcjdtnf26@cluster0.a8cvf.mongodb.net/gorsovet26?retryWrites=true&w=majority';
+    const url = config.get('mongoUrl');
     await mongoose.connect(url, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
       useCreateIndex: true,
     });
-
-    // const db = mongoose.connection;
-    // console.log(db.collections.deputies);
-    // db.collections.deputies.dropIndexes();
 
     app.listen(PORT, () => {
       console.log(`Server has been started on port ${PORT}...`);
@@ -109,19 +102,15 @@ sendQuestion = async (data, fileName = '', originalName = '') => {
     port: 587,
     secure: false,
     auth: {
-      // user: 'sovetdeputatov2012@yandex.ru',
-      // pass: '73501505',
-      user: 'eldar@mygang.ru',
-      pass: '1234509876',
+      user: config.get('user'),
+      pass: config.get('password'),
     },
   });
 
   let mailOption = {
-    // from: '<sovetdeputatov2012@yandex.ru>',
-    // to: 'sovetdeputatov2012@yandex.ru',
-    from: '<eldar@mygang.ru>',
-    to: 'eldar@mygang.ru',
-    subject: 'Сайт gorsovet-26.ru',
+    from: `<${config.get('user')}>`,
+    to: config.get('user'),
+    subject: 'Совет депутатов ЗАТО г. «Железногорск»',
     html: data,
   };
 
@@ -161,8 +150,8 @@ subscribe = async (subs, subject, data) => {
     port: 465,
     secure: true,
     auth: {
-      user: 'eldar@mygang.ru',
-      pass: '1234509876',
+      user: config.get('user'),
+      pass: config.get('password'),
     },
     tls: {
       rejectUnauthorized: false,
@@ -178,7 +167,7 @@ subscribe = async (subs, subject, data) => {
   });
 
   let mailOption = {
-    from: '<eldar@mygang.ru>',
+    from: `<${config.get('user')}>`,
     to: subs,
     subject,
     html: data,

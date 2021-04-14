@@ -22,8 +22,6 @@ const buildAdminRouter = (admin) => {
         const user = await Admin.findOne({ email });
 
         if (user && (await argon2.verify(user.encryptedPassword, password))) {
-          console.log(user);
-
           return user;
         }
         return false;

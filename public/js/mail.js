@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   function sendForm(form, url) {
-    console.log(url);
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -36,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const receptionForm = document.querySelector('.reception__form');
 
   if (questionForm) {
-    console.log(questionForm);
     sendForm(questionForm, '/question');
   }
 
@@ -54,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
     fileInput.addEventListener('change', (e) => {
       const files = Array.from(e.target.files);
       fileLabel.innerHTML = '';
-      // fileLabel.textContent = 'При необходимости прикрепите файл';
 
       files.forEach((file) => {
         if (file.type.match('image')) {
@@ -64,19 +61,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const reader = new FileReader();
 
         reader.onload = (ev) => {
-          // console.log(ev.target);
-
           fileLabel.insertAdjacentHTML(
             'beforeend',
             `<img src="/img/file-icon.png" style="width: 50px" />`,
           );
           fileLabel.insertAdjacentHTML('beforeend', `<span>${file.name}</span>`);
-          // console.log(fileLabel);
         };
 
         reader.readAsDataURL(file);
       });
-      // console.log(files);
     });
 
     sendForm(receptionForm, '/reception/appeal');
