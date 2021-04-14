@@ -155,15 +155,14 @@ sendQuestion = async (data, fileName = '', originalName = '') => {
 };
 
 // Подписка на новсти
-subscribe = async (host = 'smtp.yandex.ru', port = 587, subs, subject, data) => {
+subscribe = async (subs, subject, data) => {
   let transporter = nodemailer.createTransport({
-    name: 'mail.gorsovet-26.ru',
-    host: 'mail.gorsovet-26.ru',
+    host: 'smtp.yandex.ru',
     port: 465,
     secure: true,
     auth: {
-      user: 'sovetdeputatov2012@yandex.ru',
-      pass: '73501505',
+      user: 'eldar@mygang.ru',
+      pass: '1234509876',
     },
     tls: {
       rejectUnauthorized: false,
@@ -179,7 +178,7 @@ subscribe = async (host = 'smtp.yandex.ru', port = 587, subs, subject, data) => 
   });
 
   let mailOption = {
-    from: '<sovetdeputatov2012@yandex.ru>',
+    from: '<eldar@mygang.ru>',
     to: subs,
     subject,
     html: data,

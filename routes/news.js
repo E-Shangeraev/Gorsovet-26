@@ -9,9 +9,8 @@ const changeStream = News.watch().on('change', async (data) => {
   // console.log(data.fullDocument);
   const subscribers = await Subscriber.find({ status: 1 }).lean();
   const emails = subscribers.map((item) => item.email).join(', ');
-  // const sub = subscribers.map((item) => item.email).join(', ');
-  console.log(subscribers);
-  console.log(emails);
+  console.log('subscribers', subscribers);
+  console.log('emails', emails);
   const added = data.fullDocument;
   if (added) {
     const news = `
@@ -34,7 +33,7 @@ const changeStream = News.watch().on('change', async (data) => {
         href="gorsovet-26.ru/news/${added._id}">Читать</a>
       </div>
     `;
-    await subscribe('smtp.yandex.ru', 587, emails, 'gorsovet-26.ru опубликовал новость', news);
+    await subscribe(emails, 'gorsovet-26.ru опубликовал новость', news);
   }
 });
 
@@ -44,6 +43,8 @@ router.get('/', paginatedResults(News), async (req, res) => {
   const pagesCount = res.paginatedResults.pagesCount;
   const pageNums = res.paginatedResults.pageNums;
   const report = await Report.find().lean();
+  const subscribers = await Subscriber.find().lean();
+  console.log(subscribers);
 
   report.forEach((rep) => {
     if (rep.video) {
@@ -66,7 +67,9 @@ router.get('/', paginatedResults(News), async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
-  const article = await News.findByIdAndUpdate(req.params.id, { $inc: { views: 1 } })
+  const article = await News.findByIdAndUpdate(req.params.id, {
+    $inc: { views: 1 },
+  })
     .sort({
       views: -1,
     })
@@ -109,21 +112,29 @@ router.post('/subscribe', async (req, res) => {
         res.sendStatus(400);
         throw err;
       }
-      let candidat = await Subscriber.findOne({ email: data.email });
-      console.log(candidat);
+      let candidate = await Subscriber.findOne({ email: data.email });
+      console.log(candidate);
 
       const confirmMessage = `
-        <div style="background-color: #adadad">
+        <div style="background-color: #f8f8f8; padding: 5%; border-radius: 6px;">
           <h2>Сайт gorsovet-26.ru</h2>
           <hr>
-          <a href="gorsovet-26.ru/news/subscribe/${candidat._id}">Подтвердить</a>
+          <a style="
+          display: block; 
+          width: fit-content; 
+          background: #54b43c;
+          border: 2px solid lightgray;
+          color: #fff; 
+          border-radius: 6px; 
+          text-decoration: none; 
+          padding: 15px 30px; 
+          margin-top: 30px;"
+          href="gorsovet-26.ru/news/subscribe/${candidate._id}">Подтвердить</a>
         </div>
       `;
 
       subscribe(
-        'smtp.yandex.ru',
-        587,
-        'eldar@mygang.ru',
+        candidate.email,
         'Подвтердите подписку на новости',
         confirmMessage,
       );
