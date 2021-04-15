@@ -15,7 +15,11 @@
 
     if (options.locales && typeof options.locales == 'string') {
       $.getJSON(options.locales, function (data) {
-        options.locales = $.extend({}, $.fn.eventCalendar.defaults.locales, data);
+        options.locales = $.extend(
+          {},
+          $.fn.eventCalendar.defaults.locales,
+          data,
+        );
         moment.locale(data.locale, options.locales.moment);
         moment.locale(data.locale);
 
@@ -25,7 +29,11 @@
       });
     } else {
       if (options.locales && options.locales.locale) {
-        options.locales = $.extend({}, $.fn.eventCalendar.defaults.locales, options.locales);
+        options.locales = $.extend(
+          {},
+          $.fn.eventCalendar.defaults.locales,
+          options.locales,
+        );
         moment.locale(options.locales.locale, options.locales.moment);
         moment.locale(options.locales.locale);
       }
@@ -35,7 +43,7 @@
 
   let promoEventTitle = [];
   let promoEventDate = [];
-
+  let promoEventTime = [];
   let eventClosestTime = document.querySelector('.event__closest time');
   let eventName = document.querySelector('.event__name');
 
@@ -61,7 +69,6 @@
     onlyOneDescription: true,
     openEventInNewWindow: true,
     eventsScrollable: false,
-    dateFormatMonth: 'MM',
     dateFormat: 'D/MM/YYYY',
     jsonDateFormat: 'timestamp', // you can use also "human" 'YYYY-MM-DD HH:MM:SS'
     moveSpeed: 500, // speed of month move when you clic on a new date
@@ -104,7 +111,15 @@
       // show current month
       dateSlider('current', flags, eventsOpts);
 
-      getEvents(flags, eventsOpts, eventsOpts.eventsLimit, false, false, false, false);
+      getEvents(
+        flags,
+        eventsOpts,
+        eventsOpts.eventsLimit,
+        false,
+        false,
+        false,
+        false,
+      );
 
       changeMonth(flags, eventsOpts);
 
@@ -121,42 +136,52 @@
         var year = flags.wrap.attr('data-current-year'),
           month = flags.wrap.attr('data-current-month');
 
-        getEvents(flags, eventsOpts, eventsOpts.eventsLimit, year, month, false, 'month');
+        getEvents(
+          flags,
+          eventsOpts,
+          eventsOpts.eventsLimit,
+          year,
+          month,
+          false,
+          'month',
+        );
       });
     });
 
     // show event description
-    flags.wrap.find('.eventCalendar-list').on('click', '.eventCalendar-eventTitle', function (e) {
-      if (!eventsOpts.showDescription) {
-        e.preventDefault();
-        var desc = $(this).parent().find('.eventCalendar-eventDesc');
+    flags.wrap
+      .find('.eventCalendar-list')
+      .on('click', '.eventCalendar-eventTitle', function (e) {
+        if (!eventsOpts.showDescription) {
+          e.preventDefault();
+          var desc = $(this).parent().find('.eventCalendar-eventDesc');
 
-        if (!desc.find('a').length()) {
-          var eventUrl = $(this).attr('href');
-          var eventTarget = $(this).attr('target');
+          if (!desc.find('a').length()) {
+            var eventUrl = $(this).attr('href');
+            var eventTarget = $(this).attr('target');
 
-          // create a button to go to event url
-          desc.append(
-            '<a href="' +
-              eventUrl +
-              '" target="' +
-              eventTarget +
-              '" class="bt">' +
-              eventsOpts.locales.txt_GoToEventUrl +
-              'download </a>',
-          );
-        }
-
-        if (desc.is(':visible')) {
-          desc.slideUp();
-        } else {
-          if (eventsOpts.onlyOneDescription) {
-            flags.wrap.find('.eventCalendar-eventDesc').slideUp();
+            // create a button to go to event url
+            desc.append(
+              '<a href="' +
+                eventUrl +
+                '" target="' +
+                eventTarget +
+                '" class="bt">' +
+                eventsOpts.locales.txt_GoToEventUrl +
+                '</a>',
+            );
           }
-          desc.slideDown();
+
+          if (desc.is(':visible')) {
+            desc.slideUp();
+          } else {
+            if (eventsOpts.onlyOneDescription) {
+              flags.wrap.find('.eventCalendar-eventDesc').slideUp();
+            }
+            desc.slideDown();
+          }
         }
-      }
-    });
+      });
   }
 
   function sortJson(a, b) {
@@ -168,7 +193,9 @@
 
   function dateSlider(show, flags, eventsOpts) {
     var $eventsCalendarSlider = $("<div class='eventCalendar-slider'></div>"),
-      $eventsCalendarMonthWrap = $("<div class='eventCalendar-monthWrap'></div>"),
+      $eventsCalendarMonthWrap = $(
+        "<div class='eventCalendar-monthWrap'></div>",
+      ),
       $eventsCalendarTitle = $(
         "<div class='eventCalendar-currentTitle'><a href='#' class='eventCalendar-monthTitle'><span></span></a></div>",
       ),
@@ -179,7 +206,8 @@
           eventsOpts.locales.txt_next +
           '</span></a>',
       );
-    ($eventsCalendarDaysList = $("<ul class='eventCalendar-daysList'></ul>")), (date = new Date());
+    ($eventsCalendarDaysList = $("<ul class='eventCalendar-daysList'></ul>")),
+      (date = new Date());
 
     if (!flags.wrap.find('.eventCalendar-slider').length) {
       flags.wrap.prepend($eventsCalendarSlider);
@@ -244,10 +272,20 @@
 
     if (show != 'current') {
       // month change
-      getEvents(flags, eventsOpts, eventsOpts.eventsLimit, year, month, false, show);
+      getEvents(
+        flags,
+        eventsOpts,
+        eventsOpts.eventsLimit,
+        year,
+        month,
+        false,
+        show,
+      );
     }
 
-    flags.wrap.attr('data-current-month', month).attr('data-current-year', year);
+    flags.wrap
+      .attr('data-current-month', month)
+      .attr('data-current-year', year);
 
     // add current date info
     moment.locale(eventsOpts.locales.locale);
@@ -265,7 +303,9 @@
       .split(' ')
       .join('<br>');
 
-    $eventsCalendarTitle.find('.eventCalendar-monthTitle span').html(formatedDate);
+    $eventsCalendarTitle
+      .find('.eventCalendar-monthTitle span')
+      .html(formatedDate);
     $('.eventCalendar-prev').find('span').html(formatedPrevDate);
     $('.eventCalendar-next').find('span').html(formatedNextDate);
 
@@ -288,7 +328,9 @@
 
         for (; i < 7; i++) {
           daysList.push(
-            '<li class="eventCalendar-day-header">' + moment()._locale._weekdaysShort[i] + '</li>',
+            '<li class="eventCalendar-day-header">' +
+              moment()._locale._weekdaysShort[i] +
+              '</li>',
           );
 
           if (i === 6 && eventsOpts.startWeekOnMonday) {
@@ -313,7 +355,9 @@
       } // if -1 is because day starts on sunday(0) and week starts on monday
 
       for (i = weekDay; i > 0; i--) {
-        daysList.push('<li class="eventCalendar-day eventCalendar-empty"></li>');
+        daysList.push(
+          '<li class="eventCalendar-day eventCalendar-empty"></li>',
+        );
       }
     }
     for (dayCount = 1; dayCount <= daysOnTheMonth; dayCount++) {
@@ -336,7 +380,10 @@
     }
     $eventsCalendarDaysList.append(daysList.join(''));
 
-    $eventsCalendarSlider.css('height', $eventsCalendarMonthWrap.height() + 'px');
+    $eventsCalendarSlider.css(
+      'height',
+      $eventsCalendarMonthWrap.height() + 'px',
+    );
   }
 
   function getEvents(flags, eventsOpts, limit, year, month, day, direction) {
@@ -352,6 +399,7 @@
       month = '';
     }
 
+    //var month = month || '';
     flags.wrap.find('.eventCalendar-loading').fadeIn();
 
     if (eventsOpts.jsonData) {
@@ -359,7 +407,16 @@
       eventsOpts.cacheJson = true;
 
       flags.eventsJson = eventsOpts.jsonData;
-      getEventsData(flags, eventsOpts, flags.eventsJson, limit, year, month, day, direction);
+      getEventsData(
+        flags,
+        eventsOpts,
+        flags.eventsJson,
+        limit,
+        year,
+        month,
+        day,
+        direction,
+      );
     } else if (!eventsOpts.cacheJson || !direction) {
       // first load: load json and save it to future filters
       $.getJSON(
@@ -374,27 +431,58 @@
           day,
         function (data) {
           flags.eventsJson = data; // save data to future filters
-          getEventsData(flags, eventsOpts, flags.eventsJson, limit, year, month, day, direction);
+          getEventsData(
+            flags,
+            eventsOpts,
+            flags.eventsJson,
+            limit,
+            year,
+            month,
+            day,
+            direction,
+          );
         },
       ).error(function () {
         showError('error getting json: ', flags.wrap);
       });
     } else {
       // filter previus saved json
-      getEventsData(flags, eventsOpts, flags.eventsJson, limit, year, month, day, direction);
+      getEventsData(
+        flags,
+        eventsOpts,
+        flags.eventsJson,
+        limit,
+        year,
+        month,
+        day,
+        direction,
+      );
     }
 
     if (day > '') {
-      flags.wrap.find('.eventCalendar-current').removeClass('eventCalendar-current');
+      flags.wrap
+        .find('.eventCalendar-current')
+        .removeClass('eventCalendar-current');
       flags.wrap.find('#dayList_' + day).addClass('eventCalendar-current');
     }
   }
 
-  function getEventsData(flags, eventsOpts, data, limit, year, month, day, direction) {
+  function getEventsData(
+    flags,
+    eventsOpts,
+    data,
+    limit,
+    year,
+    month,
+    day,
+    direction,
+  ) {
     directionLeftMove = '-=' + flags.directionLeftMove;
     eventContentHeight = 'auto';
 
-    subtitle = flags.wrap.find('.eventCalendar-list-wrap .eventCalendar-subtitle');
+    subtitle = flags.wrap.find(
+      '.eventCalendar-list-wrap .eventCalendar-subtitle',
+    );
 
     if (!direction) {
       // first load
@@ -407,7 +495,10 @@
       moment.locale(eventsOpts.locales.locale);
 
       if (day !== '') {
-        formatedDate = moment(year + ' ' + jsMonth + ' ' + day, 'YYYY MM DD').format('LL');
+        formatedDate = moment(
+          year + ' ' + jsMonth + ' ' + day,
+          'YYYY MM DD',
+        ).format('LL');
         subtitle.html(
           eventsOpts.locales.txt_SpecificEvents_prev +
             formatedDate +
@@ -440,7 +531,11 @@
       },
       eventsOpts.moveSpeed,
       function () {
-        flags.wrap.find('.eventCalendar-list').css({ left: 0, height: 'auto' }).hide();
+        flags.wrap
+          .find('.eventCalendar-list')
+          .css({ left: 0, height: 'auto' })
+          .hide();
+        //wrap.find('.eventCalendar-list li').fadeIn();
 
         var events = [];
 
@@ -476,6 +571,7 @@
               eventYear = eventDate[0];
               eventMonth = parseInt(eventDate[1]) - 1;
               eventDay = parseInt(eventDate[2]);
+              //eventMonthToShow = eventMonth;
               eventMonthToShow = parseInt(eventMonth) + 1;
               eventHour = eventTime[0];
               eventMinute = eventTime[1];
@@ -504,6 +600,7 @@
 
             if (limit === 0 || limit > i) {
               // if month or day exist then only show matched events
+
               if (
                 (month === false || month == eventMonth) &&
                 (day === '' || day == eventDay) &&
@@ -514,21 +611,28 @@
                 } else {
                   moment.locale(eventsOpts.locales.locale);
 
-                  const eventMonth = +moment(eventDate).format(eventsOpts.dateFormatMonth);
-                  eventStringDate = moment(eventDate).format(eventsOpts.dateFormat).split('');
+                  const eventMyMonth = +moment(eventDate).format(
+                    eventsOpts.dateFormatMonth,
+                  );
+                  eventStringDate = moment(eventDate)
+                    .format(eventsOpts.dateFormat)
+                    .split('');
 
-                  if (eventMonth === 3 || eventMonth === 8) {
+                  if (eventMyMonth === 3 || eventMyMonth === 8) {
                     eventStringDate.push('a');
                   } else {
                     eventStringDate[eventStringDate.length - 1] = 'я';
                   }
 
+                  const eventMyTime = eventTime.slice(0, 2).join(':');
+
                   eventStringDate = eventStringDate.join('').toLowerCase();
                   promoEventDate.push(eventStringDate);
                   promoEventTitle.push(event.title);
+                  promoEventTime.push(eventMyTime);
 
                   if (eventClosestTime && eventName) {
-                    eventClosestTime.textContent = `${promoEventDate[0]} ${eventHour}:${eventMinute}`;
+                    eventClosestTime.textContent = `${promoEventDate[0]} ${promoEventTime[0]}`;
                     eventName.textContent = promoEventTitle[0];
                   }
 
@@ -540,12 +644,14 @@
                       event.url +
                       '" target="' +
                       eventLinkTarget +
-                      '" class="eventCalendar-eventTitle" download>' +
+                      '" class="eventCalendar-eventTitle">' +
                       event.title +
                       '</a>';
                   } else {
                     eventTitle =
-                      '<span class="eventCalendar-eventTitle">' + event.title + '</span>';
+                      '<span class="eventCalendar-eventTitle">' +
+                      event.title +
+                      '</span>';
                   }
                   events.push(
                     '<li id="' +
@@ -572,6 +678,7 @@
                 }
               }
             }
+
             // add mark in the dayList to the days with events
             if (
               eventYear == flags.wrap.attr('data-current-year') &&
@@ -594,10 +701,12 @@
               eventsOpts.locales.txt_noEvents +
               '</p></li>',
           );
-          eventClosestTime.textContent = 'Нет запланированных событий';
-          eventName.textContent = '';
-          eventClosestTime = null;
-          eventName = null;
+          if (eventClosestTime) {
+            eventClosestTime.textContent = 'Нет запланированных событий';
+            eventName.textContent = '';
+            eventClosestTime = null;
+            eventName = null;
+          }
         }
         flags.wrap.find('.eventCalendar-loading').hide();
 
@@ -628,30 +737,42 @@
         lastMonthMove = '+=' + flags.directionLeftMove;
       }
 
-      flags.wrap.find('.eventCalendar-monthWrap.eventCalendar-oldMonth').animate(
-        {
-          opacity: eventsOpts.moveOpacity,
-          left: lastMonthMove,
-        },
-        eventsOpts.moveSpeed,
-        function () {
-          flags.wrap.find('.eventCalendar-monthWrap.eventCalendar-oldMonth').remove();
-        },
-      );
+      flags.wrap
+        .find('.eventCalendar-monthWrap.eventCalendar-oldMonth')
+        .animate(
+          {
+            opacity: eventsOpts.moveOpacity,
+            left: lastMonthMove,
+          },
+          eventsOpts.moveSpeed,
+          function () {
+            flags.wrap
+              .find('.eventCalendar-monthWrap.eventCalendar-oldMonth')
+              .remove();
+          },
+        );
     });
   }
 
   function showError(msg, wrap) {
     wrap
       .find('.eventCalendar-list-wrap')
-      .html("<span class='eventCalendar-loading eventCalendar-error'>" + msg + '</span>');
+      .html(
+        "<span class='eventCalendar-loading eventCalendar-error'>" +
+          msg +
+          '</span>',
+      );
   }
 
   function setCalendarWidth(flags) {
     // resize calendar width on window resize
     flags.directionLeftMove = flags.wrap.width();
-    flags.wrap.find('.eventCalendar-monthWrap').width(flags.wrap.width() + 'px');
+    flags.wrap
+      .find('.eventCalendar-monthWrap')
+      .width(flags.wrap.width() + 'px');
 
-    flags.wrap.find('.eventCalendar-list-wrap').width(flags.wrap.width() + 'px');
+    flags.wrap
+      .find('.eventCalendar-list-wrap')
+      .width(flags.wrap.width() + 'px');
   }
 })(jQuery);

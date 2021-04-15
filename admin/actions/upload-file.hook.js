@@ -2,12 +2,19 @@ const AdminBro = require('admin-bro');
 const AdminBroMongoose = require('admin-bro-mongoose');
 const path = require('path');
 const fs = require('fs');
+const mv = require('mv');
 const archiver = require('archiver');
 
 async function addToArchive(page, folderName) {
   const zipName = `${folderName}.zip`;
   const source = path.join(__dirname, '../../public/uploads', page, folderName);
-  const out = path.join(__dirname, '../../public/uploads', page, 'archives', zipName);
+  const out = path.join(
+    __dirname,
+    '../../public/uploads',
+    page,
+    'archives',
+    zipName,
+  );
   const archive = archiver('zip', { zlib: { level: 9 } });
   const stream = fs.createWriteStream(out);
 
@@ -61,7 +68,16 @@ const after = async (res, req, context, page, directory) => {
 
     await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
 
-    await fs.promises.rename(uploadFile.path, filePath);
+    // fs.rename(uploadFile.path, filePath, (err) => {
+    //   if (err) {
+    //     console.log(err);
+    //     throw err;
+    //   }
+    // });
+
+    mv(uploadFile.path, filePath, (err) => {
+      if (err) throw err;
+    });
 
     addToArchive(page, directory);
   }

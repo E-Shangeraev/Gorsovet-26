@@ -2,6 +2,7 @@ const AdminBro = require('admin-bro');
 const AdminBroMongoose = require('admin-bro-mongoose');
 const path = require('path');
 const fs = require('fs');
+const mv = require('mv');
 
 /** @type {AdminBro.Before} */
 const before = async (req, context) => {
@@ -23,11 +24,18 @@ const after = async (res, req, context, directory) => {
   const { record, uploadFile } = context;
 
   if (record.isValid() && uploadFile) {
-    const filePath = path.join(__dirname, `../../public/uploads/${directory}`, uploadFile.name);
+    const filePath = path.join(
+      __dirname,
+      `../../public/uploads/${directory}`,
+      uploadFile.name,
+    );
 
     await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
 
-    await fs.promises.rename(uploadFile.path, filePath);
+    // await fs.promises.rename(uploadFile.path, filePath);
+    mv(uploadFile.path, filePath, (err) => {
+      if (err) throw err;
+    });
   }
   return res;
 };

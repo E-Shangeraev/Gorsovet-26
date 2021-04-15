@@ -10,7 +10,7 @@ const Calendar = new Schema(
     fileName: String,
     date: {
       type: Date,
-      default: Date.now,
+      default: Date.now() - 4,
     },
     ownerId: {
       type: Types.ObjectId,
