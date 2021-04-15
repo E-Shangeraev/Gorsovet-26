@@ -15,14 +15,22 @@ const ActivityHearing = require('../models/ActivityHearing');
 const ActivitySession = require('../models/ActivitySession');
 const Subscriber = require('../models/Subscriber');
 
-const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
-const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
+const {
+  before: passwordBeforeHook,
+  after: passwordAfterHook,
+} = require('./actions/password.hook');
+const {
+  before: uploadBeforeHook,
+  after: uploadAfterHook,
+} = require('./actions/upload-image.hook');
 const {
   before: uploadBeforeEventHook,
   after: uploadAfterEventHook,
 } = require('./actions/upload-event.hook');
 const { after: deleteAfterEventHook } = require('./actions/delete-event.hook');
-const { handler: bulkDeleteEventHook } = require('./actions/bulkDelete-event.hook');
+const {
+  handler: bulkDeleteEventHook,
+} = require('./actions/bulkDelete-event.hook');
 const {
   before: uploadBeforeFractionHook,
   after: uploadAfterFractionHook,
@@ -32,9 +40,13 @@ const {
   after: uploadAfterFileHook,
 } = require('./actions/upload-file.hook');
 const { after: deleteAfterFileHook } = require('./actions/delete-file.hook');
-const { handler: bulkDeleteFileHook } = require('./actions/bulkDelete-file.hook');
+const {
+  handler: bulkDeleteFileHook,
+} = require('./actions/bulkDelete-file.hook');
 const { after: deleteAfterImageHook } = require('./actions/delete-image.hook');
-const { handler: bulkDeleteImageHook } = require('./actions/bulkDelete-image.hook');
+const {
+  handler: bulkDeleteImageHook,
+} = require('./actions/bulkDelete-image.hook');
 
 AdminBro.registerAdapter(AdminBroMongoose);
 
@@ -42,7 +54,15 @@ const getDocumentOptions = (model, page, category, parent) => ({
   resource: model,
   options: {
     listProperties: ['category', 'year', 'month', 'name'],
-    editProperties: ['category', 'year', 'month', 'name', 'uploadFile', 'filePath', 'fileName'],
+    editProperties: [
+      'category',
+      'year',
+      'month',
+      'name',
+      'uploadFile',
+      'filePath',
+      'fileName',
+    ],
     parent: {
       name: parent,
     },
@@ -53,6 +73,7 @@ const getDocumentOptions = (model, page, category, parent) => ({
         },
         props: {
           category,
+          page,
         },
       },
     },
@@ -64,7 +85,13 @@ const getDocumentOptions = (model, page, category, parent) => ({
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          return uploadAfterFileHook(modifiedResponse, req, context, page, category);
+          return uploadAfterFileHook(
+            modifiedResponse,
+            req,
+            context,
+            page,
+            category,
+          );
         },
       },
       edit: {
@@ -74,18 +101,31 @@ const getDocumentOptions = (model, page, category, parent) => ({
         },
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          return uploadAfterFileHook(modifiedResponse, req, context, page, category);
+          return uploadAfterFileHook(
+            modifiedResponse,
+            req,
+            context,
+            page,
+            category,
+          );
         },
       },
       delete: {
         after: async (res, req, context) => {
           const modifiedResponse = await passwordAfterHook(res, req, context);
-          return deleteAfterFileHook(modifiedResponse, req, context, page, category);
+          return deleteAfterFileHook(
+            modifiedResponse,
+            req,
+            context,
+            page,
+            category,
+          );
         },
       },
       bulkDelete: {
         actionType: 'bulk',
-        handler: async (req, res, context) => bulkDeleteFileHook(req, res, context, page, category),
+        handler: async (req, res, context) =>
+          bulkDeleteFileHook(req, res, context, page, category),
       },
     },
   },
@@ -278,7 +318,11 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
@@ -288,19 +332,30 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
+              return deleteAfterImageHook(modifiedResponse, req, context, [
+                'img',
+              ]);
             },
           },
           bulkDelete: {
             actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
+            handler: async (req, res, context) =>
+              bulkDeleteImageHook(req, res, context),
           },
           show: {
             isVisible: false,
@@ -329,8 +384,17 @@ const options = {
               return uploadBeforeEventHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterEventHook(modifiedResponse, req, context, 'calendar');
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
+              return uploadAfterEventHook(
+                modifiedResponse,
+                req,
+                context,
+                'calendar',
+              );
             },
           },
           edit: {
@@ -339,19 +403,33 @@ const options = {
               return uploadBeforeEventHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterEventHook(modifiedResponse, req, context, 'calendar');
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
+              return uploadAfterEventHook(
+                modifiedResponse,
+                req,
+                context,
+                'calendar',
+              );
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               return deleteAfterEventHook(modifiedResponse, req, context);
             },
           },
           bulkDelete: {
             actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteEventHook(req, res, context),
+            handler: async (req, res, context) =>
+              bulkDeleteEventHook(req, res, context),
           },
         },
       },
@@ -394,7 +472,11 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               uploadAfterFractionHook(modifiedResponse, req, context);
               return uploadAfterHook(modifiedResponse, req, context);
             },
@@ -406,20 +488,31 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               uploadAfterFractionHook(modifiedResponse, req, context);
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
+              return deleteAfterImageHook(modifiedResponse, req, context, [
+                'img',
+              ]);
             },
           },
           bulkDelete: {
             actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
+            handler: async (req, res, context) =>
+              bulkDeleteImageHook(req, res, context),
           },
         },
       },
@@ -449,7 +542,11 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
@@ -459,19 +556,30 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
+              return deleteAfterImageHook(modifiedResponse, req, context, [
+                'img',
+              ]);
             },
           },
           bulkDelete: {
             actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
+            handler: async (req, res, context) =>
+              bulkDeleteImageHook(req, res, context),
           },
         },
       },
@@ -498,7 +606,11 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
@@ -508,14 +620,24 @@ const options = {
               return uploadBeforeHook(modifiedRequest, context);
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
               return uploadAfterHook(modifiedResponse, req, context);
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context,
+              );
+              return deleteAfterImageHook(modifiedResponse, req, context, [
+                'img',
+              ]);
             },
           },
         },
@@ -534,8 +656,18 @@ const options = {
     getDocumentOptions(DocumentReport, 'documents', 'reports', 'Документы'),
     getDocumentOptions(DocumentBase, 'documents', 'base', 'Документы'),
     getDocumentOptions(ActivityWork, 'activity', 'work', 'Деятельность совета'),
-    getDocumentOptions(ActivityHearing, 'activity', 'hearings', 'Деятельность совета'),
-    getDocumentOptions(ActivitySession, 'activity', 'sessions', 'Деятельность совета'),
+    getDocumentOptions(
+      ActivityHearing,
+      'activity',
+      'hearings',
+      'Деятельность совета',
+    ),
+    getDocumentOptions(
+      ActivitySession,
+      'activity',
+      'sessions',
+      'Деятельность совета',
+    ),
   ],
   branding: {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',
