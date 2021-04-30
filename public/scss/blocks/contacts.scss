@@ -1,6 +1,6 @@
 .contacts {
   display: grid;
-  grid-template-columns: 30% 1fr;
+  grid-template-columns: 40% 1fr;
   grid-auto-flow: row;
   grid-auto-rows: min-content;
   grid-column-gap: 5%;
@@ -13,6 +13,7 @@
   li {
     display: flex;
     align-items: start;
+    font-size: 18px;
   }
   li:not(:last-of-type) {
     margin-bottom: 10%;
@@ -46,7 +47,7 @@
   overflow: hidden;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1440px) {
   .contacts__list li {
     font-size: 16px;
   }

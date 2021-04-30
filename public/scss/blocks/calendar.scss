@@ -22,8 +22,12 @@
 }
 .eventCalendar-wrap {
   display: grid;
-  grid-template-columns: 40% 1fr;
-  column-gap: 35px;
+  // grid-template-columns: 40% 1fr;
+  grid-template-columns: 1fr 1fr;
+  // column-gap: 35px;
+  column-gap: 20px;
+  width: 70vw;
+  margin: 0 auto;
   border-radius: 6px;
 }
 .eventCalendar-monthWrap {
@@ -203,6 +207,12 @@
   .eventCalendar-day a {
     width: 35px;
     height: 35px;
+  }
+}
+@media (max-width: 1366px) {
+  .eventCalendar-wrap {
+    grid-template-columns: 40% 1fr;
+    width: 100%;
   }
 }
 @media (max-width: 900px) {

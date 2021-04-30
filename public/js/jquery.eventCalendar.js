@@ -35,7 +35,7 @@
 
   let promoEventTitle = [];
   let promoEventDate = [];
-
+  let promoEventTime = [];
   let eventClosestTime = document.querySelector('.event__closest time');
   let eventName = document.querySelector('.event__name');
 
@@ -61,7 +61,6 @@
     onlyOneDescription: true,
     openEventInNewWindow: true,
     eventsScrollable: false,
-    dateFormatMonth: 'MM',
     dateFormat: 'D/MM/YYYY',
     jsonDateFormat: 'timestamp', // you can use also "human" 'YYYY-MM-DD HH:MM:SS'
     moveSpeed: 500, // speed of month move when you clic on a new date
@@ -143,7 +142,7 @@
               eventTarget +
               '" class="bt">' +
               eventsOpts.locales.txt_GoToEventUrl +
-              'download </a>',
+              '</a>',
           );
         }
 
@@ -352,6 +351,7 @@
       month = '';
     }
 
+    //var month = month || '';
     flags.wrap.find('.eventCalendar-loading').fadeIn();
 
     if (eventsOpts.jsonData) {
@@ -441,6 +441,7 @@
       eventsOpts.moveSpeed,
       function () {
         flags.wrap.find('.eventCalendar-list').css({ left: 0, height: 'auto' }).hide();
+        //wrap.find('.eventCalendar-list li').fadeIn();
 
         var events = [];
 
@@ -476,6 +477,7 @@
               eventYear = eventDate[0];
               eventMonth = parseInt(eventDate[1]) - 1;
               eventDay = parseInt(eventDate[2]);
+              //eventMonthToShow = eventMonth;
               eventMonthToShow = parseInt(eventMonth) + 1;
               eventHour = eventTime[0];
               eventMinute = eventTime[1];
@@ -504,6 +506,7 @@
 
             if (limit === 0 || limit > i) {
               // if month or day exist then only show matched events
+
               if (
                 (month === false || month == eventMonth) &&
                 (day === '' || day == eventDay) &&
@@ -514,22 +517,34 @@
                 } else {
                   moment.locale(eventsOpts.locales.locale);
 
-                  const eventMonth = +moment(eventDate).format(eventsOpts.dateFormatMonth);
+                  const eventMyMonth = +moment(eventDate).format(eventsOpts.dateFormatMonth);
                   eventStringDate = moment(eventDate).format(eventsOpts.dateFormat).split('');
 
-                  if (eventMonth === 3 || eventMonth === 8) {
+                  if (eventMyMonth === 3 || eventMyMonth === 8) {
                     eventStringDate.push('a');
                   } else {
                     eventStringDate[eventStringDate.length - 1] = 'я';
                   }
 
+                  const eventMyTime = eventTime.slice(0, 2).join(':');
+
                   eventStringDate = eventStringDate.join('').toLowerCase();
                   promoEventDate.push(eventStringDate);
                   promoEventTitle.push(event.title);
+                  promoEventTime.push(eventMyTime);
 
                   if (eventClosestTime && eventName) {
-                    eventClosestTime.textContent = `${promoEventDate[0]} ${eventHour}:${eventMinute}`;
-                    eventName.textContent = promoEventTitle[0];
+                    eventClosestTime.textContent = `${promoEventDate[0]} ${promoEventTime[0]}`;
+                    eventName.innerHTML =
+                      '<a href="' +
+                      event.url +
+                      '" target="' +
+                      eventLinkTarget +
+                      '" download>' +
+                      promoEventTitle[0] +
+                      '</a>';
+                    eventClosestTime = null;
+                    eventName = null;
                   }
 
                   var eventTitle;
@@ -540,7 +555,7 @@
                       event.url +
                       '" target="' +
                       eventLinkTarget +
-                      '" class="eventCalendar-eventTitle" download>' +
+                      '" class="eventCalendar-eventTitle">' +
                       event.title +
                       '</a>';
                   } else {
@@ -572,6 +587,7 @@
                 }
               }
             }
+
             // add mark in the dayList to the days with events
             if (
               eventYear == flags.wrap.attr('data-current-year') &&
@@ -594,10 +610,12 @@
               eventsOpts.locales.txt_noEvents +
               '</p></li>',
           );
-          eventClosestTime.textContent = 'Нет запланированных событий';
-          eventName.textContent = '';
-          eventClosestTime = null;
-          eventName = null;
+          if (eventClosestTime) {
+            eventClosestTime.textContent = 'Нет запланированных событий';
+            eventName.textContent = '';
+            eventClosestTime = null;
+            eventName = null;
+          }
         }
         flags.wrap.find('.eventCalendar-loading').hide();
 

@@ -1,48 +1,68 @@
-const { default: AdminBro } = require('admin-bro');
-const uploadFeature = require('@admin-bro/upload');
-const AdminBroMongoose = require('admin-bro-mongoose');
-const Admin = require('./admin.resourceOptions');
-const Activity = require('../models/Activity');
-const Calendar = require('../models/Calendar');
-const Deputie = require('../models/Deputie');
-const News = require('../models/News');
-const Report = require('../models/Report');
-const DocumentSession = require('../models/DocumentSession');
-const DocumentReport = require('../models/DocumentReport');
-const DocumentBase = require('../models/DocumentBase');
-const ActivityWork = require('../models/ActivityWork');
-const ActivityHearing = require('../models/ActivityHearing');
-const ActivitySession = require('../models/ActivitySession');
-const Subscriber = require('../models/Subscriber');
+const { default: AdminBro } = require('admin-bro')
+const uploadFeature = require('@admin-bro/upload')
+const AdminBroMongoose = require('admin-bro-mongoose')
+const Admin = require('./admin.resourceOptions')
+// const Activity = require('../models/Activity');
+const Calendar = require('../models/Calendar')
+const Deputie = require('../models/Deputie')
+const News = require('../models/News')
+const Report = require('../models/Report')
+const DocumentSession = require('../models/DocumentSession')
+const DocumentReport = require('../models/DocumentReport')
+const DocumentBase = require('../models/DocumentBase')
+const ActivityWork = require('../models/ActivityWork')
+const ActivityHearing = require('../models/ActivityHearing')
+const ActivitySession = require('../models/ActivitySession')
+const Subscriber = require('../models/Subscriber')
 
-const { before: passwordBeforeHook, after: passwordAfterHook } = require('./actions/password.hook');
-const { before: uploadBeforeHook, after: uploadAfterHook } = require('./actions/upload-image.hook');
+const {
+  before: passwordBeforeHook,
+  after: passwordAfterHook,
+} = require('./actions/password.hook')
+const {
+  before: uploadBeforeHook,
+  after: uploadAfterHook,
+} = require('./actions/upload-image.hook')
 const {
   before: uploadBeforeEventHook,
   after: uploadAfterEventHook,
-} = require('./actions/upload-event.hook');
-const { after: deleteAfterEventHook } = require('./actions/delete-event.hook');
-const { handler: bulkDeleteEventHook } = require('./actions/bulkDelete-event.hook');
+} = require('./actions/upload-event.hook')
+const { after: deleteAfterEventHook } = require('./actions/delete-event.hook')
+const {
+  handler: bulkDeleteEventHook,
+} = require('./actions/bulkDelete-event.hook')
 const {
   before: uploadBeforeFractionHook,
   after: uploadAfterFractionHook,
-} = require('./actions/upload-fraction.hook');
+} = require('./actions/upload-fraction.hook')
 const {
   before: uploadBeforeFileHook,
   after: uploadAfterFileHook,
-} = require('./actions/upload-file.hook');
-const { after: deleteAfterFileHook } = require('./actions/delete-file.hook');
-const { handler: bulkDeleteFileHook } = require('./actions/bulkDelete-file.hook');
-const { after: deleteAfterImageHook } = require('./actions/delete-image.hook');
-const { handler: bulkDeleteImageHook } = require('./actions/bulkDelete-image.hook');
+} = require('./actions/upload-file.hook')
+const { after: deleteAfterFileHook } = require('./actions/delete-file.hook')
+const {
+  handler: bulkDeleteFileHook,
+} = require('./actions/bulkDelete-file.hook')
+const { after: deleteAfterImageHook } = require('./actions/delete-image.hook')
+const {
+  handler: bulkDeleteImageHook,
+} = require('./actions/bulkDelete-image.hook')
 
-AdminBro.registerAdapter(AdminBroMongoose);
+AdminBro.registerAdapter(AdminBroMongoose)
 
 const getDocumentOptions = (model, page, category, parent) => ({
   resource: model,
   options: {
     listProperties: ['category', 'year', 'month', 'name'],
-    editProperties: ['category', 'year', 'month', 'name', 'uploadFile', 'filePath', 'fileName'],
+    editProperties: [
+      'category',
+      'year',
+      'month',
+      'name',
+      'uploadFile',
+      'filePath',
+      'fileName',
+    ],
     parent: {
       name: parent,
     },
@@ -59,37 +79,56 @@ const getDocumentOptions = (model, page, category, parent) => ({
     actions: {
       new: {
         before: async (req, context) => {
-          const modifiedRequest = await passwordBeforeHook(req, context);
-          return uploadBeforeFileHook(modifiedRequest, context);
+          const modifiedRequest = await passwordBeforeHook(req, context)
+          return uploadBeforeFileHook(modifiedRequest, context)
         },
         after: async (res, req, context) => {
-          const modifiedResponse = await passwordAfterHook(res, req, context);
-          return uploadAfterFileHook(modifiedResponse, req, context, page, category);
+          const modifiedResponse = await passwordAfterHook(res, req, context)
+          return uploadAfterFileHook(
+            modifiedResponse,
+            req,
+            context,
+            page,
+            category
+          )
         },
       },
       edit: {
         before: async (req, context) => {
-          const modifiedRequest = await passwordBeforeHook(req, context);
-          return uploadBeforeFileHook(modifiedRequest, context);
+          const modifiedRequest = await passwordBeforeHook(req, context)
+          return uploadBeforeFileHook(modifiedRequest, context)
         },
         after: async (res, req, context) => {
-          const modifiedResponse = await passwordAfterHook(res, req, context);
-          return uploadAfterFileHook(modifiedResponse, req, context, page, category);
+          const modifiedResponse = await passwordAfterHook(res, req, context)
+          return uploadAfterFileHook(
+            modifiedResponse,
+            req,
+            context,
+            page,
+            category
+          )
         },
       },
       delete: {
         after: async (res, req, context) => {
-          const modifiedResponse = await passwordAfterHook(res, req, context);
-          return deleteAfterFileHook(modifiedResponse, req, context, page, category);
+          const modifiedResponse = await passwordAfterHook(res, req, context)
+          return deleteAfterFileHook(
+            modifiedResponse,
+            req,
+            context,
+            page,
+            category
+          )
         },
       },
       bulkDelete: {
         actionType: 'bulk',
-        handler: async (req, res, context) => bulkDeleteFileHook(req, res, context, page, category),
+        handler: async (req, res, context) =>
+          bulkDeleteFileHook(req, res, context, page, category),
       },
     },
   },
-});
+})
 
 /** @type {import('admin-bro').AdminBroOptions} */
 const options = {
@@ -106,7 +145,7 @@ const options = {
       },
       labels: {
         Admin: 'Администраторы',
-        Activity: 'Деятельность депутатов Совета депутатов',
+        // Activity: 'Деятельность депутатов Совета депутатов',
         Calendar: 'Календарь событий',
         Deputie: 'Депутатский корпус',
         News: 'Новости',
@@ -125,16 +164,16 @@ const options = {
         save: 'Сохранить',
       },
       resources: {
-        Activity: {
-          properties: {
-            title: 'Заголовок',
-            text: 'Текст',
-            img: 'Путь к изображению',
-            uploadImage: 'Изображение',
-            date: 'Дата публикации',
-            views: 'Кол-во просмотров',
-          },
-        },
+        // Activity: {
+        //   properties: {
+        //     title: 'Заголовок',
+        //     text: 'Текст',
+        //     img: 'Путь к изображению',
+        //     uploadImage: 'Изображение',
+        //     date: 'Дата публикации',
+        //     views: 'Кол-во просмотров',
+        //   },
+        // },
         Calendar: {
           properties: {
             title: 'Название события',
@@ -253,61 +292,76 @@ const options = {
   },
   resources: [
     Admin,
-    {
-      resource: Activity,
-      options: {
-        listProperties: ['title', 'text', 'date', 'views', 'uploadImage'],
-        parent: {
-          name: 'Депутатский корпус',
-        },
-        properties: {
-          text: {
-            type: 'richtext',
-          },
-          uploadImage: {
-            components: {
-              edit: AdminBro.bundle('./components/upload-image.edit.tsx'),
-              list: AdminBro.bundle('./components/upload-image.list.tsx'),
-            },
-          },
-        },
-        actions: {
-          new: {
-            before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
-            },
-            after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
-            },
-          },
-          edit: {
-            before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
-            },
-            after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
-            },
-          },
-          delete: {
-            after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
-            },
-          },
-          bulkDelete: {
-            actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
-          },
-          show: {
-            isVisible: false,
-          },
-        },
-      },
-    },
+    // {
+    //   resource: Activity,
+    //   options: {
+    //     listProperties: ['title', 'text', 'date', 'views', 'uploadImage'],
+    //     parent: {
+    //       name: 'Депутатский корпус',
+    //     },
+    //     properties: {
+    //       text: {
+    //         type: 'richtext',
+    //       },
+    //       uploadImage: {
+    //         components: {
+    //           edit: AdminBro.bundle('./components/upload-image.edit.tsx'),
+    //           list: AdminBro.bundle('./components/upload-image.list.tsx'),
+    //         },
+    //       },
+    //     },
+    //     actions: {
+    //       new: {
+    //         before: async (req, context) => {
+    //           const modifiedRequest = await passwordBeforeHook(req, context)
+    //           return uploadBeforeHook(modifiedRequest, context)
+    //         },
+    //         after: async (res, req, context) => {
+    //           const modifiedResponse = await passwordAfterHook(
+    //             res,
+    //             req,
+    //             context
+    //           )
+    //           return uploadAfterHook(modifiedResponse, req, context)
+    //         },
+    //       },
+    //       edit: {
+    //         before: async (req, context) => {
+    //           const modifiedRequest = await passwordBeforeHook(req, context)
+    //           return uploadBeforeHook(modifiedRequest, context)
+    //         },
+    //         after: async (res, req, context) => {
+    //           const modifiedResponse = await passwordAfterHook(
+    //             res,
+    //             req,
+    //             context
+    //           )
+    //           return uploadAfterHook(modifiedResponse, req, context)
+    //         },
+    //       },
+    //       delete: {
+    //         after: async (res, req, context) => {
+    //           const modifiedResponse = await passwordAfterHook(
+    //             res,
+    //             req,
+    //             context
+    //           )
+    //           return deleteAfterImageHook(modifiedResponse, req, context, [
+    //             'img',
+    //           ])
+    //         },
+    //       },
+    //       bulkDelete: {
+    //         actionType: 'bulk',
+    //         handler: async (req, res, context) =>
+    //           bulkDeleteImageHook(req, res, context),
+    //       },
+    //       show: {
+    //         isVisible: false,
+    //       },
+    //     },
+    //   },
+    // },
     {
       resource: Calendar,
       options: {
@@ -325,33 +379,56 @@ const options = {
         actions: {
           new: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeEventHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              return uploadBeforeEventHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterEventHook(modifiedResponse, req, context, 'calendar');
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return uploadAfterEventHook(
+                modifiedResponse,
+                req,
+                context,
+                'calendar'
+              )
             },
           },
           edit: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeEventHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              return uploadBeforeEventHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterEventHook(modifiedResponse, req, context, 'calendar');
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return uploadAfterEventHook(
+                modifiedResponse,
+                req,
+                context,
+                'calendar'
+              )
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterEventHook(modifiedResponse, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return deleteAfterEventHook(modifiedResponse, req, context)
             },
           },
           bulkDelete: {
             actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteEventHook(req, res, context),
+            handler: async (req, res, context) =>
+              bulkDeleteEventHook(req, res, context),
           },
         },
       },
@@ -389,37 +466,52 @@ const options = {
         actions: {
           new: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              uploadBeforeFractionHook(modifiedRequest, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              uploadBeforeFractionHook(modifiedRequest, context)
+              return uploadBeforeHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              uploadAfterFractionHook(modifiedResponse, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              uploadAfterFractionHook(modifiedResponse, req, context)
+              return uploadAfterHook(modifiedResponse, req, context)
             },
           },
           edit: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              uploadBeforeFractionHook(modifiedRequest, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              uploadBeforeFractionHook(modifiedRequest, context)
+              return uploadBeforeHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              uploadAfterFractionHook(modifiedResponse, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              uploadAfterFractionHook(modifiedResponse, req, context)
+              return uploadAfterHook(modifiedResponse, req, context)
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return deleteAfterImageHook(modifiedResponse, req, context, [
+                'img',
+              ])
             },
           },
           bulkDelete: {
             actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
+            handler: async (req, res, context) =>
+              bulkDeleteImageHook(req, res, context),
           },
         },
       },
@@ -445,33 +537,48 @@ const options = {
         actions: {
           new: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              return uploadBeforeHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return uploadAfterHook(modifiedResponse, req, context)
             },
           },
           edit: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              return uploadBeforeHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return uploadAfterHook(modifiedResponse, req, context)
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return deleteAfterImageHook(modifiedResponse, req, context, [
+                'img',
+              ])
             },
           },
           bulkDelete: {
             actionType: 'bulk',
-            handler: async (req, res, context) => bulkDeleteImageHook(req, res, context),
+            handler: async (req, res, context) =>
+              bulkDeleteImageHook(req, res, context),
           },
         },
       },
@@ -494,28 +601,42 @@ const options = {
         actions: {
           new: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              return uploadBeforeHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return uploadAfterHook(modifiedResponse, req, context)
             },
           },
           edit: {
             before: async (req, context) => {
-              const modifiedRequest = await passwordBeforeHook(req, context);
-              return uploadBeforeHook(modifiedRequest, context);
+              const modifiedRequest = await passwordBeforeHook(req, context)
+              return uploadBeforeHook(modifiedRequest, context)
             },
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return uploadAfterHook(modifiedResponse, req, context);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return uploadAfterHook(modifiedResponse, req, context)
             },
           },
           delete: {
             after: async (res, req, context) => {
-              const modifiedResponse = await passwordAfterHook(res, req, context);
-              return deleteAfterImageHook(modifiedResponse, req, context, ['img']);
+              const modifiedResponse = await passwordAfterHook(
+                res,
+                req,
+                context
+              )
+              return deleteAfterImageHook(modifiedResponse, req, context, [
+                'img',
+              ])
             },
           },
         },
@@ -534,14 +655,24 @@ const options = {
     getDocumentOptions(DocumentReport, 'documents', 'reports', 'Документы'),
     getDocumentOptions(DocumentBase, 'documents', 'base', 'Документы'),
     getDocumentOptions(ActivityWork, 'activity', 'work', 'Деятельность совета'),
-    getDocumentOptions(ActivityHearing, 'activity', 'hearings', 'Деятельность совета'),
-    getDocumentOptions(ActivitySession, 'activity', 'sessions', 'Деятельность совета'),
+    getDocumentOptions(
+      ActivityHearing,
+      'activity',
+      'hearings',
+      'Деятельность совета'
+    ),
+    getDocumentOptions(
+      ActivitySession,
+      'activity',
+      'sessions',
+      'Деятельность совета'
+    ),
   ],
   branding: {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',
     logo: '/img/emblem.png',
     softwareBrothers: false,
   },
-};
+}
 
-module.exports = options;
+module.exports = options

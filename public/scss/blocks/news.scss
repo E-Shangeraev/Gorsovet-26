@@ -31,17 +31,23 @@
 
 @media (max-width: 1700px) {
   .news__container {
-    grid-template-columns: repeat(3, 1fr);
+    // grid-template-columns: repeat(3, 1fr);
     margin-bottom: 60px;
   }
   .read .news__container a:nth-of-type(4) {
     display: none !important;
   }
 }
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
+  .news__container {
+    // grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 50px;
+  }
+}
+@media (max-width: 920px) {
   .news__container {
     grid-template-columns: repeat(2, 1fr);
-    margin-bottom: 50px;
   }
   .read .news__container {
     a:nth-of-type(4) {

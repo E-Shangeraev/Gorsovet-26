@@ -86,14 +86,15 @@
   justify-content: space-between;
 }
 .promo__title {
+  width: 70%;
   font-family: $semi;
-  font-size: 48px;
+  font-size: 44px;
   line-height: 120%;
   color: #fff;
 }
 .promo__event {
   flex-shrink: 0;
-  width: 482px;
+  width: 430px;
 }
 .promo__button {
   width: fit-content;
@@ -145,6 +146,12 @@
   }
   .promo__news h4 {
     font-size: 14px;
+  }
+  .promo__wrapper {
+    padding: 60px 150px;
+  }
+  .promo__buttons {
+    top: 11%;
   }
 }
 @media (max-width: 1440px) {

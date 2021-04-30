@@ -25,15 +25,21 @@
   font-size: 18px;
   line-height: 120%;
 }
-.event__name {
+.event__name a {
   font-family: $semi;
-  font-size: 30px;
-  line-height: 120%;
+  font-size: 22px;
+  line-height: 130%;
+  color: #fff;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 @media (max-width: 1600px) {
-  .event__name {
-    font-size: 26px;
+  .event__name a {
+    font-size: 20px;
   }
   .event__time,
   .event__date {
@@ -47,8 +53,8 @@
   .event__wrapper {
     padding: 40px 25px;
   }
-  .event__name {
-    font-size: 22px;
+  .event__name a {
+    font-size: 18px;
   }
   .event__time,
   .event__date {

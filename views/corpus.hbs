@@ -37,22 +37,22 @@
               {{about}}
             </p>
             <footer class="your-deputie__footer">
-            {{#if schedule}}
-              <p>
-                <span class="red">
-                  График приема:
-                </span>
-                {{schedule}}
-              </p>
-            {{/if}}
-            {{#if appointment}}
-              <p>
-                <span class="red">
-                  Запись:
-                </span>
-                {{appointment}}
-              </p>
-            {{/if}}
+              {{#if schedule}}
+                <p>
+                  <span class="red">
+                    График приема:
+                  </span>
+                  {{schedule}}
+                </p>
+              {{/if}}
+              {{#if appointment}}
+                <p>
+                  <span class="red">
+                    Запись:
+                  </span>
+                  {{appointment}}
+                </p>
+              {{/if}}
             </footer>
           </div>
         </div>
@@ -75,17 +75,17 @@
         class="form__field"
         id="deputie-search"
         type="search"
-        placeholder="Введите адерс своего проживания*"
-         autocomplete="off"
+        placeholder="Введите адрес своего проживания*"
+        autocomplete="off"
       />
-      <input type="hidden" class="form__id">
+      <input type="hidden" class="form__id" />
       <button class="button form__button">
         Найти
       </button>
     </form>
   </div>
 </section>
-<section class="activities">
+{{!-- <section class="activities">
   <h2 class="title">
     Деятельность депутатов Совета депутатов
   </h2>
@@ -140,4 +140,4 @@
       </span>
     </p>
   </div>
-</section>
+</section> --}}

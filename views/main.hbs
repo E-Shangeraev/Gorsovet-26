@@ -1,106 +1,87 @@
 <section class="promo">
   <div class="promo__wrapper">
-      <ul class="promo__news promo__slider">
-        {{#if news.length}}
-          {{#each news}}
-            <li>
-              <a href="/news/{{_id}}">
-                <h4>
-                  {{title}}
-                </h4>
-                <div>
-                  <time pubdate>
-                    {{moment date format="DD.MM.YYYY"}}
-                  </time>
-                  <p class="promo__views">
-                    <img src="/svg/views.svg" />
-                    <span class="preview__count">
-                      {{views}}
-                    </span>
-                  </p>
-                </div>
-              </a>
-            </li>
-          {{/each}}
-        {{/if}}
-      </ul>
-      <div class="promo__content d-flex">
-        <div>
-          <h2 class="promo__title">
-            Ваша возможность задать интересующий вопрос своему депутату
-          </h2>
-          <a href="/reception" class="button promo__button">
-            Задать вопрос
-          </a>
-        </div>
-        <div class="event promo__event">
-          <header>
-            <time class="event__time">
-              {{year}}
-            </time>
-            <time class="event__date">
-              {{date format="DD MMMM YYYY"}}
-            </time>
-          </header>
-          <div class="event__wrapper">
-            <p class="event__closest">
-              Ближайшее мероприятие -
-              <time>
-                <span class="loader"></span>
-              </time>
-            </p>
-            <h3 class="event__name">
+    <ul class="promo__news promo__slider">
+      {{#if news.length}}
+        {{#each news}}
+          <li>
+            <a href="/news/{{_id}}">
+              <h4>
+                {{title}}
+              </h4>
+              <div>
+                <time pubdate>
+                  {{moment date format="DD.MM.YYYY"}}
+                </time>
+                <p class="promo__views">
+                  <img src="/svg/views.svg" />
+                  <span class="preview__count">
+                    {{views}}
+                  </span>
+                </p>
+              </div>
+            </a>
+          </li>
+        {{/each}}
+      {{/if}}
+    </ul>
+    <div class="promo__content d-flex">
+      <div>
+        <h2 class="promo__title">
+          Ваша возможность задать вопрос своему депутату
+        </h2>
+        <a href="/reception" class="button promo__button">
+          Задать вопрос
+        </a>
+      </div>
+      <div class="event promo__event">
+        <header>
+          <time class="event__time">
+            {{year}}
+          </time>
+          <time class="event__date">
+            {{date format="DD MMMM YYYY"}}
+          </time>
+        </header>
+        <div class="event__wrapper">
+          <p class="event__closest">
+            Ближайшее мероприятие -
+            <time>
               <span class="loader"></span>
-            </h3>
-          </div>
+            </time>
+          </p>
+          <p class="event__name">
+            <span class="loader"></span>
+          </p>
         </div>
       </div>
-      <p class="promo__buttons slider__buttons">
-          <button class="promo__prev slider__prev"></button>
-          <button class="promo__next slider__next"></button>
-        </p>
     </div>
+    <p class="promo__buttons slider__buttons">
+      <button class="promo__prev slider__prev"></button>
+      <button class="promo__next slider__next"></button>
+    </p>
+  </div>
 </section>
-
 <section class="about">
   <div class="about__container">
     <div class="about__block">
       <div>
         <h3 class="subtitle">
-          Совет депутатов
+          Совет депутатов ЗАТО г. Железногорск
         </h3>
         <p class="about__text">
           Совет депутатов ЗАТО г. Железногорск является представительным органом местного самоуправления ЗАТО Железногорск, наделенным собственными полномочиями по решению вопросов местного значения. Совет депутатов состоит из 25 депутатов, избираемых на муниципальных выборах, на основе всеобщего равного и прямого избирательного права при тайном голосовании. Срок полномочий Совета депутатов составляет пять лет. Совет депутатов ЗАТО г.Железногорск VI созыва приступил к работе 22 сентября 2020 года. В Совете депутатов сформированы четыре постоянные депутатские комиссии: комиссия бюджету, финансам и налогам, комиссия по вопросам экономики, собственности и ЖКХ, комиссия по вопросам местного самоуправления и законности, комиссия по социальным вопросам.
         </p>
       </div>
-      <img src="/img/about-1.jpg" alt="Совет депутатов" /> 
-    </div>
-    <div class="about__block">
-      <img src="/img/about-2.jpg" alt="Деятельность совета" />
-      <div>
-        <h3 class="subtitle">
-          Деятельность совета
-        </h3>
-        <p class="about__text">
-          Информация о деятельности совета депутатов. Информация о деятельности совета
-            депутатов. Информация о деятельности совета депутатов. Информация о деятельности
-            совета депутатов. Информация о деятельности совета депутатов. Информация о
-            деятельности совета депутатов. Информация о деятельности совета депутатов.
-            Информация о деятельности совета депутатов. Информация о деятельности совета
-            депутатов. Информация о деятельности совета депутатов.
-        </p>
-      </div>
+      <img src="img/council.jpg" alt="Совет депутатов ЗАТО г. Железногорск" />
     </div>
   </div>
 </section>
-
 <section class="calendar">
   <div id="eventsCalendar"></div>
 </section>
-
 <section class="deput">
   <h2 class="title">
-    Депутаты Совета депутатов
+    Депутаты Совета депутатов ЗАТО г. Железногорск
   </h2>
   <div class="deput__slider">
     {{#if deputies.length}}
@@ -141,12 +122,12 @@
               </p>
             {{/if}}
             {{#if appointment}}
-            <p class="deput__registration">
-              <span class="red">
-                Запись:
-              </span>
-              {{appointment}}
-            </p>
+              <p class="deput__registration">
+                <span class="red">
+                  Запись:
+                </span>
+                {{appointment}}
+              </p>
             {{/if}}
           </figcaption>
           <a href="/reception/{{_id}}" class="button deput__button">
@@ -156,7 +137,6 @@
       {{/each}}
     {{/if}}
   </div>
-
   <div class="slider__nav deput__slider-nav">
     <a href="/corpus" class="more">
       Все депутаты
@@ -195,10 +175,10 @@
         class="form__field"
         id="deputie-search"
         type="search"
-        placeholder="Введите адерс своего проживания*"
+        placeholder="Введите адрес своего проживания*"
         autocomplete="off"
       />
-      <input type="hidden" class="form__id">
+      <input type="hidden" class="form__id" />
       <button class="button form__button">
         Найти
       </button>
@@ -216,22 +196,25 @@
       </h4>
       <ul>
         <li>
-          <a href="https://vk.com/gorsovet_26">
+          <a href="https://vk.com/gorsovet_26" target="_blank">
             <img src="/svg/vk-useful.svg" alt="ВКонтакте" />
           </a>
         </li>
         <li>
-          <a href="https://www.instagram.com/gorsovet_26?r=nametag">
+          <a
+            href="https://www.instagram.com/gorsovet_26?r=nametag"
+            target="_blank"
+          >
             <img src="/svg/inst-useful.svg" alt="Инстаграм" />
           </a>
         </li>
         <li>
-          <a href="https://www.facebook.com/gorsovet26/">
+          <a href="https://www.facebook.com/gorsovet26/" target="_blank">
             <img src="/svg/fb-useful.svg" alt="Фейсбук" />
           </a>
         </li>
         <li>
-          <a href="https://ok.ru/group/58007684644885">
+          <a href="https://ok.ru/group/58007684644885" target="_blank">
             <img src="/svg/ok-useful.svg" alt="Одноклассники" />
           </a>
         </li>
@@ -254,7 +237,7 @@
           массовых коммуникаций по Красноярскому краю. Свидетельство о регистрации ПИ № ТУ 24
           -00408 от 30 мая 2011 года...
       </p>
-      <a href="http://www.gig26.ru/" class="more">
+      <a href="http://www.gig26.ru/" class="more" target="_blank">
         Подробнее
       </a>
     </div>
@@ -278,7 +261,7 @@
           наделяется Уставом ЗАТО Железногорск полномочиями по решению вопросов местного
           значения и по осуществлению...
       </p>
-      <a href="http://www.admk26.ru/" class="more">
+      <a href="http://www.admk26.ru/" class="more" target="_blank">
         Подробнее
       </a>
     </div>
@@ -295,7 +278,7 @@
         остались?
       </h2>
       <p class="questions__desc">
-        Опишите свой вопрос и мы обязательно ответим на него в ближайшее время!
+        Опишите свой вопрос и мы обязательно ответим Вам!
       </p>
     </div>
     <form action="/question" method="POST" class="form questions__form">
@@ -316,7 +299,7 @@
       <input
         class="form__field form__field--white"
         type="tel"
-        placeholder="Ваш телефон*" 
+        placeholder="Ваш телефон*"
         name="phone"
         required
       />
