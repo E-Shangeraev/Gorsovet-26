@@ -1,13 +1,19 @@
 import React from 'react';
-import { Label, Box, DropZone, DropZoneProps, DropZoneItem } from '@admin-bro/design-system';
+import {
+  Label,
+  Box,
+  DropZone,
+  DropZoneProps,
+  DropZoneItem,
+} from '@admin-bro/design-system';
 import { BasePropertyProps } from 'admin-bro/src/frontend/components/property-type/base-property-props';
 
 const Edit: React.FC<BasePropertyProps> = (props) => {
   const { property, onChange, record } = props;
-  const { category } = props.property.props;
+  const { page, category } = props.property.props;
 
   const handleDropZoneChange: DropZoneProps['onChange'] = (files) => {
-    onChange('filePath', `/uploads/documents/${category}/` + files[0]?.name);
+    onChange('filePath', `/uploads/${page}/${category}/` + files[0]?.name);
     onChange('fileName', files[0]?.name);
     onChange(property.name, files[0]);
   };

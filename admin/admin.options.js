@@ -73,6 +73,7 @@ const getDocumentOptions = (model, page, category, parent) => ({
         },
         props: {
           category,
+          page,
         },
       },
     },

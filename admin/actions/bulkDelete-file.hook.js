@@ -6,7 +6,13 @@ const archiver = require('archiver');
 async function addToArchive(page, folderName) {
   const zipName = `${folderName}.zip`;
   const source = path.join(__dirname, '../../public/uploads', page, folderName);
-  const out = path.join(__dirname, '../../public/uploads', page, 'archives', zipName);
+  const out = path.join(
+    __dirname,
+    '../../public/uploads',
+    page,
+    'archives',
+    zipName,
+  );
   const archive = archiver('zip', { zlib: { level: 9 } });
   const stream = fs.createWriteStream(out);
 
@@ -37,7 +43,9 @@ const handler = async (req, res, context, page, directory) => {
   const { records, resource, h, translateMessage } = context;
 
   if (req.method === 'get') {
-    const recordsInJSON = records.map((record) => record.toJSON(context.currentAdmin));
+    const recordsInJSON = records.map((record) =>
+      record.toJSON(context.currentAdmin),
+    );
     return {
       records: recordsInJSON,
     };
@@ -61,7 +69,9 @@ const handler = async (req, res, context, page, directory) => {
         }),
         type: 'success',
       },
-      redirectUrl: h.resourceUrl({ resourceId: resource._decorated.id() || resource.id() }),
+      redirectUrl: h.resourceUrl({
+        resourceId: resource._decorated.id() || resource.id(),
+      }),
     };
   }
 };

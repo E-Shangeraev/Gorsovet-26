@@ -9,35 +9,43 @@
     url:
    		http://www.vissit.com/projects/eventCalendar/
 */
-(function ($) {
+;(function ($) {
   $.fn.eventCalendar = function (options) {
-    var calendar = this;
+    var calendar = this
 
     if (options.locales && typeof options.locales == 'string') {
       $.getJSON(options.locales, function (data) {
-        options.locales = $.extend({}, $.fn.eventCalendar.defaults.locales, data);
-        moment.locale(data.locale, options.locales.moment);
-        moment.locale(data.locale);
+        options.locales = $.extend(
+          {},
+          $.fn.eventCalendar.defaults.locales,
+          data
+        )
+        moment.locale(data.locale, options.locales.moment)
+        moment.locale(data.locale)
 
-        initEventCalendar(calendar, options);
+        initEventCalendar(calendar, options)
       }).error(function () {
-        showError('error getting locale json', $(this));
-      });
+        showError('error getting locale json', $(this))
+      })
     } else {
       if (options.locales && options.locales.locale) {
-        options.locales = $.extend({}, $.fn.eventCalendar.defaults.locales, options.locales);
-        moment.locale(options.locales.locale, options.locales.moment);
-        moment.locale(options.locales.locale);
+        options.locales = $.extend(
+          {},
+          $.fn.eventCalendar.defaults.locales,
+          options.locales
+        )
+        moment.locale(options.locales.locale, options.locales.moment)
+        moment.locale(options.locales.locale)
       }
-      initEventCalendar(calendar, options);
+      initEventCalendar(calendar, options)
     }
-  };
+  }
 
-  let promoEventTitle = [];
-  let promoEventDate = [];
-  let promoEventTime = [];
-  let eventClosestTime = document.querySelector('.event__closest time');
-  let eventName = document.querySelector('.event__name');
+  let promoEventTitle = []
+  let promoEventDate = []
+  let promoEventTime = []
+  let eventClosestTime = document.querySelector('.event__closest time')
+  let eventName = document.querySelector('.event__name')
 
   // define the parameters with the default values of the function
   $.fn.eventCalendar.defaults = {
@@ -68,137 +76,158 @@
     jsonData: '', // to load and inline json (not ajax calls)
     cacheJson: true, // if true plugin get a json only first time and after plugin filter events
     // if false plugin get a new json on each date change
-  };
+  }
 
   function initEventCalendar(that, options) {
-    var eventsOpts = $.extend({}, $.fn.eventCalendar.defaults, options);
+    var eventsOpts = $.extend({}, $.fn.eventCalendar.defaults, options)
 
     // define global vars for the function
     var flags = {
       wrap: '',
       directionLeftMove: '300',
       eventsJson: {},
-    };
+    }
 
     // each eventCalendar will execute this function
     that.each(function () {
-      flags.wrap = $(this);
+      flags.wrap = $(this)
       flags.wrap
         .addClass('eventCalendar-wrap')
         .append(
           "<div class='eventCalendar-list-wrap'><h3 class='calendar-title'>Календарь событий</h3><p class='eventCalendar-subtitle'></p><span class='eventCalendar-loading'>" +
             eventsOpts.locales.txt_loading +
-            "</span><div class='eventCalendar-list-content'><ul class='eventCalendar-list'></ul></div></div>",
-        );
+            "</span><div class='eventCalendar-list-content'><ul class='eventCalendar-list'></ul></div></div>"
+        )
 
       if (eventsOpts.eventsScrollable) {
-        flags.wrap.find('.eventCalendar-list-content').addClass('scrollable');
+        flags.wrap.find('.eventCalendar-list-content').addClass('scrollable')
       }
 
-      setCalendarWidth(flags);
+      setCalendarWidth(flags)
       $(window).resize(function () {
-        setCalendarWidth(flags);
-      });
+        setCalendarWidth(flags)
+      })
 
       // show current month
-      dateSlider('current', flags, eventsOpts);
+      dateSlider('current', flags, eventsOpts)
 
-      getEvents(flags, eventsOpts, eventsOpts.eventsLimit, false, false, false, false);
+      getEvents(
+        flags,
+        eventsOpts,
+        eventsOpts.eventsLimit,
+        false,
+        false,
+        false,
+        false
+      )
 
-      changeMonth(flags, eventsOpts);
+      changeMonth(flags, eventsOpts)
 
       flags.wrap.on('click', '.eventCalendar-day a', function (e) {
-        e.preventDefault();
+        e.preventDefault()
         var year = flags.wrap.attr('data-current-year'),
           month = flags.wrap.attr('data-current-month'),
-          day = $(this).parent().attr('rel');
+          day = $(this).parent().attr('rel')
 
-        getEvents(flags, eventsOpts, false, year, month, day, 'day');
-      });
+        getEvents(flags, eventsOpts, false, year, month, day, 'day')
+      })
       flags.wrap.on('click', '.eventCalendar-monthTitle', function (e) {
-        e.preventDefault();
+        e.preventDefault()
         var year = flags.wrap.attr('data-current-year'),
-          month = flags.wrap.attr('data-current-month');
+          month = flags.wrap.attr('data-current-month')
 
-        getEvents(flags, eventsOpts, eventsOpts.eventsLimit, year, month, false, 'month');
-      });
-    });
+        getEvents(
+          flags,
+          eventsOpts,
+          eventsOpts.eventsLimit,
+          year,
+          month,
+          false,
+          'month'
+        )
+      })
+    })
 
     // show event description
-    flags.wrap.find('.eventCalendar-list').on('click', '.eventCalendar-eventTitle', function (e) {
-      if (!eventsOpts.showDescription) {
-        e.preventDefault();
-        var desc = $(this).parent().find('.eventCalendar-eventDesc');
+    flags.wrap
+      .find('.eventCalendar-list')
+      .on('click', '.eventCalendar-eventTitle', function (e) {
+        if (!eventsOpts.showDescription) {
+          e.preventDefault()
+          var desc = $(this).parent().find('.eventCalendar-eventDesc')
 
-        if (!desc.find('a').length()) {
-          var eventUrl = $(this).attr('href');
-          var eventTarget = $(this).attr('target');
+          if (!desc.find('a').length()) {
+            var eventUrl = $(this).attr('href')
+            var eventTarget = $(this).attr('target')
 
-          // create a button to go to event url
-          desc.append(
-            '<a href="' +
-              eventUrl +
-              '" target="' +
-              eventTarget +
-              '" class="bt">' +
-              eventsOpts.locales.txt_GoToEventUrl +
-              '</a>',
-          );
-        }
-
-        if (desc.is(':visible')) {
-          desc.slideUp();
-        } else {
-          if (eventsOpts.onlyOneDescription) {
-            flags.wrap.find('.eventCalendar-eventDesc').slideUp();
+            // create a button to go to event url
+            desc.append(
+              '<a href="' +
+                eventUrl +
+                '" target="' +
+                eventTarget +
+                '" class="bt">' +
+                eventsOpts.locales.txt_GoToEventUrl +
+                '</a>'
+            )
           }
-          desc.slideDown();
+
+          if (desc.is(':visible')) {
+            desc.slideUp()
+          } else {
+            if (eventsOpts.onlyOneDescription) {
+              flags.wrap.find('.eventCalendar-eventDesc').slideUp()
+            }
+            desc.slideDown()
+          }
         }
-      }
-    });
+      })
   }
 
   function sortJson(a, b) {
     if (typeof a.date === 'string') {
-      return a.date.toLowerCase() > b.date.toLowerCase() ? 1 : -1;
+      return a.date.toLowerCase() > b.date.toLowerCase() ? 1 : -1
     }
-    return a.date > b.date ? 1 : -1;
+    return a.date > b.date ? 1 : -1
   }
 
   function dateSlider(show, flags, eventsOpts) {
     var $eventsCalendarSlider = $("<div class='eventCalendar-slider'></div>"),
-      $eventsCalendarMonthWrap = $("<div class='eventCalendar-monthWrap'></div>"),
+      $eventsCalendarMonthWrap = $(
+        "<div class='eventCalendar-monthWrap'></div>"
+      ),
       $eventsCalendarTitle = $(
-        "<div class='eventCalendar-currentTitle'><a href='#' class='eventCalendar-monthTitle'><span></span></a></div>",
+        "<div class='eventCalendar-currentTitle'><a href='#' class='eventCalendar-monthTitle'><span></span></a></div>"
       ),
       $eventsCalendarArrows = $(
         "<a href='#' class='eventCalendar-arrow eventCalendar-prev'><span>" +
           eventsOpts.locales.txt_prev +
           "</span></a><a href='#' class='eventCalendar-arrow eventCalendar-next'><span>" +
           eventsOpts.locales.txt_next +
-          '</span></a>',
-      );
-    ($eventsCalendarDaysList = $("<ul class='eventCalendar-daysList'></ul>")), (date = new Date());
+          '</span></a>'
+      )
+    ;($eventsCalendarDaysList = $("<ul class='eventCalendar-daysList'></ul>")),
+      (date = new Date())
 
     if (!flags.wrap.find('.eventCalendar-slider').length) {
-      flags.wrap.prepend($eventsCalendarSlider);
-      $eventsCalendarSlider.append($eventsCalendarMonthWrap);
+      flags.wrap.prepend($eventsCalendarSlider)
+      $eventsCalendarSlider.append($eventsCalendarMonthWrap)
     } else {
-      flags.wrap.find('.eventCalendar-slider').append($eventsCalendarMonthWrap);
+      flags.wrap.find('.eventCalendar-slider').append($eventsCalendarMonthWrap)
     }
 
     flags.wrap
       .find('.eventCalendar-monthWrap.eventCalendar-currentMonth')
       .removeClass('eventCalendar-currentMonth')
-      .addClass('eventCalendar-oldMonth');
+      .addClass('eventCalendar-oldMonth')
     $eventsCalendarMonthWrap
       .addClass('eventCalendar-currentMonth')
-      .append($eventsCalendarTitle, $eventsCalendarDaysList);
+      .append($eventsCalendarTitle, $eventsCalendarDaysList)
 
     // if current show current month & day
     if (show === 'current') {
-      day = date.getDate();
-      $eventsCalendarSlider.append($eventsCalendarArrows);
+      day = date.getDate()
+      $eventsCalendarSlider.append($eventsCalendarArrows)
     } else {
       date = new Date(
         flags.wrap.attr('data-current-year'),
@@ -206,19 +235,19 @@
         1,
         0,
         0,
-        0,
-      ); // current visible month
-      day = 0; // not show current day in days list
+        0
+      ) // current visible month
+      day = 0 // not show current day in days list
 
-      moveOfMonth = 1;
+      moveOfMonth = 1
       if (show === 'prev') {
-        moveOfMonth = -1;
+        moveOfMonth = -1
       }
-      date.setMonth(date.getMonth() + moveOfMonth);
+      date.setMonth(date.getMonth() + moveOfMonth)
 
-      var tmpDate = new Date();
+      var tmpDate = new Date()
       if (date.getMonth() === tmpDate.getMonth()) {
-        day = tmpDate.getDate();
+        day = tmpDate.getDate()
       }
     }
 
@@ -230,96 +259,108 @@
       month = date.getMonth(), // 0-11
       monthToShow = month + 1,
       monthPrev = monthToShow - 1,
-      monthNext = monthToShow + 1;
+      monthNext = monthToShow + 1
 
     if (monthPrev === 0) {
-      monthPrev = 12;
-      yearForPrev = yearForPrev - 1;
+      monthPrev = 12
+      yearForPrev = yearForPrev - 1
     }
     if (monthNext === 13) {
-      monthNext = 1;
-      yearForNext = yearForNext + 1;
+      monthNext = 1
+      yearForNext = yearForNext + 1
     }
 
     if (show != 'current') {
       // month change
-      getEvents(flags, eventsOpts, eventsOpts.eventsLimit, year, month, false, show);
+      getEvents(
+        flags,
+        eventsOpts,
+        eventsOpts.eventsLimit,
+        year,
+        month,
+        false,
+        show
+      )
     }
 
-    flags.wrap.attr('data-current-month', month).attr('data-current-year', year);
+    flags.wrap.attr('data-current-month', month).attr('data-current-year', year)
 
     // add current date info
-    moment.locale(eventsOpts.locales.locale);
+    moment.locale(eventsOpts.locales.locale)
 
     var formatedDate = moment(year + ' ' + monthToShow, 'YYYY MM')
       .format('MMMM YYYY')
       .split(' ')
-      .join('<br>');
+      .join('<br>')
     var formatedPrevDate = moment(yearForPrev + ' ' + monthPrev, 'YYYY MM')
       .format('MMMM YYYY')
       .split(' ')
-      .join('<br>');
+      .join('<br>')
     var formatedNextDate = moment(yearForNext + ' ' + monthNext, 'YYYY MM')
       .format('MMMM YYYY')
       .split(' ')
-      .join('<br>');
+      .join('<br>')
 
-    $eventsCalendarTitle.find('.eventCalendar-monthTitle span').html(formatedDate);
-    $('.eventCalendar-prev').find('span').html(formatedPrevDate);
-    $('.eventCalendar-next').find('span').html(formatedNextDate);
+    $eventsCalendarTitle
+      .find('.eventCalendar-monthTitle span')
+      .html(formatedDate)
+    $('.eventCalendar-prev').find('span').html(formatedPrevDate)
+    $('.eventCalendar-next').find('span').html(formatedNextDate)
 
     // print all month days
-    var daysOnTheMonth = 32 - new Date(year, month, 32).getDate();
+    var daysOnTheMonth = 32 - new Date(year, month, 32).getDate()
     var daysList = [],
-      i;
+      i
     if (eventsOpts.showDayAsWeeks) {
-      $eventsCalendarDaysList.addClass('eventCalendar-showAsWeek');
+      $eventsCalendarDaysList.addClass('eventCalendar-showAsWeek')
 
       // show day name in top of calendar
       if (eventsOpts.showDayNameInCalendar) {
-        $eventsCalendarDaysList.addClass('eventCalendar-showDayNames');
+        $eventsCalendarDaysList.addClass('eventCalendar-showDayNames')
 
-        i = 0;
+        i = 0
         // if week start on monday
         if (eventsOpts.startWeekOnMonday) {
-          i = 1;
+          i = 1
         }
 
         for (; i < 7; i++) {
           daysList.push(
-            '<li class="eventCalendar-day-header">' + moment()._locale._weekdaysShort[i] + '</li>',
-          );
+            '<li class="eventCalendar-day-header">' +
+              moment()._locale._weekdaysShort[i] +
+              '</li>'
+          )
 
           if (i === 6 && eventsOpts.startWeekOnMonday) {
             // print sunday header
             daysList.push(
               '<li class="eventCalendar-day-header">' +
                 moment()._locale._weekdaysShort[0] +
-                '</li>',
-            );
+                '</li>'
+            )
           }
         }
       }
 
-      dt = new Date(year, month, 01);
-      var weekDay = dt.getDay(); // day of the week where month starts
+      dt = new Date(year, month, 01)
+      var weekDay = dt.getDay() // day of the week where month starts
 
       if (eventsOpts.startWeekOnMonday) {
-        weekDay = dt.getDay() - 1;
+        weekDay = dt.getDay() - 1
       }
       if (weekDay < 0) {
-        weekDay = 6;
+        weekDay = 6
       } // if -1 is because day starts on sunday(0) and week starts on monday
 
       for (i = weekDay; i > 0; i--) {
-        daysList.push('<li class="eventCalendar-day eventCalendar-empty"></li>');
+        daysList.push('<li class="eventCalendar-day eventCalendar-empty"></li>')
       }
     }
     for (dayCount = 1; dayCount <= daysOnTheMonth; dayCount++) {
-      var dayClass = '';
+      var dayClass = ''
 
       if (day > 0 && dayCount === day && year === currentYear) {
-        dayClass = 'today';
+        dayClass = 'today'
       }
       daysList.push(
         '<li id="dayList_' +
@@ -330,36 +371,48 @@
           dayClass +
           '"><a href="#">' +
           dayCount +
-          '</a></li>',
-      );
+          '</a></li>'
+      )
     }
-    $eventsCalendarDaysList.append(daysList.join(''));
+    $eventsCalendarDaysList.append(daysList.join(''))
 
-    $eventsCalendarSlider.css('height', $eventsCalendarMonthWrap.height() + 'px');
+    $eventsCalendarSlider.css(
+      'height',
+      $eventsCalendarMonthWrap.height() + 'px'
+    )
   }
 
   function getEvents(flags, eventsOpts, limit, year, month, day, direction) {
-    limit = limit || 0;
-    year = year || '';
-    day = day || '';
+    limit = limit || 0
+    year = year || ''
+    day = day || ''
 
     // to avoid problem with january (month = 0)
 
     if (typeof month != 'undefined') {
-      month = month;
+      month = month
     } else {
-      month = '';
+      month = ''
     }
 
     //var month = month || '';
-    flags.wrap.find('.eventCalendar-loading').fadeIn();
+    flags.wrap.find('.eventCalendar-loading').fadeIn()
 
     if (eventsOpts.jsonData) {
       // user send a json in the plugin params
-      eventsOpts.cacheJson = true;
+      eventsOpts.cacheJson = true
 
-      flags.eventsJson = eventsOpts.jsonData;
-      getEventsData(flags, eventsOpts, flags.eventsJson, limit, year, month, day, direction);
+      flags.eventsJson = eventsOpts.jsonData
+      getEventsData(
+        flags,
+        eventsOpts,
+        flags.eventsJson,
+        limit,
+        year,
+        month,
+        day,
+        direction
+      )
     } else if (!eventsOpts.cacheJson || !direction) {
       // first load: load json and save it to future filters
       $.getJSON(
@@ -373,62 +426,96 @@
           '&day=' +
           day,
         function (data) {
-          flags.eventsJson = data; // save data to future filters
-          getEventsData(flags, eventsOpts, flags.eventsJson, limit, year, month, day, direction);
-        },
+          flags.eventsJson = data // save data to future filters
+          getEventsData(
+            flags,
+            eventsOpts,
+            flags.eventsJson,
+            limit,
+            year,
+            month,
+            day,
+            direction
+          )
+        }
       ).error(function () {
-        showError('error getting json: ', flags.wrap);
-      });
+        showError('error getting json: ', flags.wrap)
+      })
     } else {
       // filter previus saved json
-      getEventsData(flags, eventsOpts, flags.eventsJson, limit, year, month, day, direction);
+      getEventsData(
+        flags,
+        eventsOpts,
+        flags.eventsJson,
+        limit,
+        year,
+        month,
+        day,
+        direction
+      )
     }
 
     if (day > '') {
-      flags.wrap.find('.eventCalendar-current').removeClass('eventCalendar-current');
-      flags.wrap.find('#dayList_' + day).addClass('eventCalendar-current');
+      flags.wrap
+        .find('.eventCalendar-current')
+        .removeClass('eventCalendar-current')
+      flags.wrap.find('#dayList_' + day).addClass('eventCalendar-current')
     }
   }
 
-  function getEventsData(flags, eventsOpts, data, limit, year, month, day, direction) {
-    directionLeftMove = '-=' + flags.directionLeftMove;
-    eventContentHeight = 'auto';
+  function getEventsData(
+    flags,
+    eventsOpts,
+    data,
+    limit,
+    year,
+    month,
+    day,
+    direction
+  ) {
+    directionLeftMove = '-=' + flags.directionLeftMove
+    eventContentHeight = 'auto'
 
-    subtitle = flags.wrap.find('.eventCalendar-list-wrap .eventCalendar-subtitle');
+    subtitle = flags.wrap.find(
+      '.eventCalendar-list-wrap .eventCalendar-subtitle'
+    )
 
     if (!direction) {
       // first load
-      subtitle.html(eventsOpts.locales.txt_NextEvents);
-      eventContentHeight = 'auto';
-      directionLeftMove = '-=0';
+      subtitle.html(eventsOpts.locales.txt_NextEvents)
+      eventContentHeight = 'auto'
+      directionLeftMove = '-=0'
     } else {
       var jsMonth = parseInt(month) + 1,
-        formatedDate;
-      moment.locale(eventsOpts.locales.locale);
+        formatedDate
+      moment.locale(eventsOpts.locales.locale)
 
       if (day !== '') {
-        formatedDate = moment(year + ' ' + jsMonth + ' ' + day, 'YYYY MM DD').format('LL');
+        formatedDate = moment(
+          year + ' ' + jsMonth + ' ' + day,
+          'YYYY MM DD'
+        ).format('LL')
         subtitle.html(
           eventsOpts.locales.txt_SpecificEvents_prev +
             formatedDate +
             ' ' +
-            eventsOpts.locales.txt_SpecificEvents_after,
-        );
+            eventsOpts.locales.txt_SpecificEvents_after
+        )
       } else {
-        formatedDate = moment(year + ' ' + jsMonth, 'YYYY MM').format('MMMM');
+        formatedDate = moment(year + ' ' + jsMonth, 'YYYY MM').format('MMMM')
         subtitle.html(
           eventsOpts.locales.txt_SpecificEvents_prev +
             formatedDate +
             ' ' +
-            eventsOpts.locales.txt_SpecificEvents_after,
-        );
+            eventsOpts.locales.txt_SpecificEvents_after
+        )
       }
 
       if (direction === 'eventCalendar-prev') {
-        directionLeftMove = '+=' + flags.directionLeftMove;
+        directionLeftMove = '+=' + flags.directionLeftMove
       } else if (direction === 'day' || direction === 'month') {
-        directionLeftMove = '+=0';
-        eventContentHeight = 0;
+        directionLeftMove = '+=0'
+        eventContentHeight = 0
       }
     }
 
@@ -440,25 +527,28 @@
       },
       eventsOpts.moveSpeed,
       function () {
-        flags.wrap.find('.eventCalendar-list').css({ left: 0, height: 'auto' }).hide();
+        flags.wrap
+          .find('.eventCalendar-list')
+          .css({ left: 0, height: 'auto' })
+          .hide()
         //wrap.find('.eventCalendar-list li').fadeIn();
 
-        var events = [];
+        var events = []
 
-        data = $(data).sort(sortJson); // sort event by dates
+        data = $(data).sort(sortJson) // sort event by dates
         // each event
         if (data.length) {
           // show or hide event description
-          var eventDescClass = '';
+          var eventDescClass = ''
           if (!eventsOpts.showDescription) {
-            eventDescClass = 'eventCalendar-hidden';
+            eventDescClass = 'eventCalendar-hidden'
           }
-          var eventLinkTarget = '_self';
+          var eventLinkTarget = '_self'
           if (eventsOpts.openEventInNewWindow) {
-            eventLinkTarget = '_target';
+            eventLinkTarget = '_target'
           }
 
-          var i = 0;
+          var i = 0
           $.each(data, function (key, event) {
             var eventDateTime,
               eventDate,
@@ -469,39 +559,39 @@
               eventMonthToShow,
               eventHour,
               eventMinute,
-              eventSeconds;
+              eventSeconds
             if (eventsOpts.jsonDateFormat == 'human') {
-              eventDateTime = event.date.split(' ');
-              eventDate = eventDateTime[0].split('-');
-              eventTime = eventDateTime[1].split(':');
-              eventYear = eventDate[0];
-              eventMonth = parseInt(eventDate[1]) - 1;
-              eventDay = parseInt(eventDate[2]);
+              eventDateTime = event.date.split(' ')
+              eventDate = eventDateTime[0].split('-')
+              eventTime = eventDateTime[1].split(':')
+              eventYear = eventDate[0]
+              eventMonth = parseInt(eventDate[1]) - 1
+              eventDay = parseInt(eventDate[2])
               //eventMonthToShow = eventMonth;
-              eventMonthToShow = parseInt(eventMonth) + 1;
-              eventHour = eventTime[0];
-              eventMinute = eventTime[1];
-              eventSeconds = eventTime[2];
+              eventMonthToShow = parseInt(eventMonth) + 1
+              eventHour = eventTime[0]
+              eventMinute = eventTime[1]
+              eventSeconds = eventTime[2]
               eventDate = new Date(
                 eventYear,
                 eventMonth,
                 eventDay,
                 eventHour,
                 eventMinute,
-                eventSeconds,
-              );
+                eventSeconds
+              )
             } else {
-              eventDate = new Date(parseInt(event.date));
-              eventYear = eventDate.getFullYear();
-              eventMonth = eventDate.getMonth();
-              eventDay = eventDate.getDate();
-              eventMonthToShow = eventMonth + 1;
-              eventHour = eventDate.getHours();
-              eventMinute = eventDate.getMinutes();
+              eventDate = new Date(parseInt(event.date))
+              eventYear = eventDate.getFullYear()
+              eventMonth = eventDate.getMonth()
+              eventDay = eventDate.getDate()
+              eventMonthToShow = eventMonth + 1
+              eventHour = eventDate.getHours()
+              eventMinute = eventDate.getMinutes()
             }
 
             if (parseInt(eventMinute) <= 9) {
-              eventMinute = '0' + parseInt(eventMinute);
+              eventMinute = '0' + parseInt(eventMinute)
             }
 
             if (limit === 0 || limit > i) {
@@ -515,26 +605,30 @@
                 // if initial load then load only future events
                 if (month === false && eventDate < new Date()) {
                 } else {
-                  moment.locale(eventsOpts.locales.locale);
+                  moment.locale(eventsOpts.locales.locale)
 
-                  const eventMyMonth = +moment(eventDate).format(eventsOpts.dateFormatMonth);
-                  eventStringDate = moment(eventDate).format(eventsOpts.dateFormat).split('');
+                  const eventMyMonth = +moment(eventDate).format(
+                    eventsOpts.dateFormatMonth
+                  )
+                  eventStringDate = moment(eventDate)
+                    .format(eventsOpts.dateFormat)
+                    .split('')
 
                   if (eventMyMonth === 3 || eventMyMonth === 8) {
-                    eventStringDate.push('a');
+                    eventStringDate.push('a')
                   } else {
-                    eventStringDate[eventStringDate.length - 1] = 'я';
+                    eventStringDate[eventStringDate.length - 1] = 'я'
                   }
 
-                  const eventMyTime = eventTime.slice(0, 2).join(':');
+                  const eventMyTime = eventTime.slice(0, 2).join(':')
 
-                  eventStringDate = eventStringDate.join('').toLowerCase();
-                  promoEventDate.push(eventStringDate);
-                  promoEventTitle.push(event.title);
-                  promoEventTime.push(eventMyTime);
+                  eventStringDate = eventStringDate.join('').toLowerCase()
+                  promoEventDate.push(eventStringDate)
+                  promoEventTitle.push(event.title)
+                  promoEventTime.push(eventMyTime)
 
                   if (eventClosestTime && eventName) {
-                    eventClosestTime.textContent = `${promoEventDate[0]} ${promoEventTime[0]}`;
+                    eventClosestTime.textContent = `${promoEventDate[0]} ${promoEventTime[0]}`
                     eventName.innerHTML =
                       '<a href="' +
                       event.url +
@@ -542,12 +636,12 @@
                       eventLinkTarget +
                       '" download>' +
                       promoEventTitle[0] +
-                      '</a>';
-                    eventClosestTime = null;
-                    eventName = null;
+                      '</a>'
+                    eventClosestTime = null
+                    eventName = null
                   }
 
-                  var eventTitle;
+                  var eventTitle
 
                   if (event.url) {
                     eventTitle =
@@ -557,10 +651,12 @@
                       eventLinkTarget +
                       '" class="eventCalendar-eventTitle">' +
                       event.title +
-                      '</a>';
+                      '</a>'
                   } else {
                     eventTitle =
-                      '<span class="eventCalendar-eventTitle">' + event.title + '</span>';
+                      '<span class="eventCalendar-eventTitle">' +
+                      event.title +
+                      '</span>'
                   }
                   events.push(
                     '<li id="' +
@@ -581,9 +677,9 @@
                       eventDescClass +
                       '">' +
                       event.description +
-                      '</p></li>',
-                  );
-                  i++;
+                      '</p></li>'
+                  )
+                  i++
                 }
               }
             }
@@ -596,11 +692,11 @@
               flags.wrap
                 .find(
                   '.eventCalendar-currentMonth .eventCalendar-daysList #dayList_' +
-                    parseInt(eventDay),
+                    parseInt(eventDay)
                 )
-                .addClass('eventCalendar-dayWithEvents');
+                .addClass('eventCalendar-dayWithEvents')
             }
-          });
+          })
         }
 
         // there is no events on this period
@@ -608,68 +704,76 @@
           events.push(
             '<li class="eventCalendar-noEvents"><p>' +
               eventsOpts.locales.txt_noEvents +
-              '</p></li>',
-          );
+              '</p></li>'
+          )
           if (eventClosestTime) {
-            eventClosestTime.textContent = 'Нет запланированных событий';
-            eventName.textContent = '';
-            eventClosestTime = null;
-            eventName = null;
+            eventClosestTime.textContent = 'Нет запланированных событий'
+            eventName.textContent = ''
+            eventClosestTime = null
+            eventName = null
           }
         }
-        flags.wrap.find('.eventCalendar-loading').hide();
+        flags.wrap.find('.eventCalendar-loading').hide()
 
-        flags.wrap.find('.eventCalendar-list').html(events.join(''));
+        flags.wrap.find('.eventCalendar-list').html(events.join(''))
 
         flags.wrap.find('.eventCalendar-list').animate(
           {
             opacity: 1,
             height: 'toggle',
           },
-          eventsOpts.moveSpeed,
-        );
-      },
-    );
-    setCalendarWidth(flags);
+          eventsOpts.moveSpeed
+        )
+      }
+    )
+    setCalendarWidth(flags)
   }
 
   function changeMonth(flags, eventsOpts) {
     flags.wrap.find('.eventCalendar-arrow').click(function (e) {
-      e.preventDefault();
-      var lastMonthMove;
+      e.preventDefault()
+      var lastMonthMove
 
       if ($(this).hasClass('eventCalendar-next')) {
-        dateSlider('next', flags, eventsOpts);
-        lastMonthMove = '-=' + flags.directionLeftMove;
+        dateSlider('next', flags, eventsOpts)
+        lastMonthMove = '-=' + flags.directionLeftMove
       } else {
-        dateSlider('prev', flags, eventsOpts);
-        lastMonthMove = '+=' + flags.directionLeftMove;
+        dateSlider('prev', flags, eventsOpts)
+        lastMonthMove = '+=' + flags.directionLeftMove
       }
 
-      flags.wrap.find('.eventCalendar-monthWrap.eventCalendar-oldMonth').animate(
-        {
-          opacity: eventsOpts.moveOpacity,
-          left: lastMonthMove,
-        },
-        eventsOpts.moveSpeed,
-        function () {
-          flags.wrap.find('.eventCalendar-monthWrap.eventCalendar-oldMonth').remove();
-        },
-      );
-    });
+      flags.wrap
+        .find('.eventCalendar-monthWrap.eventCalendar-oldMonth')
+        .animate(
+          {
+            opacity: eventsOpts.moveOpacity,
+            left: lastMonthMove,
+          },
+          eventsOpts.moveSpeed,
+          function () {
+            flags.wrap
+              .find('.eventCalendar-monthWrap.eventCalendar-oldMonth')
+              .remove()
+          }
+        )
+    })
   }
 
   function showError(msg, wrap) {
     wrap
       .find('.eventCalendar-list-wrap')
-      .html("<span class='eventCalendar-loading eventCalendar-error'>" + msg + '</span>');
+      .html(
+        "<span class='eventCalendar-loading eventCalendar-error'>" +
+          msg +
+          '</span>'
+      )
   }
 
   function setCalendarWidth(flags) {
     // resize calendar width on window resize
-    flags.directionLeftMove = flags.wrap.width();
-    flags.wrap.find('.eventCalendar-monthWrap').width(flags.wrap.width() + 'px');
+    flags.directionLeftMove = flags.wrap.width()
+    flags.wrap.find('.eventCalendar-monthWrap').width(flags.wrap.width() + 'px')
 
-    flags.wrap.find('.eventCalendar-list-wrap').width(flags.wrap.width() + 'px');
+    flags.wrap.find('.eventCalendar-list-wrap').width(flags.wrap.width() + 'px')
   }
-})(jQuery);
+})(jQuery)

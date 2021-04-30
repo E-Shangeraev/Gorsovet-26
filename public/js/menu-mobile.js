@@ -18,7 +18,7 @@ burger.addEventListener('click', () => {
 headerNav.addEventListener('click', (e) => {
   if (!e.target.closest('.header__nav ul') || e.target.closest(close)) {
     headerNav.style.backdropFilter = '';
-    document.body.style.overflowY = '';
+    document.body.style.overflowY = 'auto';
     setTimeout(() => {
       burger.classList.remove('burger--animate');
       close.classList.remove('close--animate');
