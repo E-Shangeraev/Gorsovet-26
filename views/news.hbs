@@ -12,7 +12,7 @@
         placeholder="Поиск по новостям"
         autocomplete="off"
       />
-      <input type="hidden" class="form__id">
+      <input type="hidden" class="form__id" />
     </form>
   </div>
   <div class="news__container">
@@ -23,26 +23,25 @@
             {{#if img}}
               <img class="preview__image" src="{{img}}" alt="{{title}}" />
             {{else}}
-              <img class="preview__image preview__image--no-image" src="/img/no-image.jpg" alt="{{title}}" />
+              <img
+                class="preview__image preview__image--no-image"
+                src="/img/no-image.jpg"
+                alt="{{title}}"
+              />
             {{/if}}
             <figcaption class="preview__caption">
               <h4 class="preview__title">
                 {{title}}
               </h4>
-              <div class="preview__text">
-                {{trimString text 150}}
-              </div>
-              <div class="preview__footer">
-                <time pubdate>
-                  {{moment date format="DD.MM.YYYY"}}
-                </time>
-                <p class="preview__views">
+              <div class="preview__text ql-editor">{{preview text}}</div>
+              {{!-- <div class="preview__text ql-editor">{{text}}</div> --}}
+              <footer class="preview__footer">
+                <time>{{moment date format="DD.MM.YYYY"}}</time>
+                <div class="preview__views">
                   <img src="/svg/views-gray.svg" />
-                  <span class="preview__count">
-                    {{views}}
-                  </span>
-                </p>
-              </div>
+                  <span class="preview__count">{{views}}</span>
+                </div>
+              </footer>
             </figcaption>
           </figure>
         </a>
@@ -111,21 +110,27 @@
       {{#each report}}
         {{#if img}}
           <li>
-            <a href="{{img}}" class='open-report-popup'>
+            <a href="{{img}}" class="open-report-popup">
               <img src="{{img}}" />
             </a>
           </li>
         {{/if}}
         {{#if video}}
           <li>
-            <a href="{{url}}" class='open-video-popup' rel="nofollow">
-              <iframe src="{{video}}?rel=0" class="report__video" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <a href="{{url}}" class="open-video-popup" rel="nofollow">
+              <iframe
+                src="{{video}}?rel=0"
+                class="report__video"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              ></iframe>
             </a>
           </li>
         {{/if}}
       {{/each}}
     {{/if}}
   </ul>
-
-  {{!-- <div id="report-popup" class="mfp-hide"></div> --}}
+  {{! <div id="report-popup" class="mfp-hide"></div> }}
 </section>

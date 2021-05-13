@@ -47,7 +47,7 @@
               {{/if}}
               <figcaption class="preview__caption">
                 <h4 class="preview__title">{{title}}</h4>
-                <div class="preview__text">{{trimString text 200}}</div>
+                <div class="preview__text ql-editor">{{preview text}}</div>
                 <div class="preview__footer">
                   <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
                   <p class="preview__views">
@@ -61,7 +61,7 @@
         {{/each}}
       {{/if}}
 
-      {{#if activities.length}}
+      {{!-- {{#if activities.length}}
         {{#each activities}}
           <a href="/corpus/{{_id}}">
             <figure class="preview">
@@ -72,7 +72,7 @@
               {{/if}}
               <figcaption class="preview__caption">
                 <h4 class="preview__title">{{title}}</h4>
-                <div class="preview__text">{{trimString text 200}}</div>
+                <div class="preview__text">{{preview text 200}}</div>
                 <div class="preview__footer">
                   <time pubdate>{{moment date format="DD.MM.YYYY"}}</time>
                   <p class="preview__views">
@@ -84,6 +84,6 @@
             </figure>
           </a>
         {{/each}}
-      {{/if}}   
+      {{/if}}    --}}
     </div>
   </section>

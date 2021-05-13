@@ -1,12 +1,12 @@
-const ActivityWork = require('../models/ActivityWork');
-const ActivityHearing = require('../models/ActivityHearing');
-const ActivitySession = require('../models/ActivitySession');
+const ActivityWork = require('../models/ActivityWork')
+const ActivityHearing = require('../models/ActivityHearing')
+const ActivitySession = require('../models/ActivitySession')
 
 const getDocuments = async (req, res, model, title) => {
   const documents = await model
     .find({ year: req.query.y, month: req.query.m })
-    .lean();
-  const availableYears = await model.find().distinct('year').lean();
+    .lean()
+  const availableYears = await model.find().distinct('year').lean()
 
   res.render('documents-folder', {
     title,
@@ -15,19 +15,18 @@ const getDocuments = async (req, res, model, title) => {
     availableYears,
     m: req.query.m,
     y: req.query.y,
-  });
-};
+    isCalendar: true,
+  })
+}
 
 exports.documents = async (req, res) => {
-  const work = await ActivityWork.findOne()
-    .sort({ year: -1, month: -1 })
-    .lean();
+  const work = await ActivityWork.findOne().sort({ year: -1, month: -1 }).lean()
   const hearing = await ActivityHearing.findOne()
     .sort({ year: -1, month: -1 })
-    .lean();
+    .lean()
   const sessions = await ActivitySession.findOne()
     .sort({ year: -1, month: -1 })
-    .lean();
+    .lean()
 
   res.render('activity', {
     title: 'Деятельность совета',
@@ -35,14 +34,14 @@ exports.documents = async (req, res) => {
     work,
     hearing,
     sessions,
-  });
-};
+  })
+}
 
 exports.work = async (req, res) =>
-  getDocuments(req, res, ActivityWork, 'Работа комиссий');
+  getDocuments(req, res, ActivityWork, 'Работа комиссий')
 
 exports.hearing = async (req, res) =>
-  getDocuments(req, res, ActivityHearing, 'Публичные слушания');
+  getDocuments(req, res, ActivityHearing, 'Публичные слушания')
 
 exports.sessions = async (req, res) =>
-  getDocuments(req, res, ActivitySession, 'Сессии');
+  getDocuments(req, res, ActivitySession, 'Сессии')

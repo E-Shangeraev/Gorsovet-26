@@ -1,0 +1,133 @@
+.personnel {
+  margin-bottom: 80px;
+}
+.personnel__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+}
+.personnel__block {
+  display: flex;
+  flex-direction: column;
+  padding: 60px;
+  height: fit-content;
+  transition: ease-in 0.3s;
+  border-radius: 6px;
+  background-color: $gray;
+
+  &.collapsible--opened,
+  &:hover {
+    box-shadow: $shadow;
+  }
+  &.collapsible--opened {
+    height: auto;
+  }
+}
+.personnel__name {
+  margin-bottom: 25px;
+  font-family: $reg;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 140%;
+}
+.personnel__content {
+  padding: 0;
+
+  h5 {
+    margin-top: 30px;
+    margin-bottom: 0px;
+    font-size: 18px;
+  }
+
+  span,
+  li {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 1600px) {
+  .personnel__name {
+    font-size: 18px;
+  }
+  .personnel__content {
+    h5 {
+      font-size: 16px;
+    }
+    span,
+    li {
+      font-size: 16px;
+    }
+  }
+}
+@media (max-width: 1400px) {
+  .personnel__block {
+    padding: 30px;
+  }
+}
+@media (max-width: 1200px) {
+  .personnel__container {
+    gap: 25px;
+  }
+  .personnel__name {
+    font-size: 16px;
+  }
+  .personnel__content {
+    h5 {
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    span,
+    li {
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 900px) {
+  .personnel__name {
+    font-size: 14px;
+  }
+  .personnel__content {
+    h5,
+    span,
+    li {
+      font-size: 14px;
+    }
+  }
+}
+@media (max-width: 768px) {
+  .personnel__container {
+    grid-template-columns: 1fr;
+    row-gap: 20px;
+  }
+}
+@media (max-width: 440px) {
+  .personnel {
+    margin-bottom: 50px;
+  }
+  .personnel__block {
+    padding: 20px;
+  }
+  .personnel__name {
+    margin-bottom: 15px;
+    font-size: 12px;
+  }
+  .personnel__content {
+    h5 {
+      line-height: 150%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      font-size: 12px;
+    }
+    span,
+    li {
+      line-height: 150%;
+      font-size: 12px;
+    }
+    li:not(:last-of-type) {
+      margin-bottom: 10px;
+    }
+    span {
+      display: inline-block;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 .questions__container {
   display: flex;
   gap: 30px;
-  padding: 95px 50px;
+  padding: 65px 50px;
   background-color: $red;
   border-radius: 6px;
 }
@@ -39,7 +39,7 @@
 
 @media (max-width: 1600px) {
   .questions__container {
-    padding: 80px 50px;
+    padding: 50px 50px;
   }
   .questions__desc {
     font-size: 20px;
@@ -54,7 +54,7 @@
 }
 @media (max-width: 1440px) {
   .questions__container {
-    padding: 70px 40px;
+    padding: 40px 40px;
   }
   .questions__desc {
     font-size: 18px;
@@ -90,7 +90,7 @@
 }
 @media (max-width: 900px) {
   .questions__container {
-    padding: 60px 50px;
+    padding: 50px 50px;
   }
   .questions__desc {
     font-size: 16px;

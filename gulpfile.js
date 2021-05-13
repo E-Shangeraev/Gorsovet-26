@@ -1,29 +1,29 @@
-const gulp = require('gulp');
-const babel = require('gulp-babel');
-const sass = require('gulp-sass');
-const browserSync = require('browser-sync');
-const uglify = require('gulp-uglify');
-const csso = require('gulp-csso');
-const concat = require('gulp-concat');
-const imagemin = require('gulp-imagemin');
-const cache = require('gulp-cache');
-const rename = require('gulp-rename');
-const autoprefixer = require('gulp-autoprefixer');
-const nodemon = require('gulp-nodemon');
+const gulp = require('gulp')
+const babel = require('gulp-babel')
+const sass = require('gulp-sass')
+const browserSync = require('browser-sync')
+const uglify = require('gulp-uglify')
+const csso = require('gulp-csso')
+const concat = require('gulp-concat')
+const imagemin = require('gulp-imagemin')
+const cache = require('gulp-cache')
+const rename = require('gulp-rename')
+const autoprefixer = require('gulp-autoprefixer')
+const nodemon = require('gulp-nodemon')
 
 gulp.task('scss', function () {
   return gulp
-    .src('public/scss/**/style.scss')
+    .src(['public/scss/**/style.scss', 'public/scss/**/style-landing.scss'])
     .pipe(sass({ outputStyle: 'compressed' }))
     .pipe(rename({ suffix: '.min' }))
     .pipe(
       autoprefixer({
         overrideBrowserslist: ['last 8 versions'],
-      }),
+      })
     )
     .pipe(gulp.dest('public/css'))
-    .pipe(browserSync.reload({ stream: true }));
-});
+    .pipe(browserSync.reload({ stream: true }))
+})
 
 gulp.task('css', function () {
   return gulp
@@ -37,22 +37,22 @@ gulp.task('css', function () {
     ])
     .pipe(concat('libs.css'))
     .pipe(csso())
-    .pipe(gulp.dest('public/css/libs'));
-});
+    .pipe(gulp.dest('public/css/libs'))
+})
 
 gulp.task('images', function () {
   return gulp
     .src('public/img/*.+(png|jpg|jpeg|gif|svg)')
     .pipe(cache(imagemin()))
-    .pipe(gulp.dest('public/img/'));
-});
+    .pipe(gulp.dest('public/img/'))
+})
 
 gulp.task('uploads', function () {
   return gulp
     .src('public/uploads/*.+(png|jpg|jpeg|gif|svg)')
     .pipe(cache(imagemin()))
-    .pipe(gulp.dest('public/uploads/'));
-});
+    .pipe(gulp.dest('public/uploads/'))
+})
 
 gulp.task('libs', function () {
   return gulp
@@ -69,23 +69,23 @@ gulp.task('libs', function () {
     ])
     .pipe(concat('libs.js'))
     .pipe(uglify())
-    .pipe(gulp.dest('public/js/libs'));
-});
+    .pipe(gulp.dest('public/js/libs'))
+})
 
 gulp.task('watch', function () {
-  gulp.watch('public/scss/**/*.scss', gulp.parallel('scss'));
-  gulp.watch('views/**/*.hbs', browserSync.reload({ stream: true }));
-  gulp.watch('public/js/*.js', browserSync.reload({ stream: true }));
-});
+  gulp.watch('public/scss/**/*.scss', gulp.parallel('scss'))
+  gulp.watch('views/**/*.hbs', browserSync.reload({ stream: true }))
+  gulp.watch('public/js/*.js', browserSync.reload({ stream: true }))
+})
 
 gulp.task('browser-sync', function (cb) {
   browserSync.init({
     proxy: 'http://localhost:8089',
     open: true,
     port: 8090,
-  });
+  })
 
-  let started = false;
+  let started = false
 
   return nodemon({
     script: 'index.js',
@@ -98,14 +98,14 @@ gulp.task('browser-sync', function (cb) {
   })
     .on('start', function () {
       if (!started) {
-        started = true;
-        cb();
+        started = true
+        cb()
       }
     })
     .on('restart', function () {
-      browserSync.reload({ stream: true });
-      console.log('Nodemon restarted!');
-    });
-});
+      browserSync.reload({ stream: true })
+      console.log('Nodemon restarted!')
+    })
+})
 
-gulp.task('default', gulp.parallel('scss', 'browser-sync', 'watch'));
+gulp.task('default', gulp.parallel('scss', 'browser-sync', 'watch'))

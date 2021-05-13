@@ -1,6 +1,6 @@
 .footer {
   margin-top: auto;
-  padding: 105px 200px;
+  padding: 85px 200px;
   background: #242020;
 
   * {
@@ -74,6 +74,7 @@
 .footer__copyright {
   color: rgba(255, 255, 255, 0.5);
   line-height: 150%;
+  width: 75%;
 
   span {
     white-space: nowrap;
@@ -89,7 +90,7 @@
 
 @media (max-width: 1600px) {
   .footer {
-    padding: 90px 200px;
+    padding: 60px 200px;
   }
   .footer__container {
     column-gap: 5px;
@@ -113,7 +114,7 @@
 }
 @media (max-width: 1440px) {
   .footer {
-    padding: 75px 100px;
+    padding: 55px 100px;
   }
   .footer__title,
   .footer__contacts li *,
@@ -215,7 +216,7 @@
 }
 @media (max-width: 440px) {
   .footer {
-    padding: 50px 20px;
+    padding: 30px 20px;
   }
   .footer__emblem {
     p {

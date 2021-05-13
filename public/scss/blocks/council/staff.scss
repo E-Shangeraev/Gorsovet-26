@@ -27,12 +27,39 @@
 .staff__desc {
   margin-bottom: 20px;
 }
+.staff__membership {
+  li {
+    padding: 0;
+    &::before {
+      content: '';
+    }
+  }
+  a {
+    display: block;
+  }
+}
+.staff__member {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  min-width: 560px;
+
+  li {
+    text-align: left;
+    line-height: 130%;
+  }
+}
 
 @media (max-width: 1440px) {
   .staff p,
   .staff h5,
   .staff li {
     font-size: 14px;
+  }
+}
+@media (max-width: 710px) {
+  .staff__table {
+    overflow-x: auto;
+    box-shadow: inset -7px 0 12px -11px #686868;
   }
 }
 @media (max-width: 440px) {
