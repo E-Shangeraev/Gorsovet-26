@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema, model, Types } = require('mongoose')
 
 const DocumentSession = new Schema(
   {
@@ -13,9 +13,12 @@ const DocumentSession = new Schema(
       ref: 'Admin',
     },
   },
-  { collection: 'documents_sessions' },
-);
+  { collection: 'documents_sessions' }
+)
 
-DocumentSession.index({ name: 'text' }, { default_language: 'russian' });
+DocumentSession.index(
+  { name: 'text', category: 'text' },
+  { default_language: 'russian' }
+)
 
-module.exports = model('DocumentSession', DocumentSession);
+module.exports = model('DocumentSession', DocumentSession)

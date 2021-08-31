@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema, model, Types } = require('mongoose')
 
 const DocumentBase = new Schema(
   {
@@ -13,9 +13,12 @@ const DocumentBase = new Schema(
       ref: 'Admin',
     },
   },
-  { collection: 'documents_base' },
-);
+  { collection: 'documents_base' }
+)
 
-DocumentBase.index({ name: 'text' }, { default_language: 'russian' });
+DocumentBase.index(
+  { name: 'text', category: 'text' },
+  { default_language: 'russian' }
+)
 
-module.exports = model('DocumentBase', DocumentBase);
+module.exports = model('DocumentBase', DocumentBase)

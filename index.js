@@ -91,6 +91,12 @@ const start = async () => {
       useCreateIndex: true,
     })
 
+    const db = mongoose.connection
+    // console.log(db.collections.deputies);
+    // db.collections.documents_base.dropIndexes()
+    // db.collections.documents_reports.dropIndexes()
+    // db.collections.documents_sessions.dropIndexes()
+
     app.listen(PORT, () => {
       console.log(`Server has been started on port ${PORT}...`)
     })

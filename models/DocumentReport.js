@@ -1,4 +1,4 @@
-const { Schema, model, Types } = require('mongoose');
+const { Schema, model, Types } = require('mongoose')
 
 const DocumentReport = new Schema(
   {
@@ -13,9 +13,12 @@ const DocumentReport = new Schema(
       ref: 'Admin',
     },
   },
-  { collection: 'documents_reports' },
-);
+  { collection: 'documents_reports' }
+)
 
-DocumentReport.index({ name: 'text' }, { default_language: 'russian' });
+DocumentReport.index(
+  { name: 'text', category: 'text' },
+  { default_language: 'russian' }
+)
 
-module.exports = model('DocumentReport', DocumentReport);
+module.exports = model('DocumentReport', DocumentReport)

@@ -18,7 +18,7 @@
         options.locales = $.extend(
           {},
           $.fn.eventCalendar.defaults.locales,
-          data
+          data,
         )
         moment.locale(data.locale, options.locales.moment)
         moment.locale(data.locale)
@@ -32,7 +32,7 @@
         options.locales = $.extend(
           {},
           $.fn.eventCalendar.defaults.locales,
-          options.locales
+          options.locales,
         )
         moment.locale(options.locales.locale, options.locales.moment)
         moment.locale(options.locales.locale)
@@ -96,7 +96,7 @@
         .append(
           "<div class='eventCalendar-list-wrap'><h3 class='calendar-title'>Календарь событий</h3><p class='eventCalendar-subtitle'></p><span class='eventCalendar-loading'>" +
             eventsOpts.locales.txt_loading +
-            "</span><div class='eventCalendar-list-content'><ul class='eventCalendar-list'></ul></div></div>"
+            "</span><div class='eventCalendar-list-content'><ul class='eventCalendar-list'></ul></div></div>",
         )
 
       if (eventsOpts.eventsScrollable) {
@@ -118,7 +118,7 @@
         false,
         false,
         false,
-        false
+        false,
       )
 
       changeMonth(flags, eventsOpts)
@@ -143,7 +143,7 @@
           year,
           month,
           false,
-          'month'
+          'month',
         )
       })
     })
@@ -168,7 +168,7 @@
                 eventTarget +
                 '" class="bt">' +
                 eventsOpts.locales.txt_GoToEventUrl +
-                '</a>'
+                '</a>',
             )
           }
 
@@ -194,17 +194,17 @@
   function dateSlider(show, flags, eventsOpts) {
     var $eventsCalendarSlider = $("<div class='eventCalendar-slider'></div>"),
       $eventsCalendarMonthWrap = $(
-        "<div class='eventCalendar-monthWrap'></div>"
+        "<div class='eventCalendar-monthWrap'></div>",
       ),
       $eventsCalendarTitle = $(
-        "<div class='eventCalendar-currentTitle'><a href='#' class='eventCalendar-monthTitle'><span></span></a></div>"
+        "<div class='eventCalendar-currentTitle'><a href='#' class='eventCalendar-monthTitle'><span></span></a></div>",
       ),
       $eventsCalendarArrows = $(
         "<a href='#' class='eventCalendar-arrow eventCalendar-prev'><span>" +
           eventsOpts.locales.txt_prev +
           "</span></a><a href='#' class='eventCalendar-arrow eventCalendar-next'><span>" +
           eventsOpts.locales.txt_next +
-          '</span></a>'
+          '</span></a>',
       )
     ;($eventsCalendarDaysList = $("<ul class='eventCalendar-daysList'></ul>")),
       (date = new Date())
@@ -235,7 +235,7 @@
         1,
         0,
         0,
-        0
+        0,
       ) // current visible month
       day = 0 // not show current day in days list
 
@@ -279,7 +279,7 @@
         year,
         month,
         false,
-        show
+        show,
       )
     }
 
@@ -328,7 +328,7 @@
           daysList.push(
             '<li class="eventCalendar-day-header">' +
               moment()._locale._weekdaysShort[i] +
-              '</li>'
+              '</li>',
           )
 
           if (i === 6 && eventsOpts.startWeekOnMonday) {
@@ -336,7 +336,7 @@
             daysList.push(
               '<li class="eventCalendar-day-header">' +
                 moment()._locale._weekdaysShort[0] +
-                '</li>'
+                '</li>',
             )
           }
         }
@@ -371,14 +371,14 @@
           dayClass +
           '"><a href="#">' +
           dayCount +
-          '</a></li>'
+          '</a></li>',
       )
     }
     $eventsCalendarDaysList.append(daysList.join(''))
 
     $eventsCalendarSlider.css(
       'height',
-      $eventsCalendarMonthWrap.height() + 'px'
+      $eventsCalendarMonthWrap.height() + 'px',
     )
   }
 
@@ -411,7 +411,7 @@
         year,
         month,
         day,
-        direction
+        direction,
       )
     } else if (!eventsOpts.cacheJson || !direction) {
       // first load: load json and save it to future filters
@@ -435,9 +435,9 @@
             year,
             month,
             day,
-            direction
+            direction,
           )
-        }
+        },
       ).error(function () {
         showError('error getting json: ', flags.wrap)
       })
@@ -451,7 +451,7 @@
         year,
         month,
         day,
-        direction
+        direction,
       )
     }
 
@@ -471,13 +471,13 @@
     year,
     month,
     day,
-    direction
+    direction,
   ) {
     directionLeftMove = '-=' + flags.directionLeftMove
     eventContentHeight = 'auto'
 
     subtitle = flags.wrap.find(
-      '.eventCalendar-list-wrap .eventCalendar-subtitle'
+      '.eventCalendar-list-wrap .eventCalendar-subtitle',
     )
 
     if (!direction) {
@@ -493,13 +493,13 @@
       if (day !== '') {
         formatedDate = moment(
           year + ' ' + jsMonth + ' ' + day,
-          'YYYY MM DD'
+          'YYYY MM DD',
         ).format('LL')
         subtitle.html(
           eventsOpts.locales.txt_SpecificEvents_prev +
             formatedDate +
             ' ' +
-            eventsOpts.locales.txt_SpecificEvents_after
+            eventsOpts.locales.txt_SpecificEvents_after,
         )
       } else {
         formatedDate = moment(year + ' ' + jsMonth, 'YYYY MM').format('MMMM')
@@ -507,7 +507,7 @@
           eventsOpts.locales.txt_SpecificEvents_prev +
             formatedDate +
             ' ' +
-            eventsOpts.locales.txt_SpecificEvents_after
+            eventsOpts.locales.txt_SpecificEvents_after,
         )
       }
 
@@ -578,7 +578,7 @@
                 eventDay,
                 eventHour,
                 eventMinute,
-                eventSeconds
+                eventSeconds,
               )
             } else {
               eventDate = new Date(parseInt(event.date))
@@ -607,9 +607,7 @@
                 } else {
                   moment.locale(eventsOpts.locales.locale)
 
-                  const eventMyMonth = +moment(eventDate).format(
-                    eventsOpts.dateFormatMonth
-                  )
+                  const eventMyMonth = +moment(eventDate).format('M')
                   eventStringDate = moment(eventDate)
                     .format(eventsOpts.dateFormat)
                     .split('')
@@ -677,7 +675,7 @@
                       eventDescClass +
                       '">' +
                       event.description +
-                      '</p></li>'
+                      '</p></li>',
                   )
                   i++
                 }
@@ -692,7 +690,7 @@
               flags.wrap
                 .find(
                   '.eventCalendar-currentMonth .eventCalendar-daysList #dayList_' +
-                    parseInt(eventDay)
+                    parseInt(eventDay),
                 )
                 .addClass('eventCalendar-dayWithEvents')
             }
@@ -704,7 +702,7 @@
           events.push(
             '<li class="eventCalendar-noEvents"><p>' +
               eventsOpts.locales.txt_noEvents +
-              '</p></li>'
+              '</p></li>',
           )
           if (eventClosestTime) {
             eventClosestTime.textContent = 'Нет запланированных событий'
@@ -722,9 +720,9 @@
             opacity: 1,
             height: 'toggle',
           },
-          eventsOpts.moveSpeed
+          eventsOpts.moveSpeed,
         )
-      }
+      },
     )
     setCalendarWidth(flags)
   }
@@ -754,7 +752,7 @@
             flags.wrap
               .find('.eventCalendar-monthWrap.eventCalendar-oldMonth')
               .remove()
-          }
+          },
         )
     })
   }
@@ -765,7 +763,7 @@
       .html(
         "<span class='eventCalendar-loading eventCalendar-error'>" +
           msg +
-          '</span>'
+          '</span>',
       )
   }
 
