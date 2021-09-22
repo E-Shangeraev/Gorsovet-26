@@ -9,7 +9,7 @@ const nodemailer = require('nodemailer')
 const multer = require('multer')
 const helpers = require('handlebars-helpers')(['date'])
 const { default: AdminBro } = require('admin-bro')
-const AdminBroExpress = require('admin-bro-expressjs')
+const AdminBroExpress = require('@admin-bro/express')
 const options = require('./admin/admin.options')
 const {
   homeRoutes,
@@ -58,6 +58,10 @@ handlebars.registerHelper('isActive', function (getParam, num, className) {
   } else {
     return ''
   }
+})
+handlebars.registerHelper('replace', function (string, regexp, replacement) {
+  const reg = new RegExp(regexp, 'g')
+  return string.replace(reg, replacement)
 })
 
 const admin = new AdminBro(options)

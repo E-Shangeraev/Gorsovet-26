@@ -1,6 +1,6 @@
 const { default: AdminBro } = require('admin-bro')
 const uploadFeature = require('@admin-bro/upload')
-const AdminBroMongoose = require('admin-bro-mongoose')
+const AdminBroMongoose = require('@admin-bro/mongoose')
 const Admin = require('./admin.resourceOptions')
 // const Activity = require('../models/Activity');
 const Calendar = require('../models/Calendar')
@@ -14,6 +14,9 @@ const ActivityWork = require('../models/ActivityWork')
 const ActivityHearing = require('../models/ActivityHearing')
 const ActivitySession = require('../models/ActivitySession')
 const Subscriber = require('../models/Subscriber')
+const CardsBlock = require('../models/CardsBlock')
+const Cards = require('../models/Card')
+require('dotenv').config()
 
 const {
   before: passwordBeforeHook,
@@ -47,6 +50,29 @@ const { after: deleteAfterImageHook } = require('./actions/delete-image.hook')
 const {
   handler: bulkDeleteImageHook,
 } = require('./actions/bulkDelete-image.hook')
+
+const region = process.env.AWS_REGION
+const bucket = process.env.AWS_BUCKET
+const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+const accessKeyId = process.env.AWS_ACCESS_KEY_ID
+
+const features = [
+  uploadFeature({
+    provider: {
+      aws: { region, bucket, secretAccessKey, accessKeyId, expires: 0 },
+    },
+    properties: {
+      filename: 'uploadedFile.filename',
+      file: 'uploadedFile',
+      key: 'uploadedFile.path',
+      bucket: 'uploadedFile.folder',
+      size: 'uploadedFile.size',
+      mimeType: 'uploadedFile.mime',
+      filesToDelete: 'uploadedFile.filesToDelete',
+    },
+    multiple: true,
+  }),
+]
 
 AdminBro.registerAdapter(AdminBroMongoose)
 
@@ -90,7 +116,7 @@ const getDocumentOptions = (model, page, category, parent) => ({
             req,
             context,
             page,
-            category
+            category,
           )
         },
       },
@@ -106,7 +132,7 @@ const getDocumentOptions = (model, page, category, parent) => ({
             req,
             context,
             page,
-            category
+            category,
           )
         },
       },
@@ -118,7 +144,7 @@ const getDocumentOptions = (model, page, category, parent) => ({
             req,
             context,
             page,
-            category
+            category,
           )
         },
       },
@@ -159,6 +185,8 @@ const options = {
         ActivitySession: 'Сессии',
         Comission: 'Постоянные комиссии',
         Subscriber: 'Подписчики',
+        CardsBlock: 'Блок с карточками',
+        Cards: 'Карточки',
       },
       buttons: {
         filter: 'Фильтр',
@@ -288,6 +316,24 @@ const options = {
             status: 'Статус',
           },
         },
+        CardsBlock: {
+          properties: {
+            index: 'Порядковый номер',
+            title: 'Название блока',
+          },
+        },
+        Cards: {
+          properties: {
+            index: 'Порядковый номер',
+            blockTitle: 'Название блока',
+            title: 'Заголовок',
+            uploadedFile: 'Документ(ы)',
+            contacts: 'Контакты',
+            'contacts.to': 'Имя контакта',
+            'contacts.phone': 'Номер телефона',
+            year: 'Год',
+          },
+        },
       },
     },
   },
@@ -387,13 +433,13 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return uploadAfterEventHook(
                 modifiedResponse,
                 req,
                 context,
-                'calendar'
+                'calendar',
               )
             },
           },
@@ -406,13 +452,13 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return uploadAfterEventHook(
                 modifiedResponse,
                 req,
                 context,
-                'calendar'
+                'calendar',
               )
             },
           },
@@ -421,7 +467,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return deleteAfterEventHook(modifiedResponse, req, context)
             },
@@ -475,7 +521,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               uploadAfterFractionHook(modifiedResponse, req, context)
               return uploadAfterHook(modifiedResponse, req, context)
@@ -491,7 +537,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               uploadAfterFractionHook(modifiedResponse, req, context)
               return uploadAfterHook(modifiedResponse, req, context)
@@ -502,7 +548,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return deleteAfterImageHook(modifiedResponse, req, context, [
                 'img',
@@ -545,7 +591,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return uploadAfterHook(modifiedResponse, req, context)
             },
@@ -559,7 +605,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return uploadAfterHook(modifiedResponse, req, context)
             },
@@ -569,7 +615,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return deleteAfterImageHook(modifiedResponse, req, context, [
                 'img',
@@ -609,7 +655,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return uploadAfterHook(modifiedResponse, req, context)
             },
@@ -623,7 +669,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return uploadAfterHook(modifiedResponse, req, context)
             },
@@ -633,7 +679,7 @@ const options = {
               const modifiedResponse = await passwordAfterHook(
                 res,
                 req,
-                context
+                context,
               )
               return deleteAfterImageHook(modifiedResponse, req, context, [
                 'img',
@@ -660,14 +706,52 @@ const options = {
       ActivityHearing,
       'activity',
       'hearings',
-      'Деятельность совета'
+      'Деятельность совета',
     ),
     getDocumentOptions(
       ActivitySession,
       'activity',
       'sessions',
-      'Деятельность совета'
+      'Деятельность совета',
     ),
+    {
+      resource: CardsBlock,
+      options: {
+        listProperties: ['index', 'title'],
+        editProperties: ['index', 'title'],
+        parent: {
+          name: 'КРС',
+        },
+      },
+    },
+    {
+      resource: Cards,
+      options: {
+        listProperties: [
+          'index',
+          'blockTitle',
+          'title',
+          'uploadedFile',
+          'contacts',
+          'year',
+        ],
+        editProperties: [
+          'index',
+          'blockTitle',
+          'title',
+          'uploadedFile',
+          'contacts',
+          'year',
+        ],
+        properties: {
+          mimeType: { isVisible: false },
+        },
+        parent: {
+          name: 'КРС',
+        },
+      },
+      features,
+    },
   ],
   branding: {
     companyName: 'Совет депутатов ЗАТО г. Железногорск',

@@ -1,72 +1,72 @@
-const AdminBro = require('admin-bro');
-const AdminBroMongoose = require('admin-bro-mongoose');
-const path = require('path');
-const fs = require('fs');
-const mv = require('mv');
-const archiver = require('archiver');
+const AdminBro = require('admin-bro')
+const AdminBroMongoose = require('@admin-bro/mongoose')
+const path = require('path')
+const fs = require('fs')
+const mv = require('mv')
+const archiver = require('archiver')
 
 async function addToArchive(page, folderName) {
-  const zipName = `${folderName}.zip`;
-  const source = path.join(__dirname, '../../public/uploads', page, folderName);
+  const zipName = `${folderName}.zip`
+  const source = path.join(__dirname, '../../public/uploads', page, folderName)
   const out = path.join(
     __dirname,
     '../../public/uploads',
     page,
     'archives',
     zipName,
-  );
-  const archive = archiver('zip', { zlib: { level: 9 } });
-  const stream = fs.createWriteStream(out);
+  )
+  const archive = archiver('zip', { zlib: { level: 9 } })
+  const stream = fs.createWriteStream(out)
 
   archive.on('warning', function (err) {
     if (err.code === 'ENOENT') {
-      console.log(err);
+      console.log(err)
     } else {
-      throw err;
+      throw err
     }
-  });
+  })
 
   archive.on('error', function (err) {
-    throw err;
-  });
+    throw err
+  })
 
   archive
     .directory(source, false)
-    .on('error', (err) => console.log(err))
-    .pipe(stream);
+    .on('error', err => console.log(err))
+    .pipe(stream)
 
-  stream.on('close', () => console.log('closed'));
-  archive.finalize();
-  console.log('zip file created');
+  stream.on('close', () => console.log('closed'))
+  archive.finalize()
+  console.log('zip file created')
 }
 
 /** @type {AdminBro.Before} */
 const before = async (req, context) => {
   if (req.method === 'post') {
-    const { uploadFile, ...other } = req.payload;
+    const { uploadFile, ...other } = req.payload
 
-    context.uploadFile = uploadFile;
+    context.uploadFile = uploadFile
 
     return {
       ...req,
       payload: other,
-    };
+    }
   }
-  return req;
-};
+  return req
+}
 
 /** @type {AdminBro.After<AdminBro.ActionResponse>}*/
 const after = async (res, req, context, page, directory) => {
-  const { record, uploadFile } = context;
+  const { record, uploadFile } = context
 
   if (record.isValid() && uploadFile) {
     const filePath = path.join(
       __dirname,
       `../../public/uploads/${page}/${directory}`,
       uploadFile.name,
-    );
+    )
 
-    await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+    await fs.promises.mkdir(path.dirname(filePath), { recursive: true })
 
     // fs.rename(uploadFile.path, filePath, (err) => {
     //   if (err) {
@@ -75,13 +75,13 @@ const after = async (res, req, context, page, directory) => {
     //   }
     // });
 
-    mv(uploadFile.path, filePath, (err) => {
-      if (err) throw err;
-    });
+    mv(uploadFile.path, filePath, err => {
+      if (err) throw err
+    })
 
-    addToArchive(page, directory);
+    addToArchive(page, directory)
   }
-  return res;
-};
+  return res
+}
 
-module.exports = { after, before };
+module.exports = { after, before }

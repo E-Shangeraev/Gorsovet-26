@@ -1,43 +1,43 @@
-const AdminBro = require('admin-bro');
-const AdminBroMongoose = require('admin-bro-mongoose');
-const path = require('path');
-const fs = require('fs');
-const mv = require('mv');
+const AdminBro = require('admin-bro')
+const AdminBroMongoose = require('@admin-bro/mongoose')
+const path = require('path')
+const fs = require('fs')
+const mv = require('mv')
 
 /** @type {AdminBro.Before} */
 const before = async (req, context) => {
   if (req.method === 'post') {
-    const { uploadFile, ...other } = req.payload;
+    const { uploadFile, ...other } = req.payload
 
-    context.uploadFile = uploadFile;
+    context.uploadFile = uploadFile
 
     return {
       ...req,
       payload: other,
-    };
+    }
   }
-  return req;
-};
+  return req
+}
 
 /** @type {AdminBro.After<AdminBro.ActionResponse>}*/
 const after = async (res, req, context, directory) => {
-  const { record, uploadFile } = context;
+  const { record, uploadFile } = context
 
   if (record.isValid() && uploadFile) {
     const filePath = path.join(
       __dirname,
       `../../public/uploads/${directory}`,
       uploadFile.name,
-    );
+    )
 
-    await fs.promises.mkdir(path.dirname(filePath), { recursive: true });
+    await fs.promises.mkdir(path.dirname(filePath), { recursive: true })
 
     // await fs.promises.rename(uploadFile.path, filePath);
-    mv(uploadFile.path, filePath, (err) => {
-      if (err) throw err;
-    });
+    mv(uploadFile.path, filePath, err => {
+      if (err) throw err
+    })
   }
-  return res;
-};
+  return res
+}
 
-module.exports = { after, before };
+module.exports = { after, before }

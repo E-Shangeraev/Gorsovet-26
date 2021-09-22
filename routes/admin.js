@@ -1,30 +1,30 @@
-const { default: AdminBro } = require('admin-bro');
-const { buildAuthenticatedRouter } = require('admin-bro-expressjs');
-const express = require('express');
-const argon2 = require('argon2');
-const mongoose = require('mongoose');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+const { default: AdminBro } = require('admin-bro')
+const { buildAuthenticatedRouter } = require('@admin-bro/express')
+const express = require('express')
+const argon2 = require('argon2')
+const mongoose = require('mongoose')
+const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
 
-const { Admin } = require('../models/Admin');
+const { Admin } = require('../models/Admin')
 
 /**
  * @param {AdminBro} admin
  * @return {express.Router} router
  */
-const buildAdminRouter = (admin) => {
+const buildAdminRouter = admin => {
   const router = buildAuthenticatedRouter(
     admin,
     {
       cookieName: 'admin-bro',
       cookiePassword: 'superlongandcomplicatedname',
-      authenticate: async (email, password) => {
-        const user = await Admin.findOne({ email });
+      authenticate: async (login, password) => {
+        const user = await Admin.findOne({ login })
 
         if (user && (await argon2.verify(user.encryptedPassword, password))) {
-          return user;
+          return user
         }
-        return false;
+        return false
       },
     },
     null,
@@ -33,8 +33,8 @@ const buildAdminRouter = (admin) => {
       saveUninitialized: true,
       store: new MongoStore({ mongooseConnection: mongoose.connection }),
     },
-  );
-  return router;
-};
+  )
+  return router
+}
 
-module.exports = buildAdminRouter;
+module.exports = buildAdminRouter

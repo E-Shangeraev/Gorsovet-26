@@ -1,12 +1,12 @@
-.personnel {
+.cards {
   margin-bottom: 80px;
 }
-.personnel__container {
+.cards__container {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 35px;
 }
-.personnel__block {
+.cards__block {
   display: flex;
   flex-direction: column;
   padding: 60px;
@@ -23,14 +23,14 @@
     height: auto;
   }
 }
-.personnel__name {
+.cards__name {
   margin-bottom: 25px;
   font-family: $reg;
   font-weight: normal;
   font-size: 20px;
   line-height: 140%;
 }
-.personnel__content {
+.cards__content {
   padding: 0;
 
   h5 {
@@ -46,10 +46,10 @@
 }
 
 @media (max-width: 1600px) {
-  .personnel__name {
+  .cards__name {
     font-size: 18px;
   }
-  .personnel__content {
+  .cards__content {
     h5 {
       font-size: 16px;
     }
@@ -60,18 +60,18 @@
   }
 }
 @media (max-width: 1400px) {
-  .personnel__block {
+  .cards__block {
     padding: 30px;
   }
 }
 @media (max-width: 1200px) {
-  .personnel__container {
+  .cards__container {
     gap: 25px;
   }
-  .personnel__name {
+  .cards__name {
     font-size: 16px;
   }
-  .personnel__content {
+  .cards__content {
     h5 {
       margin-top: 20px;
       font-size: 14px;
@@ -83,10 +83,10 @@
   }
 }
 @media (max-width: 900px) {
-  .personnel__name {
+  .cards__name {
     font-size: 14px;
   }
-  .personnel__content {
+  .cards__content {
     h5,
     span,
     li {
@@ -95,23 +95,23 @@
   }
 }
 @media (max-width: 768px) {
-  .personnel__container {
+  .cards__container {
     grid-template-columns: 1fr;
     row-gap: 20px;
   }
 }
 @media (max-width: 440px) {
-  .personnel {
+  .cards {
     margin-bottom: 50px;
   }
-  .personnel__block {
+  .cards__block {
     padding: 20px;
   }
-  .personnel__name {
+  .cards__name {
     margin-bottom: 15px;
     font-size: 12px;
   }
-  .personnel__content {
+  .cards__content {
     h5 {
       line-height: 150%;
       margin-top: 10px;
