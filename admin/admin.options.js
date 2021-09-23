@@ -331,7 +331,6 @@ const options = {
             contacts: 'Контакты',
             'contacts.to': 'Имя контакта',
             'contacts.phone': 'Номер телефона',
-            year: 'Год',
           },
         },
       },
@@ -733,7 +732,6 @@ const options = {
           'title',
           'uploadedFile',
           'contacts',
-          'year',
         ],
         editProperties: [
           'index',
@@ -741,7 +739,6 @@ const options = {
           'title',
           'uploadedFile',
           'contacts',
-          'year',
         ],
         properties: {
           mimeType: { isVisible: false },

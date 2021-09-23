@@ -327,6 +327,19 @@
           <h3 class="subtitle">{{blockTitle}}</h3>
           <div class="cards__container">
             {{#each cards}}
+              {{#if contacts.length}}
+                <div class="cards__block">
+                  <h4 class="cards__name">{{title}}</h4>
+                  <ul class="cards__content">
+                    {{#each contacts}}
+                      <li class="cards__contact">
+                        <span>{{to}}:</span><a href="tel:{{phone}}">{{phone}}</a>
+                      </li>
+                    {{/each}}
+                  </ul>
+                </div>
+              {{/if}}
+                  {{#if uploadedFile}}
               <div class="cards__block collapsible">
                 <div>
                   <h4 class="cards__name">{{title}}</h4>
@@ -335,18 +348,22 @@
                     <img src="svg/mark.svg" />
                   </button>
                 </div>
-                <div class="cards__content details__content">
-                  {{#if uploadedFile}}
-                    {{#if uploadedFile.path.length}}
-                      {{#each uploadedFile.path}}
-                        <a href="https://gorsovet-documents.s3.eu-central-1.amazonaws.com/{{this}}">
-                          {{@lookup ../uploadedFile.filename @index}}
-                        </a>
-                      {{/each}}
-                    {{/if}}
-                  {{/if}}
-                </div>
-              </div>
+                    <ul class="cards__content details__content">
+                        {{#if uploadedFile.path.length}}
+                          {{#each uploadedFile.path}}
+                            <li>
+                              {{#if ../uploadedFile.years.length}}
+                                <span>{{@lookup ../uploadedFile.years @index}}</span>
+                              {{/if}}
+                              <a href="https://gorsovet-documents.s3.eu-central-1.amazonaws.com/{{this}}">
+                                {{@lookup ../uploadedFile.filename @index}}
+                              </a>
+                            </li>
+                          {{/each}}
+                        {{/if}}
+                    </ul>
+                  </div>
+                {{/if}}
             {{/each}}
           </div>
         </div>

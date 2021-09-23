@@ -26,10 +26,16 @@ class CardsController {
     cards = sortByField(cards, 'blockTitle.index')
 
     cards = cards.map(item => {
-      item.uploadedFile.filename = item.uploadedFile.filename
-        .join(',')
-        .replace(/-/g, ' ')
-        .split(',')
+      if (item.uploadedFile) {
+        item.uploadedFile.years = item.uploadedFile.filename
+          .join(',')
+          .match(/\d\d\d\d/g)
+        item.uploadedFile.filename = item.uploadedFile.filename
+          .join(',')
+          .replace(/\d\d\d\d--/g, ' ')
+          .replace(/-/g, ' ')
+          .split(',')
+      }
       return item
     })
 
@@ -39,9 +45,6 @@ class CardsController {
       blockTitle: block.title,
       cards: cards.filter(card => card.blockTitle.title === block.title),
     }))
-
-    // console.log(newCards[0].cards)
-    // console.log(newCards[1])
 
     res.render('landing', {
       title: 'Контрольно-ревизионная служба',

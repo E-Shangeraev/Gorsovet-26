@@ -1,5 +1,9 @@
 .cards {
   margin-bottom: 80px;
+
+  & > div:not(:last-child) {
+    margin-bottom: 3em;
+  }
 }
 .cards__container {
   display: grid;
@@ -10,7 +14,6 @@
   display: flex;
   flex-direction: column;
   padding: 60px;
-  height: fit-content;
   transition: ease-in 0.3s;
   border-radius: 6px;
   background-color: $gray;
@@ -21,6 +24,16 @@
   }
   &.collapsible--opened {
     height: auto;
+
+    .cards__content {
+      margin-top: 15px;
+    }
+  }
+  & > div:first-child {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 }
 .cards__name {
@@ -31,18 +44,37 @@
   line-height: 140%;
 }
 .cards__content {
-  padding: 0;
+  padding: 0 25px !important;
+  list-style-type: square;
 
   h5 {
     margin-top: 30px;
     margin-bottom: 0px;
     font-size: 18px;
   }
-
+  a {
+    display: block;
+    color: black;
+  }
   span,
   li {
     font-size: 18px;
+
+    &::marker {
+      color: $red;
+    }
   }
+  span {
+    font-weight: bold;
+  }
+  li {
+    line-height: 140%;
+  }
+  li:not(:last-child) {
+    margin-bottom: 1em;
+  }
+}
+.cards__contact {
 }
 
 @media (max-width: 1600px) {

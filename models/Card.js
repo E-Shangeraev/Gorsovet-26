@@ -14,10 +14,6 @@ const CardSchema = new Schema({
       phone: String,
     },
   ],
-  year: {
-    type: String,
-    require: false,
-  },
 })
 
 module.exports = model('Cards', CardSchema)
