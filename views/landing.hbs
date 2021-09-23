@@ -323,7 +323,7 @@
   {{#if blocks.length}}
     {{#each blocks}}
       {{#if cards.length}}
-        <div>
+        <div id={{@index}}>
           <h3 class="subtitle">{{blockTitle}}</h3>
           <div class="cards__container">
             {{#each cards}}

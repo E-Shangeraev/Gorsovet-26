@@ -1,5 +1,7 @@
 const CardsModel = require('../models/Card')
 const CardsBlockModel = require('../models/CardsBlock')
+const ContactsModel = require('../models/Contacts')
+const ContactsFooterModel = require('../models/ContactsFooter')
 
 function sortByField(array, field) {
   return array.sort((a, b) => {
@@ -13,10 +15,8 @@ function sortByField(array, field) {
   })
 }
 
-class CardsController {
-  constructor() {}
-
-  async getAll(req, res) {
+class LandingController {
+  getCardBlocks = async () => {
     let cards = await CardsModel.find()
       .sort({ index: 1 })
       .populate('blockTitle')
@@ -46,13 +46,29 @@ class CardsController {
       cards: cards.filter(card => card.blockTitle.title === block.title),
     }))
 
+    return blocks
+  }
+  getContacts = async () => {
+    const contacts = await ContactsModel.findOne().lean()
+    const contactsFooter = await ContactsFooterModel.findOne().lean()
+
+    return {
+      contacts,
+      contactsFooter,
+    }
+  }
+  render = async (req, res) => {
+    const blocks = await this.getCardBlocks()
+    const contacts = await this.getContacts()
+
     res.render('landing', {
       title: 'Контрольно-ревизионная служба',
       isKRS: true,
       layout: 'landing',
       blocks,
+      ...contacts,
     })
   }
 }
 
-module.exports = new CardsController()
+module.exports = new LandingController()

@@ -5,15 +5,15 @@
       <ul class="footer__contacts">
         <li>
           <span>Тел: </span>
-          <a href="tel:+7 (3919) 76-55-50">+7 (3919) 76-55-50</a>
+          <a href="tel:{{contactsFooter.phoneNumber}}">{{contactsFooter.phoneNumber}}</a>
         </li>
         <li>
           <span>Факс: </span>
-          <a href="fax:+7 (3919) 74-62-77">+7 (3919) 74-62-77</a>
+          <a href="fax:{{contactsFooter.fax}}">{{contactsFooter.fax}}</a>
         </li>
         <li>
           <span>E-mail: </span>
-          <a href="mailto:sovet@adm.k26.ru" class="red">sovet@adm.k26.ru</a>
+          <a href="mailto:{{contactsFooter.email}}" class="red">{{contactsFooter.email}}</a>
         </li>
       </ul>
 
@@ -22,18 +22,12 @@
         <p class="white">Совет Депутатов ЗАТО <span> г. Железногорск</span></p>
       </div>  
       <ul class="footer__nav">
-        <li><a href="/">Главная</a></li>
-        <li><a href="/council">Совет депутатов</a></li>
-        <li><a href="/activity">Деятельность совета</a></li>
-      </ul>
-      <ul class="footer__nav">
-        <li><a href="/corpus">Депутатский корпус</a></li>
-        <li><a href="/documents">Документы</a></li>
-        <li><a href="/news?p=1">Новости</a></li>
-      </ul>
-      <ul class="footer__nav">
-        <li><a href="/contacts">Контакты</a></li>
-        <li><a href="/corruption">Противодействие коррупции</a></li>
+        <li><a href="#about">О службе</a></li>
+        {{#if blocks.length}}
+          {{#each blocks}}
+            <li><a href="#{{@index}}">{{blockTitle}}</a></li>
+          {{/each}}
+        {{/if}}
       </ul>
 
       <p class="footer__copyright">

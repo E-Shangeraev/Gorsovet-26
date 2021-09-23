@@ -16,6 +16,8 @@ const ActivitySession = require('../models/ActivitySession')
 const Subscriber = require('../models/Subscriber')
 const CardsBlock = require('../models/CardsBlock')
 const Cards = require('../models/Card')
+const Contacts = require('../models/Contacts')
+const ContactsFooter = require('../models/ContactsFooter')
 require('dotenv').config()
 
 const {
@@ -187,6 +189,8 @@ const options = {
         Subscriber: 'Подписчики',
         CardsBlock: 'Блок с карточками',
         Cards: 'Карточки',
+        Contacts: 'Контакты (шапка)',
+        ContactsFooter: 'Контакты (подвал)',
       },
       buttons: {
         filter: 'Фильтр',
@@ -331,6 +335,21 @@ const options = {
             contacts: 'Контакты',
             'contacts.to': 'Имя контакта',
             'contacts.phone': 'Номер телефона',
+          },
+        },
+        Contacts: {
+          properties: {
+            address: 'Адрес',
+            workTime: 'График работы',
+            phoneNumbers: 'Номера телефонов',
+            emails: 'Эл. почты',
+          },
+        },
+        ContactsFooter: {
+          properties: {
+            phoneNumber: 'Номер телефонa',
+            fax: 'Факс',
+            email: 'Эл. почта',
           },
         },
       },
@@ -748,6 +767,26 @@ const options = {
         },
       },
       features,
+    },
+    {
+      resource: Contacts,
+      options: {
+        listProperties: ['address', 'workTime', 'phoneNumbers', 'emails'],
+        editProperties: ['address', 'workTime', 'phoneNumbers', 'emails'],
+        parent: {
+          name: 'КРС',
+        },
+      },
+    },
+    {
+      resource: ContactsFooter,
+      options: {
+        listProperties: ['phoneNumber', 'fax', 'email'],
+        editProperties: ['phoneNumber', 'fax', 'email'],
+        parent: {
+          name: 'КРС',
+        },
+      },
     },
   ],
   branding: {

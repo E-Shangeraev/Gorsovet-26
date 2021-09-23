@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const router = Router()
-const cardsController = require('../controllers/cardsController')
+const landingController = require('../controllers/landingController')
 
-router.get('/', cardsController.getAll)
+router.get('/', landingController.render)
 
 module.exports = router
